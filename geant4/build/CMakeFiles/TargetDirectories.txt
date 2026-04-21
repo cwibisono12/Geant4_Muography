@@ -1,0 +1,4 @@
+/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles/muon.dir
+/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles/Simulation.dir
+/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles/edit_cache.dir
+/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles/rebuild_cache.dir
