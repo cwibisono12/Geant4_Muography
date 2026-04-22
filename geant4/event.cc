@@ -128,12 +128,12 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 					continue;
 			}
 
-			analysisManager->FillNtupleIColumn(0,0,hit->GetEventID());
-			analysisManager->FillNtupleIColumn(0,1,hit->GetParentID());
-			analysisManager->FillNtupleIColumn(0,2,hit->GetTrackID());
-			analysisManager->FillNtupleDColumn(0,3,hit->GetPos().x());
-			analysisManager->FillNtupleDColumn(0,4,hit->GetPos().y());
-			analysisManager->FillNtupleDColumn(0,5,hit->GetPos().z());
+			analysisManager->FillNtupleIColumn(1,0,hit->GetEventID());
+			analysisManager->FillNtupleIColumn(1,1,hit->GetParentID());
+			analysisManager->FillNtupleIColumn(1,2,hit->GetTrackID());
+			analysisManager->FillNtupleDColumn(1,3,hit->GetPos().x());
+			analysisManager->FillNtupleDColumn(1,4,hit->GetPos().y());
+			analysisManager->FillNtupleDColumn(1,5,hit->GetPos().z());
 		
 			analysisManager->AddNtupleRow(1);
 
@@ -168,12 +168,12 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 					continue;
 			}
 
-			analysisManager->FillNtupleIColumn(1,0,hit->GetEventID());
-			analysisManager->FillNtupleIColumn(1,1,hit->GetParentID());
-			analysisManager->FillNtupleIColumn(1,2,hit->GetTrackID());
-			analysisManager->FillNtupleDColumn(1,3,hit->GetPos().x());
-			analysisManager->FillNtupleDColumn(1,4,hit->GetPos().y());
-			analysisManager->FillNtupleDColumn(1,5,hit->GetPos().z());
+			analysisManager->FillNtupleIColumn(2,0,hit->GetEventID());
+			analysisManager->FillNtupleIColumn(2,1,hit->GetParentID());
+			analysisManager->FillNtupleIColumn(2,2,hit->GetTrackID());
+			analysisManager->FillNtupleDColumn(2,3,hit->GetPos().x());
+			analysisManager->FillNtupleDColumn(2,4,hit->GetPos().y());
+			analysisManager->FillNtupleDColumn(2,5,hit->GetPos().z());
 		
 			analysisManager->AddNtupleRow(2);
 
