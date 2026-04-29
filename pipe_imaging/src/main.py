@@ -9,13 +9,14 @@ from utilities import corr_file
 
 def transform_input(file_in, f_pipe, f_scaling, file_out):
     '''
-    Extract event data from Geant4 Simulation Result and Generate PoCA point
+    Extract event data from Geant4 Simulation results and generate the correlated file
     C. Wibisono
-    10/'20 '25
+    04/'29 '26
     Parameter(s):
     file_in: file pointer of the Geant4 output detector_hits file
     f_pipe: file pointer of the pipe hit
     f_scaling: file pointer of the scaling hit
+    f_out: file pointer  consisting of all correlated hits
     '''
 
     data ={}
