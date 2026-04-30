@@ -12,12 +12,13 @@ if __name__ == "__main__":
     file_train = sys.argv[1]
     file_test = sys.argv[2]
     file_out = sys.argv[3]
+    option = int(sys.argv[4]) #argument number for selecting the target variables (1, 2, or 3)---> see nn.get_features() function
 
-    X_train, y_train = nn.get_features(file_train)
+    X_train, y_train = nn.get_features(file_train, arg_number = option)
     
     model_param = nn.get_parameters(X_train, y_train)
 
-    X_test, y_test = nn.get_features(file_test)
+    X_test, y_test = nn.get_features(file_test, arg_number = option)
     
     result = nn.predict_outcome(X_test, model_param)
 
