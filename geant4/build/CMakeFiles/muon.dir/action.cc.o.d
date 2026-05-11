@@ -371,6 +371,4 @@ CMakeFiles/muon.dir/action.cc.o: \
  /home/geant4/geant4-v11.2.1-install/include/Geant4/G4GenericFileManager.icc \
  /home/cw25/geant4_cw_vgenb/geant4/event.hh \
  /home/geant4/geant4-v11.2.1-install/include/Geant4/G4UserEventAction.hh \
- /home/geant4/geant4-v11.2.1-install/include/Geant4/globals.hh \
- /home/cw25/geant4_cw_vgenb/geant4/MyTrackingAction.hh \
- /home/geant4/geant4-v11.2.1-install/include/Geant4/G4UserTrackingAction.hh
+ /home/geant4/geant4-v11.2.1-install/include/Geant4/globals.hh

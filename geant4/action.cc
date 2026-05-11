@@ -1,7 +1,5 @@
 #include "action.hh"
 #include "event.hh"
-//#include "stepping.hh"
-#include "MyTrackingAction.hh" //added by C.W on Oct 15 '25
 
 MyActionInitialization::MyActionInitialization(G4String fileName, G4int run_mode)
 :G4VUserActionInitialization(), fname(fileName), mode(run_mode){}
@@ -33,8 +31,6 @@ void MyActionInitialization::Build() const
 
 //Added on Oct 28 '25 C.W     
   SetUserAction(new MyEventAction(mode));   
-//Added on Oct 15 '25 C.W
-SetUserAction(new MyTrackingAction());   
 
 //SetUserAction(new SteppingAction());
 

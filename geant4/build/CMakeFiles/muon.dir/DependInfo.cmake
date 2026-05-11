@@ -8,7 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/cw25/geant4_cw_vgenb/geant4/MyTrackingAction.cc" "CMakeFiles/muon.dir/MyTrackingAction.cc.o" "gcc" "CMakeFiles/muon.dir/MyTrackingAction.cc.o.d"
   "/home/cw25/geant4_cw_vgenb/geant4/action.cc" "CMakeFiles/muon.dir/action.cc.o" "gcc" "CMakeFiles/muon.dir/action.cc.o.d"
   "/home/cw25/geant4_cw_vgenb/geant4/construction.cc" "CMakeFiles/muon.dir/construction.cc.o" "gcc" "CMakeFiles/muon.dir/construction.cc.o.d"
   "/home/cw25/geant4_cw_vgenb/geant4/event.cc" "CMakeFiles/muon.dir/event.cc.o" "gcc" "CMakeFiles/muon.dir/event.cc.o.d"

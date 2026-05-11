@@ -142,30 +142,6 @@ Simulation/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Simulation.dir/build.make CMakeFiles/Simulation.dir/build
 .PHONY : Simulation/fast
 
-MyTrackingAction.o: MyTrackingAction.cc.o
-.PHONY : MyTrackingAction.o
-
-# target to build an object file
-MyTrackingAction.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/muon.dir/build.make CMakeFiles/muon.dir/MyTrackingAction.cc.o
-.PHONY : MyTrackingAction.cc.o
-
-MyTrackingAction.i: MyTrackingAction.cc.i
-.PHONY : MyTrackingAction.i
-
-# target to preprocess a source file
-MyTrackingAction.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/muon.dir/build.make CMakeFiles/muon.dir/MyTrackingAction.cc.i
-.PHONY : MyTrackingAction.cc.i
-
-MyTrackingAction.s: MyTrackingAction.cc.s
-.PHONY : MyTrackingAction.s
-
-# target to generate assembly for a file
-MyTrackingAction.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/muon.dir/build.make CMakeFiles/muon.dir/MyTrackingAction.cc.s
-.PHONY : MyTrackingAction.cc.s
-
 action.o: action.cc.o
 .PHONY : action.o
 
@@ -440,9 +416,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Simulation"
 	@echo "... muon"
-	@echo "... MyTrackingAction.o"
-	@echo "... MyTrackingAction.i"
-	@echo "... MyTrackingAction.s"
 	@echo "... action.o"
 	@echo "... action.i"
 	@echo "... action.s"

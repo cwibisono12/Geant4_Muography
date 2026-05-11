@@ -83,24 +83,10 @@ CMakeFiles/muon.dir/sim.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/muon.dir/sim.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cw25/geant4_cw_vgenb/geant4/sim.cc -o CMakeFiles/muon.dir/sim.cc.s
 
-CMakeFiles/muon.dir/MyTrackingAction.cc.o: CMakeFiles/muon.dir/flags.make
-CMakeFiles/muon.dir/MyTrackingAction.cc.o: ../MyTrackingAction.cc
-CMakeFiles/muon.dir/MyTrackingAction.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/muon.dir/MyTrackingAction.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/MyTrackingAction.cc.o -MF CMakeFiles/muon.dir/MyTrackingAction.cc.o.d -o CMakeFiles/muon.dir/MyTrackingAction.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/MyTrackingAction.cc
-
-CMakeFiles/muon.dir/MyTrackingAction.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/muon.dir/MyTrackingAction.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cw25/geant4_cw_vgenb/geant4/MyTrackingAction.cc > CMakeFiles/muon.dir/MyTrackingAction.cc.i
-
-CMakeFiles/muon.dir/MyTrackingAction.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/muon.dir/MyTrackingAction.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cw25/geant4_cw_vgenb/geant4/MyTrackingAction.cc -o CMakeFiles/muon.dir/MyTrackingAction.cc.s
-
 CMakeFiles/muon.dir/action.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/action.cc.o: ../action.cc
 CMakeFiles/muon.dir/action.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/muon.dir/action.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/muon.dir/action.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/action.cc.o -MF CMakeFiles/muon.dir/action.cc.o.d -o CMakeFiles/muon.dir/action.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/action.cc
 
 CMakeFiles/muon.dir/action.cc.i: cmake_force
@@ -114,7 +100,7 @@ CMakeFiles/muon.dir/action.cc.s: cmake_force
 CMakeFiles/muon.dir/construction.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/construction.cc.o: ../construction.cc
 CMakeFiles/muon.dir/construction.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/muon.dir/construction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/muon.dir/construction.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/construction.cc.o -MF CMakeFiles/muon.dir/construction.cc.o.d -o CMakeFiles/muon.dir/construction.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/construction.cc
 
 CMakeFiles/muon.dir/construction.cc.i: cmake_force
@@ -128,7 +114,7 @@ CMakeFiles/muon.dir/construction.cc.s: cmake_force
 CMakeFiles/muon.dir/event.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/event.cc.o: ../event.cc
 CMakeFiles/muon.dir/event.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/muon.dir/event.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/muon.dir/event.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/event.cc.o -MF CMakeFiles/muon.dir/event.cc.o.d -o CMakeFiles/muon.dir/event.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/event.cc
 
 CMakeFiles/muon.dir/event.cc.i: cmake_force
@@ -142,7 +128,7 @@ CMakeFiles/muon.dir/event.cc.s: cmake_force
 CMakeFiles/muon.dir/generator.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/generator.cc.o: ../generator.cc
 CMakeFiles/muon.dir/generator.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/muon.dir/generator.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/muon.dir/generator.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/generator.cc.o -MF CMakeFiles/muon.dir/generator.cc.o.d -o CMakeFiles/muon.dir/generator.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/generator.cc
 
 CMakeFiles/muon.dir/generator.cc.i: cmake_force
@@ -156,7 +142,7 @@ CMakeFiles/muon.dir/generator.cc.s: cmake_force
 CMakeFiles/muon.dir/pipehit.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/pipehit.cc.o: ../pipehit.cc
 CMakeFiles/muon.dir/pipehit.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/muon.dir/pipehit.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/muon.dir/pipehit.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/pipehit.cc.o -MF CMakeFiles/muon.dir/pipehit.cc.o.d -o CMakeFiles/muon.dir/pipehit.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/pipehit.cc
 
 CMakeFiles/muon.dir/pipehit.cc.i: cmake_force
@@ -170,7 +156,7 @@ CMakeFiles/muon.dir/pipehit.cc.s: cmake_force
 CMakeFiles/muon.dir/pipesd.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/pipesd.cc.o: ../pipesd.cc
 CMakeFiles/muon.dir/pipesd.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/muon.dir/pipesd.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/muon.dir/pipesd.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/pipesd.cc.o -MF CMakeFiles/muon.dir/pipesd.cc.o.d -o CMakeFiles/muon.dir/pipesd.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/pipesd.cc
 
 CMakeFiles/muon.dir/pipesd.cc.i: cmake_force
@@ -184,7 +170,7 @@ CMakeFiles/muon.dir/pipesd.cc.s: cmake_force
 CMakeFiles/muon.dir/run.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/run.cc.o: ../run.cc
 CMakeFiles/muon.dir/run.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/muon.dir/run.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/muon.dir/run.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/run.cc.o -MF CMakeFiles/muon.dir/run.cc.o.d -o CMakeFiles/muon.dir/run.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/run.cc
 
 CMakeFiles/muon.dir/run.cc.i: cmake_force
@@ -198,7 +184,7 @@ CMakeFiles/muon.dir/run.cc.s: cmake_force
 CMakeFiles/muon.dir/scalingsd.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/scalingsd.cc.o: ../scalingsd.cc
 CMakeFiles/muon.dir/scalingsd.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/muon.dir/scalingsd.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/muon.dir/scalingsd.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/scalingsd.cc.o -MF CMakeFiles/muon.dir/scalingsd.cc.o.d -o CMakeFiles/muon.dir/scalingsd.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/scalingsd.cc
 
 CMakeFiles/muon.dir/scalingsd.cc.i: cmake_force
@@ -212,7 +198,7 @@ CMakeFiles/muon.dir/scalingsd.cc.s: cmake_force
 CMakeFiles/muon.dir/scinthit.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/scinthit.cc.o: ../scinthit.cc
 CMakeFiles/muon.dir/scinthit.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/muon.dir/scinthit.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/muon.dir/scinthit.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/scinthit.cc.o -MF CMakeFiles/muon.dir/scinthit.cc.o.d -o CMakeFiles/muon.dir/scinthit.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/scinthit.cc
 
 CMakeFiles/muon.dir/scinthit.cc.i: cmake_force
@@ -226,7 +212,7 @@ CMakeFiles/muon.dir/scinthit.cc.s: cmake_force
 CMakeFiles/muon.dir/scintsd.cc.o: CMakeFiles/muon.dir/flags.make
 CMakeFiles/muon.dir/scintsd.cc.o: ../scintsd.cc
 CMakeFiles/muon.dir/scintsd.cc.o: CMakeFiles/muon.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/muon.dir/scintsd.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/muon.dir/scintsd.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/muon.dir/scintsd.cc.o -MF CMakeFiles/muon.dir/scintsd.cc.o.d -o CMakeFiles/muon.dir/scintsd.cc.o -c /home/cw25/geant4_cw_vgenb/geant4/scintsd.cc
 
 CMakeFiles/muon.dir/scintsd.cc.i: cmake_force
@@ -240,7 +226,6 @@ CMakeFiles/muon.dir/scintsd.cc.s: cmake_force
 # Object files for target muon
 muon_OBJECTS = \
 "CMakeFiles/muon.dir/sim.cc.o" \
-"CMakeFiles/muon.dir/MyTrackingAction.cc.o" \
 "CMakeFiles/muon.dir/action.cc.o" \
 "CMakeFiles/muon.dir/construction.cc.o" \
 "CMakeFiles/muon.dir/event.cc.o" \
@@ -256,7 +241,6 @@ muon_OBJECTS = \
 muon_EXTERNAL_OBJECTS =
 
 muon: CMakeFiles/muon.dir/sim.cc.o
-muon: CMakeFiles/muon.dir/MyTrackingAction.cc.o
 muon: CMakeFiles/muon.dir/action.cc.o
 muon: CMakeFiles/muon.dir/construction.cc.o
 muon: CMakeFiles/muon.dir/event.cc.o
@@ -315,7 +299,7 @@ muon: /home/geant4/geant4-v11.2.1-install/lib64/libG4global.so
 muon: /home/geant4/geant4-v11.2.1-install/lib64/libG4clhep.so
 muon: /home/geant4/geant4-v11.2.1-install/lib64/libG4ptl.so.2.3.3
 muon: CMakeFiles/muon.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable muon"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cw25/geant4_cw_vgenb/geant4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable muon"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/muon.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

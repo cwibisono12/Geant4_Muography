@@ -1,6 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/muon.dir/MyTrackingAction.cc.o"
-  "CMakeFiles/muon.dir/MyTrackingAction.cc.o.d"
   "CMakeFiles/muon.dir/action.cc.o"
   "CMakeFiles/muon.dir/action.cc.o.d"
   "CMakeFiles/muon.dir/construction.cc.o"
