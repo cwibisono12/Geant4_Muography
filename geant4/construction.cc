@@ -3,7 +3,8 @@
 #include "G4Transform3D.hh"
 #include "G4SDManager.hh"
 
-MyDetectorConstruction::MyDetectorConstruction()
+MyDetectorConstruction::MyDetectorConstruction(G4int run_mode)
+	:G4VUserDetectorConstruction(), mode(run_mode)
 {}
 
 MyDetectorConstruction::~MyDetectorConstruction()
@@ -148,12 +149,12 @@ void MyDetectorConstruction::ConstructSDandField()
  SetSensitiveDetector(logicDetector, scintSD);
 
 
- PipeSD* pipeSD = new PipeSD("Pipe_SensitiveDet");
+ PipeSD* pipeSD = new PipeSD("Pipe_SensitiveDet", mode);
  G4SDManager::GetSDMpointer()->AddNewDetector(pipeSD);
  SetSensitiveDetector(logicPipe, pipeSD);
  //logicPipe->SetSensitiveDetector(pipeSD); 
  
- ScalingSD* scalingSD = new ScalingSD("Scaling_SensitiveDet");
+ ScalingSD* scalingSD = new ScalingSD("Scaling_SensitiveDet", mode);
  G4SDManager::GetSDMpointer()->AddNewDetector(scalingSD);
  SetSensitiveDetector(logicScaling, scalingSD);
  

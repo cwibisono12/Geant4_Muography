@@ -9,7 +9,7 @@
 class MyEventAction : public G4UserEventAction
 {
 public:
-  MyEventAction();
+  MyEventAction(G4int run_mode);
   virtual ~MyEventAction();
 
   void BeginOfEventAction(const G4Event* event) override;
@@ -20,6 +20,7 @@ private:
   G4int fHCID0;
   G4int fHCID1;
   G4int fHCID2;
+  G4int mode;
 };
 
 #endif

@@ -20,7 +20,7 @@
 class MyDetectorConstruction : public G4VUserDetectorConstruction
 {
 public:
-   MyDetectorConstruction();
+   MyDetectorConstruction(G4int run_mode);
    ~MyDetectorConstruction();
 
    virtual G4VPhysicalVolume *Construct();
@@ -33,5 +33,7 @@ private:
 private:
   // Deklarasi private untuk visAttributes
   G4VisAttributes* visAttributes;
+  G4int mode;
+
 };
 #endif

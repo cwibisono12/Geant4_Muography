@@ -13,13 +13,14 @@ int main(int argc, char** argv)
 {
    G4String filename = argv[1];   
    G4int beamnumber = atoi(argv[2]);
+   G4int run_mode = atoi(argv[3]); //mode to store the hits for the pipe and scaling
    G4RunManager *runManager = new G4RunManager();
    
-   runManager->SetUserInitialization(new MyDetectorConstruction() );
+   runManager->SetUserInitialization(new MyDetectorConstruction(run_mode));
    auto MyPhysicsList = new FTFP_BERT;
    MyPhysicsList->RegisterPhysics(new G4StepLimiterPhysics());
    runManager->SetUserInitialization(MyPhysicsList);
-   runManager->SetUserInitialization(new MyActionInitialization(filename) );
+   runManager->SetUserInitialization(new MyActionInitialization(filename, run_mode) );
 
   
 //Commented to correct the order by C.W Oct 13/'25

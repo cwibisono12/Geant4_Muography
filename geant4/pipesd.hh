@@ -7,7 +7,7 @@
 
 class PipeSD : public G4VSensitiveDetector{
 	public:
-		PipeSD(const G4String& name);
+		PipeSD(const G4String& name, G4int run_mode);
 		virtual ~PipeSD() = default;
 
 		virtual void Initialize(G4HCofThisEvent*) override;
@@ -17,7 +17,7 @@ class PipeSD : public G4VSensitiveDetector{
 
 	private:
 		PipeHitCollection* fHitsCollection;
-
+		G4int mode; //run mode to choose the hits being recorded
 
 };
 

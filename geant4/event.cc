@@ -13,7 +13,7 @@
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include <fstream>
 
-MyEventAction::MyEventAction(): G4UserEventAction(), fHCID0(-1), fHCID1(-1), fHCID2(-1){
+MyEventAction::MyEventAction(G4int run_mode): G4UserEventAction(), fHCID0(-1), fHCID1(-1), fHCID2(-1), mode(run_mode){
 //fEbeamlog.open("beam_energy.csv");
 //fEbeamlog << "#EventID,BeamKineticEnergy_GeV"<< std::endl;
 }
@@ -119,6 +119,8 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 	if(hitCollection1 && hitCollection1->entries() > 0){
 		auto analysisManager = G4AnalysisManager::Instance();
 		//G4int eventID = event->GetEventID();
+
+		if(mode == 1 || mode == 2 || mode == 3){
 		for(G4int i = 0;i < hitCollection1->entries(); i++){
 //			G4cout << "DEBUG: Entries: " << hitCollection->entries() << G4endl;
 			PipeHit* hit = (*hitCollection1)[i];
@@ -137,10 +139,50 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 		
 			analysisManager->AddNtupleRow(1);
 
-		}
+			}
 //		G4cout << "DEBUG: Event End Finished" << G4endl;
+		}
+		if(mode == 4){
+			G4double aveX = 0;
+			G4double aveY = 0;
+			G4double aveZ = 0;
+			G4int evID, parentID, trackID;
+		for(G4int i = 0;i < hitCollection1->entries(); i++){
+//			G4cout << "DEBUG: Entries: " << hitCollection->entries() << G4endl;
+			PipeHit* hit = (*hitCollection1)[i];
+			
+			if(!hit) {
+					G4cout << "DEBUG: Hit is NULL" << G4endl; 
+					continue;
+			}
+			aveX = aveX + hit->GetPos().x();
+			aveY = aveY + hit->GetPos().y();
+			aveZ = aveZ+ hit->GetPos().z();
+			evID = hit->GetEventID();
+			parentID = hit->GetParentID();
+			trackID = hit->GetTrackID();
+
+
+			}
+
+			aveX = aveX/hitCollection1->entries();
+			aveY = aveY/hitCollection1->entries();
+			aveZ = aveZ/hitCollection1->entries();
+
+			analysisManager->FillNtupleIColumn(1,0,evID);
+			analysisManager->FillNtupleIColumn(1,1,parentID);
+			analysisManager->FillNtupleIColumn(1,2,trackID);
+			analysisManager->FillNtupleDColumn(1,3,aveX);
+			analysisManager->FillNtupleDColumn(1,4,aveY);
+			analysisManager->FillNtupleDColumn(1,5,aveZ);
+		
+			analysisManager->AddNtupleRow(1);
+
+		}
 
 	}
+
+
 
 	if (fHCID2 == -1){
 		fHCID2 = sdManager->GetCollectionID("ScalingHitCollection");
@@ -159,6 +201,7 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 	if(hitCollection2 && hitCollection2->entries() > 0){
 		auto analysisManager = G4AnalysisManager::Instance();
 		//G4int eventID = event->GetEventID();
+		if(mode == 1 || mode == 2 || mode == 3){
 		for(G4int i = 0;i < hitCollection2->entries(); i++){
 //			G4cout << "DEBUG: Entries: " << hitCollection->entries() << G4endl;
 			PipeHit* hit = (*hitCollection2)[i];
@@ -179,6 +222,45 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 
 		}
 //		G4cout << "DEBUG: Event End Finished" << G4endl;
+
+		}
+
+		if(mode == 4){
+		G4double aveX = 0;
+		G4double aveY = 0;
+		G4double aveZ = 0;
+		G4int evID, parentID, trackID;
+
+		for(G4int i = 0;i < hitCollection2->entries(); i++){
+//			G4cout << "DEBUG: Entries: " << hitCollection->entries() << G4endl;
+			PipeHit* hit = (*hitCollection2)[i];
+
+			if(!hit) {
+					G4cout << "DEBUG: Hit is NULL" << G4endl; 
+					continue;
+			}
+			aveX = aveX + hit->GetPos().x();
+			aveY = aveY + hit->GetPos().y();
+			aveZ = aveZ + hit->GetPos().z();
+			evID = hit->GetEventID();
+			parentID = hit->GetParentID();
+			trackID = hit->GetTrackID();
+			}
+			
+			aveX = aveX / hitCollection2->entries();
+			aveY = aveY / hitCollection2->entries();
+			aveZ = aveZ / hitCollection2->entries();
+
+			analysisManager->FillNtupleIColumn(2,0,evID);
+			analysisManager->FillNtupleIColumn(2,1,parentID);
+			analysisManager->FillNtupleIColumn(2,2,trackID);
+			analysisManager->FillNtupleDColumn(2,3,aveX);
+			analysisManager->FillNtupleDColumn(2,4,aveY);
+			analysisManager->FillNtupleDColumn(2,5,aveZ);
+		
+			analysisManager->AddNtupleRow(2);
+
+		}
 
 	}
 }

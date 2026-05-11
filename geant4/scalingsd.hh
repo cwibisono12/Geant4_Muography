@@ -7,7 +7,7 @@
 
 class ScalingSD : public G4VSensitiveDetector{
 	public:
-		ScalingSD(const G4String& name);
+		ScalingSD(const G4String& name, G4int run_mode);
 		virtual ~ScalingSD() = default;
 
 		virtual void Initialize(G4HCofThisEvent*) override;
@@ -17,7 +17,7 @@ class ScalingSD : public G4VSensitiveDetector{
 
 	private:
 		PipeHitCollection* fHitsCollection;
-
+		G4int mode;
 };
 
 

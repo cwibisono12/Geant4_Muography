@@ -9,12 +9,12 @@
 class MyActionInitialization : public G4VUserActionInitialization
 {
 public:
-   MyActionInitialization(G4String fileName);
+   MyActionInitialization(G4String fileName, G4int run_mode);
    ~MyActionInitialization();
 
    void Build() const override;
    G4String fname;
-
+   G4int mode;
 };
 
 #endif

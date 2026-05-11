@@ -3,8 +3,8 @@
 //#include "stepping.hh"
 #include "MyTrackingAction.hh" //added by C.W on Oct 15 '25
 
-MyActionInitialization::MyActionInitialization(G4String fileName)
-:G4VUserActionInitialization(), fname(fileName){}
+MyActionInitialization::MyActionInitialization(G4String fileName, G4int run_mode)
+:G4VUserActionInitialization(), fname(fileName), mode(run_mode){}
 
 MyActionInitialization::~MyActionInitialization()
 {}
@@ -32,7 +32,7 @@ void MyActionInitialization::Build() const
 
 
 //Added on Oct 28 '25 C.W     
-  SetUserAction(new MyEventAction());   
+  SetUserAction(new MyEventAction(mode));   
 //Added on Oct 15 '25 C.W
 SetUserAction(new MyTrackingAction());   
 
