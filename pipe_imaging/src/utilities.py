@@ -297,6 +297,44 @@ def obj_dict(fin):
 
         return data
 
+def obj_dict_append(fin):
+    '''
+    Generate dictionary for an object being probed
+    allowed multiple records with the same primary key
+    C. Wibisono
+    05/18 '26
+    Parameter(s):
+    fin: file pointer input file
+    data: dictionary of object being probed position based on event ID
+    '''
+
+    data = {}
+    with open(fin, mode='r') as f:
+
+        while(1):
+            line = f.readline()
+            if line == '':
+                break
+
+            if line.find('#') == -1:
+                row = line.split(',')
+
+                if row[0] in data.keys():
+                    data[row[0]][0].append(int(row[1]))
+                    data[row[0]][1].append(int(row[2]))
+                    data[row[0]][2].append(float(row[3]))
+                    data[row[0]][3].append(float(row[4]))
+                    data[row[0]][4].append(float(row[5].split('\n')[0]))
+
+                else:
+                    data[row[0]] = [[int(row[1])],[int(row[2])],[float(row[3])],[float(row[4])],[float(row[5].split('\n')[0])]]
+
+
+
+        return data
+
+
+
 def generate_input_scint(data):
     '''
     Generate Scintillators input. This function can be used 
@@ -365,6 +403,23 @@ def generate_input_scint(data):
     return p1, p1_b, p2, p2_b
 
 
+def write_header(fout, mode):
+    '''
+    Write Header to identify correlated file types
+    C. Wibisono
+    05/18 '26
+    Parameter(s):
+    fout: correlation file output pointer object
+    mode: (int) writing mode (1) only the first/last/average hits of the probed objects to be retrieved, (2): otherwise
+    '''
+    if mode == 1:
+        fout.write('#ev_ID'+','+'#Scint_0_pos(x,y,z)'+','+'#Scint_1_pos(x,y,z)'+','+'#Scint_2_pos(x,y,z)'+','+'#Scint_3_pos(x,y,z)'+','+'Pipe_Pos(x,y,z)'+','+'Scaling_Pos(x,y,z)'+'\n')
+    
+    if mode == 2:
+        fout.write('#ev_ID'+','+'#Pos_(x,y,z)'+','+'Object_Type'+'\n')
+
+
+
 def corr_file(fout, scint_0, scint_1, scint_2, scint_3, pipe_data, scaling_data, key):
     '''
     Generate correlation file output consists of
@@ -383,3 +438,36 @@ def corr_file(fout, scint_0, scint_1, scint_2, scint_3, pipe_data, scaling_data,
     '''
 
     fout.write(key+','+str(scint_0[0])+','+str(scint_0[1])+','+str(scint_0[2])+','+str(scint_1[0])+','+str(scint_1[1])+','+str(scint_1[2])+','+str(scint_2[0])+','+str(scint_2[1])+','+str(scint_2[2])+','+str(scint_3[0])+','+str(scint_3[1])+','+str(scint_3[2])+','+str(pipe_data[key][2])+','+str(pipe_data[key][3])+','+str(pipe_data[key][4])+','+str(scaling_data[key][2])+','+str(scaling_data[key][3])+','+str(scaling_data[key][4])+'\n')
+
+
+
+
+def corr_file_append(fout, scint_0, scint_1, scint_2, scint_3, pipe_data, scaling_data, key):
+    '''
+    Generate correlation file output consists of
+    spatial positions in scintillators, pipe, and scaling.
+    The file can allow multiple scattering points for the pipe and scaling.
+    C. Wibisono
+    05/18 '26
+    Parameter(s):
+    fout: correlation file output pointer object
+    scint_0: (dict) scintillators data 1st layer
+    scint_1: (dict) scintillators data 2nd layer
+    scint_2: (dict) scintillators data 3rd layer
+    scint_3: (dict) scintillators data 4th layer
+    pipe_data: (dict) pipe data
+    scaling_data: (dict) scaling data
+    key: str primary key (event ID)
+    '''
+
+    pipe_dim = len(pipe_data[key][0])
+    scaling_dim = len(scaling_data[key][0])
+
+    fout.write(key+','+str(scint_0[0])+','+str(scint_0[1])+','+str(scint_0[2])+','+'0'+'\n')
+    fout.write(key+','+str(scint_1[0])+','+str(scint_1[1])+','+str(scint_1[2])+','+'1'+'\n')
+    fout.write(key+','+str(scint_2[0])+','+str(scint_2[1])+','+str(scint_2[2])+','+'2'+'\n')
+    fout.write(key+','+str(scint_3[0])+','+str(scint_3[1])+','+str(scint_3[2])+','+'3'+'\n')
+    for i in range(pipe_dim):
+        fout.write(key+','+str(pipe_data[key][2][i])+','+str(pipe_data[key][3][i])+','+str(pipe_data[key][4][i])+','+'4'+'\n')
+    for j in range(scaling_dim):
+        fout.write(key+','+str(scaling_data[key][2][j])+','+str(scaling_data[key][3][j])+','+str(scaling_data[key][4][j])+','+'5'+'\n')
