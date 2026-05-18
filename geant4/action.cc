@@ -26,7 +26,7 @@ void MyActionInitialization::Build() const
    //Commented by C.W on Oct 15 '25
  //  MyRunAction *runAction = new MyRunAction();
  //  SetUserAction(runAction);
-     SetUserAction(new MyRunAction(fname));
+     SetUserAction(new MyRunAction(fname, mode));
 
 
 //Added on Oct 28 '25 C.W     

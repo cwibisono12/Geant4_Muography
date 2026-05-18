@@ -8,13 +8,14 @@
 class MyRunAction: public G4UserRunAction
 {
 public:
-   MyRunAction(G4String fileName);
+   MyRunAction(G4String fileName, G4int mode);
    virtual   ~MyRunAction();
 
    virtual void BeginOfRunAction(const G4Run*);
    virtual void EndOfRunAction(const G4Run*);
 private:
    G4String fname;
+   G4int run_mode;
 };
 
 #endif

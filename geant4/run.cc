@@ -1,9 +1,10 @@
 #include "run.hh"
-#include <fstream>
+//#include <fstream>
+#include <string>
 #include "G4AnalysisManager.hh"
 #include "G4Run.hh"
 
-MyRunAction::MyRunAction(G4String fileName) : G4UserRunAction(), fname(fileName){
+MyRunAction::MyRunAction(G4String fileName, G4int mode) : G4UserRunAction(), fname(fileName), run_mode(mode){
 	auto analysisManager = G4AnalysisManager::Instance();
 	analysisManager->SetDefaultFileType("csv");
 
@@ -43,18 +44,9 @@ MyRunAction::~MyRunAction()
 {}
 
 void MyRunAction::BeginOfRunAction(const G4Run*) {
- /*
-    std::ofstream hitsfile("detector_hits.csv");
-    hitsfile << "#event, parentID, trackID, detNum, x, y, z\n";
-    hitsfile.close();
-
-    std::ofstream mscfile("msc_points.csv");
-    mscfile << "#event, parentID, trackID, x, y, z\n";
-    mscfile.close();
-*/
     auto analysisManager = G4AnalysisManager::Instance();
-    //analysisManager->OpenFile("Obj_hits.csv");
-    analysisManager->OpenFile(fname);
+   fname = fname + "_" + std::to_string(run_mode);
+   analysisManager->OpenFile(fname);
 }
 
 

@@ -37,7 +37,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
   FeC->AddElement(nist->FindOrBuildElement("Fe"), 1);   // Ferro mass fraction
   FeC->AddElement(nist->FindOrBuildElement("C"), 1);    // Carbon mass fraction
 
-// OBJEK PIPA
+// Pipe Object
   G4double pipeInnerRadius = 18*cm;
   G4double pipeOuterRadius = 21*cm;
   G4double pipeLength = 60*cm;
