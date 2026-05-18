@@ -161,7 +161,15 @@ if __name__ == "__main__":
     filein2 = sys.argv[2] #pipe file
     filein3 = sys.argv[3] #scaling file
     fileout = sys.argv[4] #output file
+    run_mode = int(sys.argv[5]) #running_mode (1, 2, 4:(first, last, average), 3: all scattering points of objects)
     with open(fileout, mode = 'w') as fout:
-        write_header(fout, 1)
+        if (run_mode == 1 or run_mode == 2 or run_mode == 4):
+            write_header(fout, 1)
+        else:
+            write_header(fout, 2)
+
         with open(filein, mode='r') as fin1:
-            transform_input(fin1, filein2, filein3, fout)
+            if (run_mode == 1 or run_mode == 2 or run_mode == 4):
+                transform_input(fin1, filein2, filein3, fout)
+            else:
+                transform_input_append(fin1, filein2, filein3, fout)

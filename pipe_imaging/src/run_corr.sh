@@ -19,7 +19,8 @@ if [[ "$initial" -ge 0 &&  "$initial" -lt 10000 ]];
 					./main.py "$directory_src/Run${j}_${run_mode}_nt_ScintillatorHits.csv" \
 					"$directory_src/Run${j}_${run_mode}_nt_PipeHits.csv" \
 					"$directory_src/Run${j}_${run_mode}_nt_ScalingHits.csv"\
-					"$directory_final/corr_file_Run${j}_${run_mode}_new.csv"
+					"$directory_final/corr_file_Run${j}_${run_mode}_new.csv"\
+					$run_mode
 			else
 				echo "File for Run $j and mode $run_mode not found in $directory_src"
 			fi
