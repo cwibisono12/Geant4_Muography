@@ -6,6 +6,7 @@ from utilities import is_valid_event
 from utilities import generate_input_scint, write_header
 from utilities import obj_dict, obj_dict_append
 from utilities import corr_file, corr_file_append
+from utilities import get_radius
 
 def transform_input(file_in, f_pipe, f_scaling, file_out):
     '''
@@ -173,3 +174,9 @@ if __name__ == "__main__":
                 transform_input(fin1, filein2, filein3, fout)
             else:
                 transform_input_append(fin1, filein2, filein3, fout)
+
+
+    obj_rad = get_radius(fileout, run_mode)
+    print("Radius of correlated objects\n")
+    print("Pipe:","r_min: (cm)",obj_rad['pipe'][0],"r_max: (cm)",obj_rad['pipe'][1])
+    print("Scaling:","r_min: (cm)",obj_rad['scaling'][0],"r_max: (cm)",obj_rad['scaling'][1])

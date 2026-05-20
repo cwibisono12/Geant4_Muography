@@ -55,6 +55,8 @@ def get_features(file_in, *, arg_number = 3):
     with open(file_in, mode='r') as fin:
         X_arr = []
         y_arr = []
+        #Read header:
+        fin.readline()
         while(1):
             line = fin.readline()
             if line == '':
@@ -239,6 +241,9 @@ def plot_test_and_predict(f_test, f_predict):
         arr_test_pipe=[[],[],[]]
         arr_test_scaling = [[],[],[]]
 
+        #Read the header:
+        f1.readline()
+
         while(1):
             line_test = f1.readline()
             if line_test == '':
@@ -329,11 +334,16 @@ def plot_test_and_predict(f_test, f_predict):
                 ax_predict.scatter(arr_2[0],arr_2[1],arr_2[2],c='red',marker='o',s=0.001)
                 ax_test.scatter(arr_test_pipe[0],arr_test_pipe[1],arr_test_pipe[2],c='blue',marker='o',s=0.001)
                 ax_test.scatter(arr_test_scaling[0],arr_test_scaling[1],arr_test_scaling[2],c='red',marker='o',s=0.001)
-                #ax_predict.view_init(elev = 0, azim = -90)
-
+                ax_predict.view_init(elev = 0, azim = -90)
+                ax_predict.set_xlim(-200,200)
+                ax_predict.set_ylim(-200,200)
+                ax_predict.set_zlim(-200,200)
                 ax_predict.set_title("Prediction from NN-model")
                 ax_test.set_title("Truth value")
-                #ax_test.view_init(elev = 0, azim =-90)
+                ax_test.view_init(elev = 0, azim =-90)
+                ax_test.set_xlim(-200,200)
+                ax_test.set_ylim(-200,200)
+                ax_test.set_zlim(-200,200)
 
                 del arr_1
                 del arr_2

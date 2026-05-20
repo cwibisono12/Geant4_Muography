@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import numpy as np
+import math
 
 
 def is_valid_event(data):
@@ -295,7 +296,7 @@ def obj_dict(fin):
                 data[row[0]] = [int(row[1]), int(row[2]), float(row[3]), float(row[4]), float(row[5].split('\n')[0])]
 
 
-        return data
+    return data
 
 def obj_dict_append(fin):
     '''
@@ -331,7 +332,7 @@ def obj_dict_append(fin):
 
 
 
-        return data
+    return data
 
 
 
@@ -471,3 +472,101 @@ def corr_file_append(fout, scint_0, scint_1, scint_2, scint_3, pipe_data, scalin
         fout.write(key+','+str(pipe_data[key][2][i])+','+str(pipe_data[key][3][i])+','+str(pipe_data[key][4][i])+','+'4'+'\n')
     for j in range(scaling_dim):
         fout.write(key+','+str(scaling_data[key][2][j])+','+str(scaling_data[key][3][j])+','+str(scaling_data[key][4][j])+','+'5'+'\n')
+
+
+def get_radius(fin, mode):
+    '''
+    Get the maximum radius of the objects
+    from the correlated file
+    C. Wibisono
+    05/20 '26:
+    Parameter(s):
+    fin: correlation file pointer object
+    mode: running_mode(1, 2, 3 or 4)
+    
+    Return(s):
+    obj: [dict] maximum and minimum radius of each object
+    '''
+
+    obj = {}
+    r_pipe_min = 10000
+    r_pipe_max = 0
+    r_scaling_min = 10000
+    r_scaling_max = 0
+
+    with open(fin, mode = 'r') as f:
+        #Read the header:
+        f.readline()
+
+        if (mode == 1 or mode == 2 or mode == 4):
+            while(1):
+                line = f.readline()
+                if line == '':
+                    break
+                else:
+                    row = line.split(',')
+                    
+                    x_pipe = float(row[13])
+                    y_pipe = float(row[14])
+                    z_pipe = float(row[15])
+                    rad_temp_pipe = math.sqrt((x_pipe**2.)+(z_pipe**2.))
+
+                    if rad_temp_pipe > r_pipe_max:
+                        r_pipe_max = rad_temp_pipe
+                    
+                    if rad_temp_pipe < r_pipe_min:
+                        r_pipe_min = rad_temp_pipe
+
+                    x_scaling = float(row[16])
+                    y_scaling = float(row[17])
+                    z_scaling = float(row[18])
+
+                    rad_temp_scaling = math.sqrt((x_scaling**2.)+(z_scaling**2.))
+
+                    if rad_temp_scaling > r_scaling_max:
+                        r_scaling_max = rad_temp_scaling
+
+                    if rad_temp_scaling < r_scaling_min:
+                        r_scaling_min = rad_temp_scaling
+
+        if mode == 3:
+            while(1):
+                line = f.readline()
+                if line == '':
+                    break
+                else:
+                    row = line.split(',')
+                    
+                    obj_type = int(row[4])
+                    
+                    if obj_type == 4:
+                        x_pipe = float(row[1])
+                        y_pipe = float(row[2])
+                        z_pipe = float(row[3])
+                        rad_temp_pipe = math.sqrt((x_pipe**2.)+(z_pipe**2.))
+
+                        if rad_temp_pipe > r_pipe_max:
+                            r_pipe_max = rad_temp_pipe
+                    
+                        if rad_temp_pipe < r_pipe_min:
+                            r_pipe_min = rad_temp_pipe
+
+                    if obj_type == 5:
+                        x_scaling = float(row[1])
+                        y_scaling = float(row[2])
+                        z_scaling = float(row[3])
+
+                        rad_temp_scaling = math.sqrt((x_scaling**2.)+(z_scaling**2.))
+
+                        if rad_temp_scaling > r_scaling_max:
+                            r_scaling_max = rad_temp_scaling
+
+                        if rad_temp_scaling < r_scaling_min:
+                            r_scaling_min = rad_temp_scaling
+
+
+        
+        obj['pipe'] = [r_pipe_min/10., r_pipe_max/10.] #in cm
+        obj['scaling'] = [r_scaling_min/10., r_scaling_max/10.] #in cm
+
+    return obj
