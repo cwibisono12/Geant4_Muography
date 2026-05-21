@@ -4,7 +4,7 @@
 #include "G4SDManager.hh"
 
 MyDetectorConstruction::MyDetectorConstruction(G4int run_mode)
-	:G4VUserDetectorConstruction(), mode(run_mode)
+	:G4VUserDetectorConstruction(), logicDetector(nullptr), logicPipe(nullptr), logicScaling(nullptr), mode(run_mode)
 {}
 
 MyDetectorConstruction::~MyDetectorConstruction()
@@ -42,16 +42,27 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
   G4double pipeOuterRadius = 21*cm;
   G4double pipeLength = 60*cm;
 
+  G4RotationMatrix *rotation = new G4RotationMatrix();
+  rotation->rotateX(90*deg); 
+
+  
+//Only Enable Pipe Object with these following running mode:  
+//if(mode >= 1 && mode <=5){
   G4Tubs *solidPipe = new G4Tubs("solidPipe", pipeInnerRadius, pipeOuterRadius, pipeLength / 2, 0*deg, 360*deg);
   //G4LogicalVolume *logicPipe = new G4LogicalVolume(solidPipe, FeC, "logicPipe");
   logicPipe = new G4LogicalVolume(solidPipe, FeC, "logicPipe");
   G4ThreeVector pipePos = G4ThreeVector(0, 0, 0);
 
-  G4RotationMatrix *rotation = new G4RotationMatrix();
-  rotation->rotateX(90*deg); 
 
   new G4PVPlacement(rotation, pipePos, logicPipe, "physPipe", logicWorld, false, 0, true);
+//}
+//=======================================================================================================================
 
+
+
+//Scaling Part============================================================================================================
+//Running mode = 5 does not enable scaling SD:
+ if(mode>= 1 && mode <=4){
 // creating silica amorf material with density 2.65 gr/cm3
   G4Material *SiO2 = new G4Material("SiO2", 2.65*g/cm3, 2); // silica amorf
   SiO2->AddElement(nist->FindOrBuildElement("Si"), 1);   // silicon mass fraction 46.7%
@@ -78,28 +89,46 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
   new G4PVPlacement(rotation, scalingPos, logicScaling, "physScaling", logicWorld, false, 0, true);
 
 */
+
+// scaling 1/2 pipe
+ /*
+  G4Tubs *solidScaling= new G4Tubs("solidScaling", scalingInnerRadius, scalingOuterRadius, pipeLength/2, 0*deg, 180*deg);
+ // auto cutter = new G4Box("cutter", scalingOuterRadius, scalingOuterRadius/2, pipeLength/2);
+ // auto cutterTransform = G4Translate3D(0, 17*cm, 0);
+ // auto solidScaling = new G4IntersectionSolid("solidScaling", fullDisk, cutter, cutterTransform);
+  logicScaling = new G4LogicalVolume(solidScaling, BaSO4, "logicScaling");
+  G4ThreeVector scalingPos = G4ThreeVector(0, 0, 0);
+
+  new G4PVPlacement(rotation, scalingPos, logicScaling, "physScaling", logicWorld, false, 0, true);
+*/
+
+//Concentric Scaling:
  G4double scalingR_in = 10*cm;
  G4double scalingR_out = 18*cm;
  G4Tubs *solidScaling = new G4Tubs("solidScaling", scalingR_in, scalingR_out, pipeLength/2, 0*deg, 360*deg);
  logicScaling = new G4LogicalVolume(solidScaling, BaSO4, "logicScaling");
  new G4PVPlacement(rotation, G4ThreeVector(0,0,0), logicScaling, "physScaling", logicWorld, false, 0, true);
-
+ }
 
 
 
 
 // display each shape already defines
   //G4VisAttributes *pipeVisAtt = new G4VisAttributes(G4Colour(0.3, 0.3, 0.3, 0.5)); // abu
+//  if(mode>=1 && mode <=5){
   G4VisAttributes *pipeVisAtt = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5, 1.0)); // grey
   pipeVisAtt->SetVisibility(true);
   pipeVisAtt->SetForceSolid(true);
   logicPipe->SetVisAttributes(pipeVisAtt);
+ // }
 
   //G4VisAttributes *ScalingVisAtt = new G4VisAttributes(G4Colour(1, 0, 1, 0.8)); // magenta
+  if(mode>=1 && mode <=4 ){
   G4VisAttributes *ScalingVisAtt = new G4VisAttributes(G4Colour(0., 0., 1, 0.8)); // blue
   ScalingVisAtt->SetVisibility(true);
   ScalingVisAtt->SetForceSolid(true);
   logicScaling->SetVisAttributes(ScalingVisAtt);
+  }
 
   G4VisAttributes *ecoMugVisAttr = new G4VisAttributes(G4Colour(0.9, 0.7, 0, 0.3));
   ecoMugVisAttr->SetVisibility(true);
@@ -149,13 +178,17 @@ void MyDetectorConstruction::ConstructSDandField()
  SetSensitiveDetector(logicDetector, scintSD);
 
 
+ if (logicPipe != nullptr){
  PipeSD* pipeSD = new PipeSD("Pipe_SensitiveDet", mode);
  G4SDManager::GetSDMpointer()->AddNewDetector(pipeSD);
  SetSensitiveDetector(logicPipe, pipeSD);
  //logicPipe->SetSensitiveDetector(pipeSD); 
- 
+ }
+
+ if (logicScaling != nullptr){
  ScalingSD* scalingSD = new ScalingSD("Scaling_SensitiveDet", mode);
  G4SDManager::GetSDMpointer()->AddNewDetector(scalingSD);
  SetSensitiveDetector(logicScaling, scalingSD);
- 
+ }
+
 }

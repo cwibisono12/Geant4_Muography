@@ -120,7 +120,7 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 		auto analysisManager = G4AnalysisManager::Instance();
 		//G4int eventID = event->GetEventID();
 
-		if(mode == 1 || mode == 2 || mode == 3){
+		if(mode == 1 || mode == 2 || mode == 3 || mode == 5){
 		for(G4int i = 0;i < hitCollection1->entries(); i++){
 //			G4cout << "DEBUG: Entries: " << hitCollection->entries() << G4endl;
 			PipeHit* hit = (*hitCollection1)[i];
@@ -201,7 +201,7 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 	if(hitCollection2 && hitCollection2->entries() > 0){
 		auto analysisManager = G4AnalysisManager::Instance();
 		//G4int eventID = event->GetEventID();
-		if(mode == 1 || mode == 2 || mode == 3){
+		if(mode == 1 || mode == 2 || mode == 3 || mode == 5){
 		for(G4int i = 0;i < hitCollection2->entries(); i++){
 //			G4cout << "DEBUG: Entries: " << hitCollection->entries() << G4endl;
 			PipeHit* hit = (*hitCollection2)[i];

@@ -28,12 +28,10 @@ private:
    G4LogicalVolume *logicDetector;
    G4LogicalVolume *logicPipe;
    G4LogicalVolume *logicScaling;
+   G4VisAttributes* visAttributes;
+   G4int mode;
    virtual void ConstructSDandField() override;
    
-private:
-  // Deklarasi private untuk visAttributes
-  G4VisAttributes* visAttributes;
-  G4int mode;
 
 };
 #endif

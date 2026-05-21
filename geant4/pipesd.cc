@@ -103,7 +103,7 @@ G4bool PipeSD::ProcessHits(G4Step* step, G4TouchableHistory*){
 		}
 
 		//Store the entire hits as the particle passes through the object
-		if (mode == 3 || mode == 4){
+		if (mode == 3 || mode == 4 || mode == 5){
 		if (isMuon && isPrimary){
 	//		G4cout << "DEBUG: Muon Filter Passed" << G4endl;
 		//	G4int evtID = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID();
