@@ -101,7 +101,187 @@ def get_features(file_in, *, arg_number = 3):
         
         return X_arr, y_arr
 
-   
+
+def get_features_append(file_in):
+    '''
+    Extract the features data to be used for the model from all hits retrieved on the object
+    C. Wibisono
+    05/25 '26
+    Parameter(s):
+    file_in: fileinput pointer object 
+    arg_number: (int) the target variables 1 for pipe only, 2 for scaling only, 3 for both
+    Return(s):
+    X: [arr] array of independent features variables
+    y: [arr] array of dependent variables
+    '''
+
+    X_arr = []
+    y_arr = []
+    
+    with open(file_in, mode='r') as fin:
+
+        #Read header:
+        fin.readline()
+        
+        data = {}
+
+        
+        #for i in range(100):
+        while(1):
+            line = fin.readline()
+            if line == '':
+                break
+        
+            else:                                
+                row = line.split(',')
+                obj_type = int(row[4].split('\n')[0])
+                
+                if row[0] in data.keys():
+                    if obj_type == 1: 
+                        x2_scint = float(row[1])
+                        y2_scint = float(row[2])
+                        z2_scint = float(row[3])
+                        
+                        data[row[0]][1].append(x2_scint)
+                        data[row[0]][1].append(y2_scint)
+                        data[row[0]][1].append(z2_scint)
+
+                    if obj_type == 2: 
+                        x3_scint = float(row[1])
+                        y3_scint = float(row[2])
+                        z3_scint = float(row[3])
+                        
+                        data[row[0]][2].append(x3_scint)
+                        data[row[0]][2].append(y3_scint)
+                        data[row[0]][2].append(z3_scint)
+
+
+                    if obj_type == 3: 
+                        x4_scint = float(row[1])
+                        y4_scint = float(row[2])
+                        z4_scint = float(row[3])
+                        
+                        data[row[0]][3].append(x4_scint)
+                        data[row[0]][3].append(y4_scint)
+                        data[row[0]][3].append(z4_scint)
+
+                    if obj_type == 4: 
+                        x_pipe = float(row[1])
+                        y_pipe = float(row[2])
+                        z_pipe = float(row[3])
+                        
+                        data[row[0]][4].append(x_pipe)
+                        data[row[0]][4].append(y_pipe)
+                        data[row[0]][4].append(z_pipe)
+                
+                    if obj_type == 5: 
+                        x_scale = float(row[1])
+                        y_scale = float(row[2])
+                        z_scale = float(row[3])
+                        
+                        data[row[0]][5].append(x_scale)
+                        data[row[0]][5].append(y_scale)
+                        data[row[0]][5].append(z_scale)
+
+
+                else:
+                    if not data:
+                        prev_id = row[0]
+                        data[row[0]] =[[],[],[],[],[],[]]
+
+                        if obj_type == 0:
+                            x1_scint = float(row[1])
+                            y1_scint = float(row[2])
+                            z1_scint = float(row[3])
+                
+                            data[row[0]][0].append(x1_scint)
+                            data[row[0]][0].append(y1_scint)
+                            data[row[0]][0].append(z1_scint)
+
+                    else:
+                        print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3])
+                        '''
+                        Extract the features from the correlated file:
+                        '''
+                        dim_pipe = len(data[prev_id][4])
+                        dim_scaling = len(data[prev_id][5])
+                       
+                        
+                        if dim_pipe > 3 and dim_scaling > 3:
+                            X_arr.append([
+                                data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                                ])
+
+                            y_arr.append([
+                                data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                                data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                                data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                                ])
+                         
+
+                        del data
+                        data = {}
+                        data[row[0]] =[[],[],[],[],[],[]]
+                        prev_id = row[0]
+                        if obj_type == 0:
+                            x1_scint = float(row[1])
+                            y1_scint = float(row[2])
+                            z1_scint = float(row[3])
+                
+                            data[row[0]][0].append(x1_scint)
+                            data[row[0]][0].append(y1_scint)
+                            data[row[0]][0].append(z1_scint)
+
+
+        dim_pipe = len(data[prev_id][4])
+        dim_scaling = len(data[prev_id][5])
+        print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3])
+        
+        if dim_pipe > 3 and dim_scaling > 3:
+            X_arr.append([
+                data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                ])
+
+            y_arr.append([
+                data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                ])
+                        
+            
+            del data
+    
+    
+        
+    return X_arr, y_arr
+
+
+
+def write_header(fin, run_mode):
+    '''
+    Write header for model prediction result file
+    C. Wibisono
+    05/21 '26
+    C. Wibisono
+    Parameter(s):
+    fin: file input pointer object where the prediction model is stored
+    run_mode:(int) run_mode (1: first hit, 2: last hit, 3: all, 4: average)
+    '''
+    if (run_mode == 1 or run_mode == 2 or run_mode == 4):
+        fin.write('#Pipe_Pos(x,y,z)'+','+'Scaling_Pos(x,y,z)'+'\n')
+
+
+
+
+
 def write_features(fout, y_test):
     '''
     Export the result from the model prediction
@@ -120,6 +300,14 @@ def write_features(fout, y_test):
         if dim_column == 6:
             for i in range(dim):
                 f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+'\n')
+
+        if dim_column == 12:
+            for i in range(dim):
+                f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
+                        str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
+                        str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
+                        str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+'\n')
+
 
 def plot_results(coords):
     '''
@@ -141,6 +329,11 @@ def plot_results(coords):
     if dim_column == 6:
         ax.scatter(coords[:,0],coords[:,1],coords[:,2],c='blue',marker='o',s=0.001)
         ax.scatter(coords[:,3],coords[:,4],coords[:,5],c='red',marker='o',s=0.001)
+    if dim_column == 12:
+        ax.scatter(coords[:,0],coords[:,1],coords[:,2],c='blue',marker='o',s=0.001) #First Hit
+        ax.scatter(coords[:,3],coords[:,4],coords[:,5],c='blue',marker='o',s=0.001) #Last Hit
+        ax.scatter(coords[:,6],coords[:,7],coords[:,8],c='red',marker='o',s=0.001) #First Hit
+        ax.scatter(coords[:,9],coords[:,10],coords[:,11],c='red',marker='o',s=0.001) #Last Hit
 
     plt.show()
 
