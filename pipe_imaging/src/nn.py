@@ -102,14 +102,14 @@ def get_features(file_in, *, arg_number = 3):
         return X_arr, y_arr
 
 
-def get_features_append(file_in):
+def get_features_append(file_in, *, arg_number = 2):
     '''
     Extract the features data to be used for the model from all hits retrieved on the object
     C. Wibisono
     05/25 '26
     Parameter(s):
     file_in: fileinput pointer object 
-    arg_number: (int) the target variables 1 for pipe only, 2 for scaling only, 3 for both
+    arg_number: (int) number of target variables (2:) for first and last hits , (3:) for the first, last and the other hits
     Return(s):
     X: [arr] array of independent features variables
     y: [arr] array of dependent variables
@@ -204,10 +204,11 @@ def get_features_append(file_in):
                         Extract the features from the correlated file:
                         '''
                         dim_pipe = len(data[prev_id][4])
+                        mid_dim_pipe = 3*int(((dim_pipe/3)//2))
                         dim_scaling = len(data[prev_id][5])
-                       
+                        mid_dim_scaling = 3*int(((dim_scaling/3)//2))
                         
-                        if dim_pipe > 3 and dim_scaling > 3:
+                        if dim_pipe > 6 and dim_scaling > 6:
                             X_arr.append([
                                 data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
                                 data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
@@ -215,13 +216,24 @@ def get_features_append(file_in):
                                 data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
                                 ])
 
-                            y_arr.append([
-                                data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
-                                data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
-                                data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
-                                data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
-                                ])
-                         
+                            if arg_number == 2:
+                                y_arr.append([
+                                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                                    ])
+
+                            if arg_number == 3:
+                                y_arr.append([
+                                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                                    data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
+                                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                                    ])
+                            
 
                         del data
                         data = {}
@@ -238,10 +250,13 @@ def get_features_append(file_in):
 
 
         dim_pipe = len(data[prev_id][4])
+        mid_dim_pipe = 3*int(((dim_pipe/3)//2))
         dim_scaling = len(data[prev_id][5])
+        mid_dim_scaling = 3*int(((dim_scaling/3)//2))
+
         print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3])
         
-        if dim_pipe > 3 and dim_scaling > 3:
+        if dim_pipe > 6 and dim_scaling > 6:
             X_arr.append([
                 data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
                 data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
@@ -249,12 +264,23 @@ def get_features_append(file_in):
                 data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
                 ])
 
-            y_arr.append([
-                data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
-                data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
-                data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
-                data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
-                ])
+            if arg_number == 2:
+                y_arr.append([
+                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                    ])
+
+            if arg_number == 3:
+                y_arr.append([
+                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                    data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
+                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                    ])
                         
             
             del data
@@ -308,6 +334,15 @@ def write_features(fout, y_test):
                         str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
                         str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+'\n')
 
+        if dim_column == 18: 
+            for i in range(dim):
+                f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
+                        str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
+                        str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
+                        str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+','+\
+                        str(y_test[i][12])+','+str(y_test[i][13])+','+str(y_test[i][14])+','+\
+                        str(y_test[i][15])+','+str(y_test[i][16])+','+str(y_test[i][17])+'\n')
+                
 
 def plot_results(coords):
     '''
@@ -334,6 +369,14 @@ def plot_results(coords):
         ax.scatter(coords[:,3],coords[:,4],coords[:,5],c='blue',marker='o',s=0.001) #Last Hit
         ax.scatter(coords[:,6],coords[:,7],coords[:,8],c='red',marker='o',s=0.001) #First Hit
         ax.scatter(coords[:,9],coords[:,10],coords[:,11],c='red',marker='o',s=0.001) #Last Hit
+
+    if dim_column == 18:
+        ax.scatter(coords[:,0],coords[:,1],coords[:,2],c='blue',marker='o',s=0.001) #First Hit
+        ax.scatter(coords[:,3],coords[:,4],coords[:,5],c='blue',marker='o',s=0.001) #Mid Hit
+        ax.scatter(coords[:,6],coords[:,7],coords[:,8],c='blue',marker='o',s=0.001) #Last Hit
+        ax.scatter(coords[:,9],coords[:,10],coords[:,11],c='red',marker='o',s=0.001) #First Hit
+        ax.scatter(coords[:,12],coords[:,13],coords[:,14],c='red',marker='o',s=0.001) #Mid Hit
+        ax.scatter(coords[:,15],coords[:,16],coords[:,17],c='red',marker='o',s=0.001) #Last Hit
 
     plt.show()
 
