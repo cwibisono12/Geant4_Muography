@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     X_train, y_train = nn.get_features(file_train, arg_number = option)
     
-    model_param = nn.get_parameters(X_train, y_train)
+    model_param = nn.get_parameters(X_train, y_train, layer = (100,10), num_iter = 2000)
 
     X_test, y_test = nn.get_features(file_test, arg_number = option)
     

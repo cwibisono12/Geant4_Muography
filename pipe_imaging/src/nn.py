@@ -2,7 +2,7 @@
 
 from sklearn.neural_network import MLPRegressor
 
-def get_parameters(X_train, y_train):
+def get_parameters(X_train, y_train, layer, *, num_iter = 2000):
     '''
     Get the parameters of the Supervised NN based on Multi-Layer Perceptron
     C. Wibisono
@@ -10,12 +10,14 @@ def get_parameters(X_train, y_train):
     Parameter(s):
     X_train: [arr] independent features variables
     y_train: [arr] target
+    layer: (tuple) number of neurons for each ith layer
+    num_iter: (int) number of iterations (default = 2000)
     Return(s):
     coeff: [obj] parameters of the model
     '''
 
     coeff  = MLPRegressor(solver = 'lbfgs', alpha = 1e-5, 
-            hidden_layer_sizes = (100,10), activation='relu', max_iter = 2000)
+            hidden_layer_sizes = layer, activation='relu', max_iter = num_iter)
 
     coeff.fit(X_train, y_train)
 
@@ -37,6 +39,47 @@ def predict_outcome(X_test, model_param):
     y_test = model_param.predict(X_test)
 
     return y_test
+
+def get_model_score(X_test, y_test, model_param):
+    '''
+    Get the coefficient of determination on test data.
+    C. Wibisono
+    06/02 '26
+    Parameter(s):
+    X_test: [arr] independent features variables
+    y_test: [arr] target variables
+    model_param: [obj] param of model
+    Return(s):
+    score: (float) R2 of X_test w.r.t y_test
+    '''
+
+    score = model_param.score(X_test, y_test)
+
+    return score
+
+
+def store_score_result(fout, layer, num_iter, score):
+    '''
+    Store the model score over the test data
+    C. Wibisono
+    06/02 '26
+    Parameter(s):
+    fout: file pointer object to store the model score result
+    layer: (tuple) an array consisting the number of neurons for each layer
+    num_iter: (int) number of iterations
+    score: (float) R2 of X_test w.r.t y_test
+    '''
+
+    dim = len(layer)
+    with open(fout, mode='a') as f:
+        f.write('=========='+'\n')
+        f.write('Number of layer: '+','+str(dim)+'\n')
+        for i in range(dim):
+            f.write(str(layer[i])+'\n')
+
+        f.write('Number of Iteration: '+','+str(num_iter)+'\n')
+        f.write('Model Score: '+','+str(score)+'\n')
+        
 
 
 def get_features(file_in, *, arg_number = 3):
