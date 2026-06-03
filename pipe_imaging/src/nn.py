@@ -24,6 +24,64 @@ def get_parameters(X_train, y_train, layer, *, num_iter = 2000):
     return coeff
 
 
+def initialize_model(X_train, y_train, layer, f_joblib, *, num_iter = 2000):
+    '''
+    Initialize the model and store the model to joblib.
+    C. Wibisono
+    06/03 '26
+    Parameter(s):
+    X_train: [arr] independent features variables
+    y_train: [arr] target
+    layer: (tuple) number of neurons for each ith layer
+    f_joblib: (obj) file pointer object to store the model
+    num_iter: (int) number of iterations (default = 2000)
+    '''
+
+    init_model = MLPRegressor(solver = 'lbfgs', alpha = 1e-5,
+            hidden_layer_sizes = layer, activation='relu', max_iter = num_iter)
+
+    init_model.partial_fit(X_train, y_train)
+
+    joblib.dump(init_model, f_joblib)
+
+
+def retrain_model(X_train, y_train, f_joblib):
+    '''
+    Retrain the model for the new set of training data.
+    C. Wibisono
+    06/03 '26
+    Parameter(s):
+    X_train: [arr] independent features variables
+    y_train: [arr] target
+    f_joblib: (obj) file pointer object to store the model
+    '''
+
+    updated_model = joblib.load(f_joblib)
+
+    updated_model.partial_fit(X_train, y_train)
+
+    joblib.dump(updated_model, f_joblib)
+
+
+def predict_outcome_from_file(X_test, f_joblib):
+    '''
+    Get the result of the model based on the retrained model
+    C. Wibisono
+    06/03 '26
+    Parameter(s):
+    X_test: [arr] independent features variables
+    f_joblib: (obj) file pointer object where the model is stored
+    Return(s):
+    y_test: [arr] model prediction
+    '''
+
+    model = joblib.load(f_joblib)
+
+    y_test = model.predict(X_test)
+
+    return y_test
+
+
 def predict_outcome(X_test, model_param):
     '''
     Get the result of the model based on the provided model_parameters
@@ -39,6 +97,7 @@ def predict_outcome(X_test, model_param):
     y_test = model_param.predict(X_test)
 
     return y_test
+
 
 def get_model_score(X_test, y_test, model_param):
     '''
@@ -57,6 +116,24 @@ def get_model_score(X_test, y_test, model_param):
 
     return score
 
+def get_model_score_from_file(X_test, y_test, f_joblib):
+    '''
+    Get the coefficient of determination on test data.
+    C. Wibisono
+    06/02 '26
+    Parameter(s):
+    X_test: [arr] independent features variables
+    y_test: [arr] target variables
+    f_joblib: [obj] file pointer object where the model is stored
+    Return(s):
+    score: (float) R2 of X_test w.r.t y_test
+    '''
+
+    model = joblib.load(f_joblib)
+
+    score = model.score(X_test, y_test)
+
+    return score
 
 def store_score_result(fout, layer, num_iter, score):
     '''
