@@ -570,3 +570,102 @@ def get_radius(fin, mode):
         obj['scaling'] = [r_scaling_min/10., r_scaling_max/10.] #in cm
 
     return obj
+
+
+def get_hits_number(file_in, file_out):
+    '''
+    Get the number of hits per event for all hits retrieved on the objects
+    C. Wibisono
+    06/04 '26
+    Parameter(s):
+    file_in: correlated fileinput pointer object
+    file_out: file output pointer object
+    '''
+
+    with open(file_in, mode='r') as fin:
+
+        #Read the header:
+        fin.readline()
+
+        data = {}
+        with open(file_out, mode ='w') as fout:
+            fout.write('#event_id'+','+'Num_Hits_Pipe'+','+'Num_Hits_Scaling'+'\n')
+
+            while(1):
+                line = fin.readline()
+                if line == '':
+                    break
+
+                else:
+                    row = line.split(',')
+                    obj_type = int(row[4].split('\n')[0])
+
+                    if row[0] in data.keys():
+                        if obj_type == 4:
+                            pipe_hits = pipe_hits + 1
+
+                        if obj_type == 5:
+                            scaling_hits = scaling_hits + 1
+
+                    else:
+                        if not data:
+                            prev_id = row[0]
+                            pipe_hits = 0
+                            scaling_hits = 0
+
+                            data[row[0]] = []
+
+                        else: #count the number of hits from previous event key
+                            data[prev_id].append(pipe_hits)
+                            data[prev_id].append(scaling_hits)
+                            fout.write(str(prev_id)+','+str(data[prev_id][0])+','+str(data[prev_id][1])+'\n')
+
+                            del data
+                            data = {}
+                            data[row[0]] = []
+                            prev_id = row[0]
+                            pipe_hits = 0
+                            scaling_hits = 0
+
+
+            data[prev_id].append(pipe_hits)
+            data[prev_id].append(scaling_hits)
+            fout.write(str(prev_id)+','+str(data[prev_id][0])+','+str(data[prev_id][1])+'\n')
+                
+            del data
+
+
+def plot_obj_hits(file_in):
+    '''
+    Plot the number of hits retrieved from scaling and pipe.
+    C. Wibisono
+    06/04 '26
+    Parameter(s):
+    file_in: file input pointer object where the number of hits are stored:
+    '''
+
+    import matplotlib.pyplot as plt
+
+    with open(file_in, mode ='r') as f:
+        f.readline()
+        pipe_hits = []
+        scaling_hits = []
+
+        while(1):
+            line = f.readline()
+            
+            if line == '':
+                break
+
+            else:
+                row = line.split(',')
+                pipe_hits.append(int(row[1]))
+                scaling_hits.append(int(row[2]))
+                        
+                        
+        fig, ax = plt.subplots(1,2)
+        ax[0].hist(pipe_hits)
+        ax[1].hist(scaling_hits)
+        ax[0].set_title('#Pipe hits')
+        ax[1].set_title('#Scaling hits')
+        plt.show()
