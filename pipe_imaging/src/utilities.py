@@ -635,6 +635,89 @@ def get_hits_number(file_in, file_out):
             del data
 
 
+def get_hits_number_in_out(file_in, file_out):
+    '''
+    Get the number of hits per event for all hits retrieved on the objects distinguished by incoming and outgoing muons across the objects
+    C. Wibisono
+    06/08 '26
+    Parameter(s):
+    file_in: correlated fileinput pointer object
+    file_out: file output pointer object
+    '''
+
+    with open(file_in, mode='r') as fin:
+
+        #Read the header:
+        fin.readline()
+
+        data = {}
+        with open(file_out, mode ='w') as fout:
+            fout.write('#event_id'+','+'Num_Hits_Pipe_In'+','+'Num_Hits_Pipe_Out'+','+'Num_Hits_Scaling_In'+','+'Num_Hits_Scaling_Out'+'\n')
+
+            while(1):
+                line = fin.readline()
+                if line == '':
+                    break
+
+                else:
+                    row = line.split(',')
+                    obj_type = int(row[4].split('\n')[0])
+                    pos_x = float(row[1])
+                    pos_y = float(row[2])
+                    pos_z = float(row[3])
+
+                    if row[0] in data.keys():
+                        if obj_type == 4:
+                            if pos_z < 0:
+                                pipe_hits_out = pipe_hits_out + 1
+                            if pos_z > 0:
+                                pipe_hits_in = pipe_hits_in + 1
+
+                        if obj_type == 5:
+                            if pos_z > 0:
+                                scaling_hits_in = scaling_hits_in + 1
+                            if pos_z < 0:
+                                scaling_hits_out = scaling_hits_out + 1
+
+                    else:
+                        if not data:
+                            prev_id = row[0]
+                            pipe_hits_in = 0
+                            pipe_hits_out = 0
+                            scaling_hits_in = 0
+                            scaling_hits_out = 0
+
+                            data[row[0]] = []
+
+                        else: #count the number of hits from previous event key
+                            data[prev_id].append(pipe_hits_in)
+                            data[prev_id].append(pipe_hits_out)
+                            data[prev_id].append(scaling_hits_in)
+                            data[prev_id].append(scaling_hits_out)
+                            fout.write(str(prev_id)+','+str(data[prev_id][0])+','+str(data[prev_id][1])+ \
+                                    ','+str(data[prev_id][2])+','+str(data[prev_id][3])+'\n')
+
+                            del data
+                            data = {}
+                            data[row[0]] = []
+                            prev_id = row[0]
+                            pipe_hits_in = 0
+                            pipe_hits_out = 0
+                            scaling_hits_in = 0
+                            scaling_hits_out = 0
+
+
+            data[prev_id].append(pipe_hits_in)
+            data[prev_id].append(pipe_hits_out)
+            data[prev_id].append(scaling_hits_in)
+            data[prev_id].append(scaling_hits_out)
+            fout.write(str(prev_id)+','+str(data[prev_id][0])+','+str(data[prev_id][1])+ \
+                    ','+str(data[prev_id][2])+','+str(data[prev_id][3])+'\n')
+                
+            del data
+
+
+
 def plot_obj_hits(file_in):
     '''
     Plot the number of hits retrieved from scaling and pipe.
@@ -666,6 +749,55 @@ def plot_obj_hits(file_in):
         fig, ax = plt.subplots(1,2)
         ax[0].hist(pipe_hits)
         ax[1].hist(scaling_hits)
+        ax[0].set_title('#Pipe hits')
+        ax[1].set_title('#Scaling hits')
+        plt.show()
+
+
+
+def plot_obj_hits_2D(file_in):
+    '''
+    Plot the number of hits retrieved from scaling and pipe for the incoming vs outgoing muons.
+    C. Wibisono
+    06/08 '26
+    Parameter(s):
+    file_in: file input pointer object where the number of hits are stored:
+    '''
+
+    import matplotlib.pyplot as plt
+
+    with open(file_in, mode ='r') as f:
+        f.readline()
+        pipe_hits_in = []
+        pipe_hits_out = []
+        scaling_hits_in = []
+        scaling_hits_out = []
+
+        while(1):
+            line = f.readline()
+            
+            if line == '':
+                break
+
+            else:
+                row = line.split(',')
+                pipe_hits_in.append(int(row[1]))
+                pipe_hits_out.append(int(row[2]))
+                scaling_hits_in.append(int(row[3]))
+                scaling_hits_out.append(int(row[4]))
+                        
+                        
+        fig, ax = plt.subplots(1,2)
+        h1 = ax[0].hist2d(pipe_hits_in, pipe_hits_out, bins = 20, cmap='Blues')
+        h2 = ax[1].hist2d(scaling_hits_in, scaling_hits_out, bins = 20, cmap='Reds')
+        fig.colorbar(h1[3], ax = ax[0], label='Pipe Counts')
+        fig.colorbar(h2[3], ax = ax[1], label='Scaling Counts') 
+
+        ax[0].set_xlabel('#Muon_In')
+        ax[0].set_ylabel('#Muon_Out')
+        ax[1].set_xlabel('#Muon_In')
+        ax[1].set_ylabel('#Muon_Out')
+
         ax[0].set_title('#Pipe hits')
         ax[1].set_title('#Scaling hits')
         plt.show()
