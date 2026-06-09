@@ -3,6 +3,7 @@
 import joblib
 from sklearn.neural_network import MLPRegressor
 
+
 def get_parameters(X_train, y_train, layer, *, num_iter = 2000):
     '''
     Get the parameters of the Supervised NN based on Multi-Layer Perceptron
@@ -136,21 +137,32 @@ def get_model_score_from_file(X_test, y_test, f_joblib):
 
     return score
 
-def store_score_result(fout, layer, num_iter, score):
+def store_score_result(fout, f_test, layer, num_iter, score):
     '''
     Store the model score over the test data
     C. Wibisono
     06/02 '26
     Parameter(s):
     fout: file pointer object to store the model score result
+    f_test: (str) file name of the test data assesed for the model score
     layer: (tuple) an array consisting the number of neurons for each layer
     num_iter: (int) number of iterations
     score: (float) R2 of X_test w.r.t y_test
     '''
 
     dim = len(layer)
+    temp = f_test.split('/')
+    dim_temp = len(temp)
+    test_fname = ''
+
+    for i in range(dim_temp):
+        if temp[i].find('.') == 1:
+            test_fname = test_fname + temp[i].split('.')[0].split('new')[0]
+
+
     with open(fout, mode='a') as f:
         f.write('=========='+'\n')
+        f.write('file_test: '+str(test_fname)+'\n')
         f.write('Number of layer: '+','+str(dim)+'\n')
         for i in range(dim):
             f.write(str(layer[i])+'\n')
@@ -405,11 +417,29 @@ def get_features_append(file_in, *, arg_number = 2):
                         
             
             del data
-    
-    
         
     return X_arr, y_arr
 
+def select_features(X_arr, *, threshold = 0.16):
+    '''
+    Reduce dimension of higher dimensional data that does not meet the threshold
+    of variance.
+    C. Wibisono
+    06/09 '26
+    Parameter(s):
+    X_arr: [arr] independent features
+    threshold: (float) threshold value to reduce data dimension
+    Return(s):
+    X_arr_new: [arr] reduced independent features
+    '''
+
+    from sklearn.feature_selection import VarianceThreshold
+    
+    sel = VarianceThreshold(threshold)
+    
+    X_arr_new = sel.fit_transform(X_arr)
+    
+    return X_arr_new
 
 
 def write_header(fin, run_mode):
@@ -424,9 +454,6 @@ def write_header(fin, run_mode):
     '''
     if (run_mode == 1 or run_mode == 2 or run_mode == 4):
         fin.write('#Pipe_Pos(x,y,z)'+','+'Scaling_Pos(x,y,z)'+'\n')
-
-
-
 
 
 def write_features(fout, y_test):

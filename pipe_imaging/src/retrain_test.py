@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     print("score:",score)
 
-    nn.store_score_result('../corr_files/retrain_test_score.csv', layer, 2000, score)
+    nn.store_score_result('../corr_files/retrain_test_score.csv', file_test, layer, 2000, score)
 
     
     #Store the prediction from the re-trained model
