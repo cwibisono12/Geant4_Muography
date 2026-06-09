@@ -156,8 +156,8 @@ def store_score_result(fout, f_test, layer, num_iter, score):
     test_fname = ''
 
     for i in range(dim_temp):
-        if temp[i].find('.') == 1:
-            test_fname = test_fname + temp[i].split('.')[0].split('new')[0]
+        if '.csv' in temp[i]:
+            test_fname = test_fname + temp[i].split('.csv')[0]
 
 
     with open(fout, mode='a') as f:
