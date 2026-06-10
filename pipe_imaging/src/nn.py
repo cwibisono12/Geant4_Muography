@@ -243,6 +243,7 @@ def get_features_append(file_in, *, arg_number = 2):
     Parameter(s):
     file_in: fileinput pointer object 
     arg_number: (int) number of target variables (2:) for first and last hits , (3:) for the first, last and the other hits
+    (4:), the first and last hits and the last hit for incoming muon and the first hit for outgoing muon.
     Return(s):
     X: [arr] array of independent features variables
     y: [arr] array of dependent variables
@@ -342,14 +343,15 @@ def get_features_append(file_in, *, arg_number = 2):
                         mid_dim_scaling = 3*int(((dim_scaling/3)//2))
                         
                         if dim_pipe > 6 and dim_scaling > 6:
-                            X_arr.append([
-                                data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
-                                data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
-                                data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
-                                data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
-                                ])
 
                             if arg_number == 2:
+                                X_arr.append([
+                                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                                    ])
+
                                 y_arr.append([
                                     data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
                                     data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
@@ -358,6 +360,12 @@ def get_features_append(file_in, *, arg_number = 2):
                                     ])
 
                             if arg_number == 3:
+                                X_arr.append([
+                                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                                    ])
                                 y_arr.append([
                                     data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
                                     data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
@@ -366,7 +374,46 @@ def get_features_append(file_in, *, arg_number = 2):
                                     data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
                                     data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
                                     ])
-                            
+
+                            if arg_number == 4:
+                                z_pos_in = []
+                                z_pos_out = []
+                                num_iteration = dim_scaling // 3
+                                flag_valid = 0
+
+                                for i in range(num_iteration):
+                                    z_ind = 3*i + 2
+                                    z_pos = data[prev_id][5][z_ind]
+                                    if z_pos > 0:
+                                        z_pos_in.append(z_ind)
+                                    if z_pos < 0:
+                                        z_pos_out.append(z_ind)
+
+                                #Get the indices for the last incoming muon and the first outgoing muon:
+                                if len(z_pos_in) > 0 and len(z_pos_out) > 0:
+                                    last_in_index = z_pos_in[len(z_pos_in)-1]
+                                    first_out_index = z_pos_out[0]
+                                    flag_valid = 1
+
+                                del z_pos_in
+                                del z_pos_out
+                                
+                                if flag_valid == 1: #Only retrieve the event that has both incoming and outgoing muons over the scaling.
+                                    X_arr.append([
+                                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                                        ])
+
+                                    y_arr.append([
+                                        data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                        data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                                        data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                                        data[prev_id][5][last_in_index-2], data[prev_id][5][last_in_index-1], data[prev_id][5][last_in_index],
+                                        data[prev_id][5][first_out_index-2], data[prev_id][5][first_out_index-1], data[prev_id][5][first_out_index],
+                                        data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                                        ])
 
                         del data
                         data = {}
@@ -390,14 +437,14 @@ def get_features_append(file_in, *, arg_number = 2):
         print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3])
         
         if dim_pipe > 6 and dim_scaling > 6:
-            X_arr.append([
-                data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
-                data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
-                data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
-                data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
-                ])
 
             if arg_number == 2:
+                X_arr.append([
+                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                    ])
                 y_arr.append([
                     data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
                     data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
@@ -406,6 +453,12 @@ def get_features_append(file_in, *, arg_number = 2):
                     ])
 
             if arg_number == 3:
+                X_arr.append([
+                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                    ])
                 y_arr.append([
                     data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
                     data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
@@ -415,6 +468,44 @@ def get_features_append(file_in, *, arg_number = 2):
                     data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
                     ])
                         
+            if arg_number == 4:
+                z_pos_in = []
+                z_pos_out = []
+                num_iteration = dim_scaling // 3
+                flag_valid = 0
+
+                for i in range(num_iteration):
+                    z_ind = 3*i + 2
+                    z_pos = data[prev_id][5][z_ind]
+                    if z_pos > 0:
+                        z_pos_in.append(z_ind)
+                    if z_pos < 0:
+                        z_pos_out.append(z_ind)
+
+                if len(z_pos_in) > 0 and len(z_pos_out) > 0:
+                    #Get the indices for the last incoming muon and the first outgoing muon:
+                    last_in_index = z_pos_in[len(z_pos_in)-1]
+                    first_out_index = z_pos_out[0]
+                    flag_valid = 1
+
+                del z_pos_in
+                del z_pos_out
+                if flag_valid == 1:
+                    X_arr.append([
+                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2]
+                        ])
+
+                    y_arr.append([
+                        data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                        data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                        data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                        data[prev_id][5][last_in_index-2], data[prev_id][5][last_in_index-1], data[prev_id][5][last_in_index],
+                        data[prev_id][5][first_out_index-2], data[prev_id][5][first_out_index-1], data[prev_id][5][first_out_index],
+                        data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                        ])
             
             del data
         
