@@ -16,12 +16,16 @@ if __name__ == "__main__":
     X_train, y_train = nn.get_features_append(file_train, arg_number = option)
     #nn.write_features(file_out_train, y_train)
 
-    dim = len(X_train)
+    #Dimensionality Reduction:
+    X_train_new = nn.select_features(X_train)
+
+
+    dim = len(X_train_new)
     for i in range(dim):
-        print(i, X_train[i], y_train[i])
+        print(i, X_train_new[i], y_train[i])
     
-    layer = (500,100,100)
-    nn.initialize_model(X_train, y_train, layer, file_model, num_iter = 5000)
+    layer = (500,500,500,100)
+    nn.initialize_model(X_train_new, y_train, layer, file_model, num_iter = 5000)
 
 
     

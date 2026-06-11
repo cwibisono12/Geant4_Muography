@@ -26,8 +26,8 @@ if __name__ == "__main__":
     for i in range(dim):
         print(i, X_train_scaled[i], y_train[i])
     
-    layer = (500, 500, 500)
-    nn.initialize_model(X_train_scaled, y_train, layer, file_model, num_iter = 3000)
+    layer = (500,500,500,100)
+    nn.initialize_model(X_train_scaled, y_train, layer, file_model, num_iter = 5000)
 
 
     

@@ -20,31 +20,25 @@ if __name__ == "__main__":
     #Dimensionality Reduction:
     X_train_new = nn.select_features(X_train)
 
-    #Preprocessing the features:
-    X_train_scaled = nn.preprocess_selected_features(X_train_new)
-
     dim = len(X_train_new)
     for i in range(dim):
-        print(i, X_train_scaled[i], y_train[i])
+        print(i, X_train_new[i], y_train[i])
     
-    layer = (500,500,500)
-    nn.retrain_model(X_train_new_scaled, y_train, file_model)
+    layer = (500,500,500,100)
+    nn.retrain_model(X_train_new, y_train, file_model)
     
     X_test, y_test = nn.get_features_append(file_test, arg_number = option)
     
     #Dimensionality Reduction:
     X_test_new = nn.select_features(X_test)
 
-    #Preporcessing the features:
-    X_test_scaled = nn.preprocess_selected_features(X_test_new)
+    result = nn.predict_outcome_from_file(X_test_new, file_model)
 
-    result = nn.predict_outcome_from_file(X_test_scaled, file_model)
-
-    score = nn.get_model_score_from_file(X_test_scaled, y_test, file_model)
+    score = nn.get_model_score_from_file(X_test_new, y_test, file_model)
 
     print("score:",score)
 
-    nn.store_score_result('../corr_files/retrain_test_score_scaleandreduce_dim.csv', file_test, layer, 3000, score)
+    nn.store_score_result('../../corr_files/retrain_test_score_reduce_dim.csv', file_test, layer, 2000, score)
 
     
     #Store the prediction from the re-trained model

@@ -25,7 +25,7 @@ if __name__ == "__main__":
     #print(fname[2].split('.')[0])
 
     X_train, y_train = nn.get_features_append(file_train, arg_number = option)
-    nn.write_features('../corr_files/'+str(f_name)+str(option)+'_train.csv', y_train)
+    nn.write_features('../../corr_files/'+str(f_name)+str(option)+'_train.csv', y_train)
 
     
 
