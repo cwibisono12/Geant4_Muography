@@ -532,6 +532,25 @@ def select_features(X_arr, *, threshold = 0.16):
     
     return X_arr_new
 
+def preprocess_selected_features(X_arr):
+    '''
+    Transform each selected feature by transforming them relative to the center of the training data.
+    C. Wibisono
+    06/11 '26
+    Parameter(s):
+    X_arr: [arr] independent features
+    Return(s):
+    X_arr_scaled: [arr] transformed features after preprocessing.
+    '''
+
+    from sklearn import preprocessing
+    
+    scaler = preprocessing.StandardScaler().fit(X_arr)
+
+    X_arr_scaled = scaler.transform(X_arr)
+
+    return X_arr_scaled
+
 
 def write_header(fin, run_mode):
     '''
