@@ -149,6 +149,7 @@ def store_score_result(fout, f_test, layer, num_iter, score):
     num_iter: (int) number of iterations
     score: (float) R2 of X_test w.r.t y_test
     '''
+    from datetime import datetime
 
     dim = len(layer)
     temp = f_test.split('/')
@@ -163,6 +164,7 @@ def store_score_result(fout, f_test, layer, num_iter, score):
     with open(fout, mode='a') as f:
         f.write('=========='+'\n')
         f.write('file_test: '+str(test_fname)+'\n')
+        f.write('Timestamp: '+str(datetime.now())+'\n')
         f.write('Number of layer: '+','+str(dim)+'\n')
         for i in range(dim):
             f.write(str(layer[i])+'\n')
