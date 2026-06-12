@@ -829,3 +829,31 @@ def retrieve_files_in_directory(directory_path):
             file_list.append(item)
 
     return file_list
+
+def retrieve_file_name(file_loc, mode, option, num_epoch):
+    '''
+    Retrieve file name from list of file
+    06/12 '26
+    Parameter(s):
+    file_loc: file address
+    option: (int) argument number for the run mode
+    mode: (int) file_mode (1: to obtain the train name, 2: to obtain the test name)
+    num_epoch: (int) number of iteration
+    Return(s):
+    fname: (str) file name
+    '''
+
+    temp = file_loc.split('/')
+    dim = len(temp)
+    test_fname = ''
+
+    for i in range(dim):
+        if '.csv' in temp[i]:
+            test_fname = test_fname + temp[i].split('new.csv')[0]
+
+    if mode == 1:
+        return test_fname+str(option)+'_'+str(num_epoch)+'_test.csv'
+    if mode == 2:
+        return test_fname+str(option)+'_train.csv'
+
+
