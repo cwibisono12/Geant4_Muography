@@ -747,8 +747,8 @@ def plot_obj_hits(file_in):
                         
                         
         fig, ax = plt.subplots(1,2)
-        ax[0].hist(pipe_hits)
-        ax[1].hist(scaling_hits)
+        ax[0].hist(pipe_hits,bins = 20)
+        ax[1].hist(scaling_hits,bins = 20)
         ax[0].set_title('#Pipe hits')
         ax[1].set_title('#Scaling hits')
         plt.show()
@@ -801,3 +801,31 @@ def plot_obj_hits_2D(file_in):
         ax[0].set_title('#Pipe hits')
         ax[1].set_title('#Scaling hits')
         plt.show()
+
+
+def retrieve_files_in_directory(directory_path):
+    '''
+    Retrieve files inside a given directory.
+    06/12 '26
+    Parameter(s):
+    directory_path: (str) directory path
+    Return(s):
+    file_list: list of files
+    '''
+
+    from pathlib import Path
+
+    path = Path(directory_path)
+
+    if not path.exists():
+        raise FileNotFoundError(f"The directory '{directory_path}' does not exist.")
+    if not path.is_dir():
+        raise NotADirectoryError(f"The path '{directory_path}'is not a directory.")
+
+    file_list = []
+
+    for item in path.iterdir():
+        if item.is_file():
+            file_list.append(item)
+
+    return file_list

@@ -25,8 +25,7 @@ def get_parameters(X_train, y_train, layer, *, num_iter = 2000):
 
     return coeff
 
-
-def initialize_model(X_train, y_train, layer, f_joblib, *, num_iter = 2000):
+def initialize_model(X_train, y_train, layer, f_joblib):
     '''
     Initialize the model and store the model to joblib.
     C. Wibisono
@@ -36,13 +35,29 @@ def initialize_model(X_train, y_train, layer, f_joblib, *, num_iter = 2000):
     y_train: [arr] target
     layer: (tuple) number of neurons for each ith layer
     f_joblib: (obj) file pointer object to store the model
+    '''
+
+    init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
+            hidden_layer_sizes = layer, activation='relu')
+
+    init_model.partial_fit(X_train, y_train)
+
+    joblib.dump(init_model, f_joblib)
+
+
+def model_initialize(layer, f_joblib):
+    '''
+    Initialize the model and store the model to joblib.
+    C. Wibisono
+    06/03 '26
+    Parameter(s):
+    layer: (tuple) number of neurons for each ith layer
+    f_joblib: (obj) file pointer object to store the model
     num_iter: (int) number of iterations (default = 2000)
     '''
 
-    init_model = MLPRegressor(solver = 'lbfgs', alpha = 1e-5,
-            hidden_layer_sizes = layer, activation='relu', max_iter = num_iter)
-
-    init_model.partial_fit(X_train, y_train)
+    init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
+            hidden_layer_sizes = layer, activation='relu')
 
     joblib.dump(init_model, f_joblib)
 
@@ -137,7 +152,7 @@ def get_model_score_from_file(X_test, y_test, f_joblib):
 
     return score
 
-def store_score_result(fout, f_test, layer, num_iter, score):
+def store_score_result(fout, f_test, layer, num_epoch, score, f_model):
     '''
     Store the model score over the test data
     C. Wibisono
@@ -146,8 +161,9 @@ def store_score_result(fout, f_test, layer, num_iter, score):
     fout: file pointer object to store the model score result
     f_test: (str) file name of the test data assesed for the model score
     layer: (tuple) an array consisting the number of neurons for each layer
-    num_iter: (int) number of iterations
+    num_epoch: (int) number of iterations (epoch)
     score: (float) R2 of X_test w.r.t y_test
+    f_model: (str) file name of the model used
     '''
     from datetime import datetime
 
@@ -155,25 +171,32 @@ def store_score_result(fout, f_test, layer, num_iter, score):
     temp = f_test.split('/')
     dim_temp = len(temp)
     test_fname = ''
-
+    
+    temp_model = f_model.split('/')
+    dim_model = len(temp_model)
+    model_fname = ''
+    
     for i in range(dim_temp):
         if '.csv' in temp[i]:
             test_fname = test_fname + temp[i].split('.csv')[0]
 
+    for j in range(dim_model):
+        if '.joblib' in temp_model[j]:
+            model_fname = model_fname + temp_model[j].split('.joblib')[0]
 
     with open(fout, mode='a') as f:
         f.write('=========='+'\n')
         f.write('file_test: '+str(test_fname)+'\n')
         f.write('Timestamp: '+str(datetime.now())+'\n')
         f.write('Number of layer: '+','+str(dim)+'\n')
+        f.write('file_model: '+str(model_fname)+'\n')
+
         for i in range(dim):
             f.write(str(layer[i])+'\n')
 
-        f.write('Number of Iteration: '+','+str(num_iter)+'\n')
+        f.write('Number of Iteration: '+','+str(num_epoch)+'\n')
         f.write('Model Score: '+','+str(score)+'\n')
         
-
-
 def get_features(file_in, *, arg_number = 3):
     '''
     Extract the features data to be used for the model
@@ -553,6 +576,37 @@ def preprocess_selected_features(X_arr):
 
     return X_arr_scaled
 
+def initialize_preprocess_batch():
+    '''
+    Initialize the batch transformer
+    '''
+
+    from sklearn import preprocessing
+
+    scaler = preprocessing.StandardScaler()
+
+    return scaler
+
+def preprocess_selected_features_batch(transformer,X_arr):
+    '''
+    Transform each selected feature by transforming them relative to the center of the training data
+    that come in per batch.
+    C. Wibisono
+    06/11 '26
+    Parameter(s):
+    transformer: [obj] initialized standardscaler transformer object
+    X_arr: [arr] independent features
+    Return(s):
+    X_arr_scaled: [arr] transformed features after preprocessing.
+    '''
+
+    from sklearn import preprocessing
+    
+    transformer.partial_fit(X_arr)
+
+    X_arr_scaled = scaler.transform(X_arr)
+
+    return X_arr_scaled
 
 def write_header(fin, run_mode):
     '''
