@@ -17,24 +17,31 @@ if __name__ == "__main__":
     option = int(sys.argv[4]) #data retrieval mode
     epoch = int(sys.argv[5]) #iteration number
     score_file = sys.argv[6] #file to store the scoring results from prediction and testing.
+    layer_file = sys.argv[7] #file consisting of nodes for each layer.
+    transf_file = sys.argv[8] #transformer file
 
     #Get the testing files list:
     file_list = utilities.retrieve_files_in_directory(directory_in)
 
     dim = len(file_list)
 
-    layer = (500,500,500)
+    #Get the layer from f_layer file:
+    layer = nn.get_layer_from_file(layer_file)
+
     for k in range(dim):
         X_test, y_test = nn.get_features_append(file_list[k], arg_number = option)
     
         #Dimensionality Reduction:
         X_test_new = nn.select_features(X_test)
 
+        #Rescaling the features:
+        X_test_new_scaled = nn.rescale_features(X_test_new, transf_file)
+
         #Make prediction from the test file
-        result = nn.predict_outcome_from_file(X_test_new, file_model)
+        result = nn.predict_outcome_from_file(X_test_new_scaled, file_model)
 
         #Get the model score over the test data
-        score = nn.get_model_score_from_file(X_test_new, y_test, file_model)
+        score = nn.get_model_score_from_file(X_test_new_scaled, y_test, file_model)
 
         print("score:",score)
 

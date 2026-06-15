@@ -53,7 +53,6 @@ def model_initialize(layer, f_joblib):
     Parameter(s):
     layer: (tuple) number of neurons for each ith layer
     f_joblib: (obj) file pointer object to store the model
-    num_iter: (int) number of iterations (default = 2000)
     '''
 
     init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
@@ -608,6 +607,62 @@ def preprocess_selected_features_batch(transformer,X_arr):
 
     return X_arr_scaled
 
+def scaler_initialize(f_transform):
+    '''
+    Initialize an empty scaler to be used to scale the data over the data batches 
+    and memory keeping to retrieve the global mean and variances over all training data.
+    C. Wibisono
+    06/15 '26
+    Parameter(s):
+    f_transform: (obj) file pointer object to store the transformer.
+    '''
+
+    from sklearn.preprocessing import StandardScaler
+
+    scaler_init = StandardScaler()
+
+    joblib.dump(scaler_init, f_transform)
+
+def scaler_update(X_train, f_transform):
+    '''
+    Update the transformer file to refit the features when the new data comes in.
+    C. Wibisono
+    06/15 '26
+    Parameter(s):
+    X_train: [arr] independent features to be rescaled.
+    f_transform: (obj) file pointer object to update the transformer.
+    '''
+
+    #Load the transformer:
+    updated_scaler = joblib.load(f_transform)
+
+    #Update the global mean and variance with the new data:
+    updated_scaler.partial_fit(X_train)
+
+    #Update the transformer file:
+    joblib.dump(updated_scaler, f_transform)
+
+
+def rescale_features(X_train, f_transform):
+    '''
+    Rescale the features given the transformer file.
+    C. Wibisono
+    06/15 '26:
+    Parameter(s):
+    X_train: [arr] independent features to be rescaled
+    f_transform: (obj) file pointer object of the transformer to rescale the features.
+    Return(s):
+    X_train_scaled: [arr] rescaled independent features.
+    '''
+
+    #Load the transformer file:
+    scaler = joblib.load(f_transform)
+
+    #Rescale the features:
+    X_train_scaled = scaler.transform(X_train)
+
+    return X_train_scaled
+
 def write_header(fin, run_mode):
     '''
     Write header for model prediction result file
@@ -900,3 +955,36 @@ def plot_test_and_predict(f_test, f_predict):
 
                 plt.show()
 
+
+def get_layer_from_file(f_layer):
+    '''
+    Extract layers from layer file and convert it into a tuple.
+    C. Wibisono
+    06/15 '26
+    Parameter(s):
+    f_layer: file pointer object consisting of nn configuration layer
+    Return(s):
+    layer: (tuple) number of neuron(s) per each ith layer
+    '''
+
+    temp_arr = []
+    
+    with open(f_layer, mode='r') as fin:
+        #Read the header:
+        fin.readline()
+        
+
+        while(1):
+            line = fin.readline()
+            if line == '':
+                break
+            else:
+                try:
+                    temp = int(line)
+                    temp_arr.append(temp)
+                except ValueError:
+                    return "Layer file is not valid. Remove any row that does not contain an integer."
+
+    layer =  tuple(temp_arr)
+
+    return layer

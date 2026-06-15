@@ -1,0 +1,11 @@
+#Each row represent the number of node for each layer.
+500
+500
+500
+500
+500
+500
+500
+500
+500
+500
