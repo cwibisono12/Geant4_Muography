@@ -560,3 +560,53 @@ file_model: partial_scaling_scaled_3_300
 500
 Number of Iteration: ,7
 Model Score: ,0.4094628237690682
+==========
+file_test: corr_file_Run20_3_new
+Timestamp: 2026-06-17 15:16:11.104390
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_300
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-7.380560560814233
+==========
+file_test: corr_file_Run23_3_new
+Timestamp: 2026-06-17 15:16:13.956906
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_300
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,0.5305269212323714
+==========
+file_test: corr_file_Run18_3_new
+Timestamp: 2026-06-17 15:16:18.258017
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_300
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-9.025791664428015
+==========
+file_test: corr_file_Run21_3_new
+Timestamp: 2026-06-17 15:16:22.026363
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_300
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-7.283452548954131
+==========
+file_test: corr_file_Run24_3_new
+Timestamp: 2026-06-17 15:16:24.817650
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_300
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,0.4311279793115694

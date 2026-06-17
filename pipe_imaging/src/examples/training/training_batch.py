@@ -12,11 +12,12 @@ if __name__ == "__main__":
     directory = sys.argv[1] #directory input where the training data are
     file_model = sys.argv[2] #file to store the model
     option = int(sys.argv[3]) #data retrieval mode
-    iter_num = int(sys.argv[4]) #number of iteration (epoch)
+    iter_num = int(sys.argv[4]) #number of maximum iteration (epoch)
     transf_file = sys.argv[5] #file to store the transformer to rescale the features
     layer_file = sys.argv[6] #file to specify the nn layers
     validation_file = sys.argv[7] #validation file to verify the model performance over validation data 
 
+    #Get the training data:
     file_list = utilities.retrieve_files_in_directory(directory)
 
     dim = len(file_list)
@@ -44,15 +45,20 @@ if __name__ == "__main__":
     #Initialize convergence variables:
     best_val_loss = np.inf
     flag_counter = 0
-    random.seed(12) #this is to match the random state listed by the estimator.
+    global_seed = 12 #this is to match the random state listed by the estimator.
 
     #Iterate the model:
     for i in range(iter_num):
         
-        random.shuffle(file_list)
+        epoch_files = file_list.copy()
+
+        epoch_seed = global_seed + i
+        random.seed(epoch_seed)
+
+        random.shuffle(epoch_files)
 
         for j in range(dim):
-            X_train, y_train = nn.get_features_append(file_list[j], arg_number = option)
+            X_train, y_train = nn.get_features_append(epoch_files[j], arg_number = option)
             X_train_new = nn.select_features(X_train)
             X_train_new_scaled = nn.rescale_features(X_train_new, transf_file)
             nn.retrain_model(X_train_new_scaled, y_train, file_model)
