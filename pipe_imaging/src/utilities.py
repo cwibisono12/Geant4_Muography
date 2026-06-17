@@ -833,6 +833,7 @@ def retrieve_files_in_directory(directory_path):
 def retrieve_file_name(file_loc, mode, option, num_epoch):
     '''
     Retrieve file name from list of file
+    C. Wibisono
     06/12 '26
     Parameter(s):
     file_loc: file address
@@ -852,7 +853,7 @@ def retrieve_file_name(file_loc, mode, option, num_epoch):
             test_fname = test_fname + temp[i].split('new.csv')[0]
 
     if mode == 1:
-        return test_fname+str(option)+'_'+str(num_epoch)+'_test.csv'
+        return test_fname+str(option)+'_'+str(num_epoch)+'_predict.csv'
     if mode == 2:
         return test_fname+str(option)+'_train.csv'
 
