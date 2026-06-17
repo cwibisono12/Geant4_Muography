@@ -38,7 +38,7 @@ def initialize_model(X_train, y_train, layer, f_joblib):
     '''
 
     init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
-            hidden_layer_sizes = layer, activation='relu')
+            hidden_layer_sizes = layer, activation='relu', random_state = 12)
 
     init_model.partial_fit(X_train, y_train)
 
@@ -56,7 +56,7 @@ def model_initialize(layer, f_joblib):
     '''
 
     init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
-            hidden_layer_sizes = layer, activation='relu')
+            hidden_layer_sizes = layer, activation='relu', random_state = 12)
 
     joblib.dump(init_model, f_joblib)
 
@@ -988,3 +988,59 @@ def get_layer_from_file(f_layer):
     layer =  tuple(temp_arr)
 
     return layer
+
+
+def calculate_mse_loss(X_valid, y_valid, f_model):
+    '''
+    Calculate the mean squared error from the model stored in f_model.
+    C. Wibisono
+    06/17 '26
+    Parameter(s):
+    X_valid: [arr] independent features of the validation data set.
+    y_valid: [arr] target variable(s) of the validation data set.
+    f_model: [obj] file where model is stored
+    Return(s):
+    val_loss: (float) mean squared error from the difference between validated data and model prediction
+    '''
+
+    from sklearn.metrics import mean_squared_error
+
+    #Load the model:
+    model = joblib.load(f_model)
+
+    #Predict the validation data set from the loaded model:
+    y_predict = model.predict(X_valid)
+
+    #Calculate the MSE from the validation data over the model prediction:
+    val_loss = mean_squared_error(y_valid, y_predict)
+
+    return val_loss
+
+def convergence_check(current_loss, best_loss, flag_counter, tolerance = 1e-4, patience = 5):
+    '''
+    Check the model convergence based on validation loss data.
+    06/17 '26
+    Parameter(s):
+    current_loss: (float) mean squared error from the difference between validated data and model prediction.
+    best_loss: (float) the lowest validation loss recorded.
+    flag_counter: (int) current consecutive iteration without improvement relative to previous iteration
+    patience: (int) Max iteration to wait for improvement before stopping.
+    Return(s):
+    is_converged: (int) 1 (model converged) 0 (otherwise)
+    best_loss: (float) updated validation loss.
+    flag_counter: (int) updated flag counter
+    '''
+
+    if current_loss < (best_loss - tolerance):
+        best_loss = current_loss
+        flag_counter = 0
+    else:
+        flag_counter = flag_counter + 1
+
+    if flag_counter >= patience:
+        is_converged = 1
+    else:
+        is_converged = 0
+
+    return is_converged, best_loss, flag_counter
+
