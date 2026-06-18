@@ -610,3 +610,103 @@ file_model: partial_scaling_scaled_3_300
 500
 Number of Iteration: ,15
 Model Score: ,0.4311279793115694
+==========
+file_test: corr_file_Run20_3_new
+Timestamp: 2026-06-18 10:15:55.348936
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-6.816589514958763
+==========
+file_test: corr_file_Run23_3_new
+Timestamp: 2026-06-18 10:15:58.228005
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,0.6441373654826233
+==========
+file_test: corr_file_Run18_3_new
+Timestamp: 2026-06-18 10:16:02.579545
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-8.8466622350033
+==========
+file_test: corr_file_Run21_3_new
+Timestamp: 2026-06-18 10:16:06.382745
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-6.714875849014748
+==========
+file_test: corr_file_Run24_3_new
+Timestamp: 2026-06-18 10:16:09.239438
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,0.5826309479075775
+==========
+file_test: corr_file_Run20_3_new
+Timestamp: 2026-06-18 10:30:33.490706
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-6.816589514958763
+==========
+file_test: corr_file_Run23_3_new
+Timestamp: 2026-06-18 10:30:36.434768
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,0.6441373654826233
+==========
+file_test: corr_file_Run18_3_new
+Timestamp: 2026-06-18 10:30:40.873237
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-8.8466622350033
+==========
+file_test: corr_file_Run21_3_new
+Timestamp: 2026-06-18 10:30:44.753798
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,-6.714875849014748
+==========
+file_test: corr_file_Run24_3_new
+Timestamp: 2026-06-18 10:30:47.677935
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh
+500
+500
+500
+Number of Iteration: ,15
+Model Score: ,0.5826309479075775

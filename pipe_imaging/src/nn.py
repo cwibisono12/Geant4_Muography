@@ -38,7 +38,7 @@ def initialize_model(X_train, y_train, layer, f_joblib):
     '''
 
     init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
-            hidden_layer_sizes = layer, activation='relu', random_state = 12)
+            hidden_layer_sizes = layer, activation='tanh', random_state = 12)
 
     init_model.partial_fit(X_train, y_train)
 
@@ -663,6 +663,28 @@ def rescale_features(X_train, f_transform):
 
     return X_train_scaled
 
+def inverse_transform(y_train_rescaled, f_transform):
+    '''
+    Perform the inverse rescaling transformation given the transformer file.
+    C. Wibisono
+    06/18 '26:
+    Parameter(s):
+    y_train_rescaled: [arr] rescaled target(s).
+    f_transform: (obj) file pointer object of the transformer to rescale the features.
+    Return(s):
+    y_train_inv: [arr] inverse rescale target(s).
+    '''
+
+    #Load the transformer file:
+    scaler = joblib.load(f_transform)
+
+    #Inverse transform the target:
+    y_train_inv = scaler.inverse_transform(y_train_rescaled)
+
+    return y_train_inv
+
+
+
 def write_header(fin, run_mode):
     '''
     Write header for model prediction result file
@@ -1043,4 +1065,5 @@ def convergence_check(current_loss, best_loss, flag_counter, tolerance = 1e-4, p
         is_converged = 0
 
     return is_converged, best_loss, flag_counter
+
 
