@@ -858,3 +858,61 @@ def retrieve_file_name(file_loc, mode, option, num_epoch):
         return test_fname+str(option)+'_train.csv'
 
 
+def obj_dict_corr(fin):
+    '''
+    Generate dictionary data object from the correlated file.
+    C. Wibisono
+    06/18 '26
+    Parameter(s):
+    fin: correlated file pointer object:
+    Return(s):
+    data: dictionary of the object from the correlated file.
+    '''
+
+    data = {}
+    with open(fin, mode='r') as f:
+
+        while(1):
+            line = f.readline()
+            if line == '':
+                break
+
+            if line.find('#') == -1:
+                row = line.split(',')
+
+                if row[0] in data.keys():
+                    data[row[0]][0].append(float(row[1]))
+                    data[row[0]][1].append(float(row[2]))
+                    data[row[0]][2].append(float(row[3]))
+                    data[row[0]][3].append(int(row[4]))
+                else:
+                    data[row[0]] = [[float(row[1])],[float(row[2])],[float(row[3])],[int(row[4])]]
+
+    return data
+
+
+def merge_file(f_in, f_out):
+    '''
+    Merge correlated files and rearrange the order.
+    C. Wibisono
+    06/18 '26
+    Parameter(s):
+    f_in: file pointer of the input file
+    f_out: file output for merged files
+    '''
+
+    data_in = obj_dict_corr(f_in)
+    flag = 0
+    with open(f_out, mode='a+') as fout:
+            
+        for item in data_in.keys():
+            dim = len(data_in[item][0])
+            for i in range(dim):
+                fout.write(item+','+str(data_in[item][0][i])+','+str(data_in[item][1][i])+','+str(data_in[item][2][i])+','+ \
+                        str(data_in[item][3][i])+'\n')
+
+        
+
+    del data_in
+
+
