@@ -916,3 +916,78 @@ def merge_file(f_in, f_out):
     del data_in
 
 
+def rearrange_corr_files(fin1, fin2, fin3, fin4, fout1, fout2):
+    '''
+    Rearrange the correlated files and shuffle the order
+    C. Wibisono
+    06/22 '26
+    Parameter(s):
+    fin1: file input1
+    fin2: file input2
+    fin3: file input3
+    fout1: file out1
+    fout2: file out2
+    '''
+
+    import random
+
+    data_in1 = obj_dict_corr(fin1)
+    data_in2 = obj_dict_corr(fin2)
+    data_in3 = obj_dict_corr(fin3)
+    data_in4 = obj_dict_corr(fin4)
+
+    data1_arr = list(data_in1.items())
+    del data_in1
+    
+    data2_arr = list(data_in2.items())
+    del data_in2
+    
+    data3_arr = list(data_in3.items())
+    del data_in3
+    
+    data4_arr = list(data_in4.items())
+    del data_in4
+
+    comb_arr = []
+    dim1 = len(data1_arr)
+    dim2 = len(data2_arr)
+    dim3 = len(data3_arr)
+    dim4 = len(data4_arr)
+
+    for i in range(dim1):
+        comb_arr.append(data1_arr[i])
+    del data1_arr
+
+    for j in range(dim2):
+        comb_arr.append(data2_arr[j])
+    del data2_arr
+
+    for k in range(dim3):
+        comb_arr.append(data3_arr[k])
+    del data3_arr
+
+    for l in range(dim4):
+        comb_arr.append(data4_arr[l])
+    del data4_arr
+
+    random.shuffle(comb_arr)
+
+    dim = len(comb_arr)
+    mid = dim // 2
+
+    with open(fout1, mode='w') as f1:
+        write_header(f1, 2)
+        for i in range(0, mid, 1):
+            temp = len(comb_arr[i][1][1])
+            for k in range(temp):
+                f1.write(comb_arr[i][0]+','+str(comb_arr[i][1][0][k])+','+str(comb_arr[i][1][1][k])+','+str(comb_arr[i][1][2][k])+','+str(comb_arr[i][1][3][k])+'\n')
+
+
+
+    with open(fout2, mode='w') as f2:
+        write_header(f2, 2)
+        for i in range(mid, dim, 1):
+            temp = len(comb_arr[i][1][1])
+            for k in range(temp):
+                f2.write(comb_arr[i][0]+','+str(comb_arr[i][1][0][k])+','+str(comb_arr[i][1][1][k])+','+str(comb_arr[i][1][2][k])+','+str(comb_arr[i][1][3][k])+'\n')
+    
