@@ -2040,3 +2040,663 @@ file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
 500
 Number of Iteration: ,23
 Model Score: ,-135.43252157173438
+==========
+file_test: corr_file_Run20_3_new
+Timestamp: 2026-06-22 12:55:48.021586
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-91.62255932451983
+==========
+file_test: corr_file_Run23_3_new
+Timestamp: 2026-06-22 12:55:50.853232
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-555.9742625452934
+==========
+file_test: corr_file_Run18_3_new
+Timestamp: 2026-06-22 12:55:55.186463
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-0.9786446448241178
+==========
+file_test: corr_file_Run21_3_new
+Timestamp: 2026-06-22 12:55:58.985855
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-90.25570906186883
+==========
+file_test: corr_file_Run24_3_new
+Timestamp: 2026-06-22 12:56:01.794847
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-766.27251708433
+==========
+file_test: corr_file_Run26_3_new
+Timestamp: 2026-06-22 12:56:03.482095
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-7574.840937689809
+==========
+file_test: corr_file_Run27_3_new
+Timestamp: 2026-06-22 12:56:04.906676
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-13674.4514925785
+==========
+file_test: corr_file_Run28_3_new
+Timestamp: 2026-06-22 12:56:08.663915
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-10.982691766281336
+==========
+file_test: corr_file_Run29_3_new
+Timestamp: 2026-06-22 12:56:12.966593
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-11.310377894430026
+==========
+file_test: corr_file_Run30_3_new
+Timestamp: 2026-06-22 12:56:17.273342
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-10.753949473915222
+==========
+file_test: corr_file_Run32_3_new
+Timestamp: 2026-06-22 12:56:22.149252
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.42559703377105806
+==========
+file_test: corr_file_Run33_3_new
+Timestamp: 2026-06-22 12:56:27.040368
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.4150202857837677
+==========
+file_test: corr_file_Run34_3_new
+Timestamp: 2026-06-22 12:56:32.091258
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.5221983978159499
+==========
+file_test: corr_file_Run35_3_new
+Timestamp: 2026-06-22 12:56:37.090250
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.5380574554742776
+==========
+file_test: corr_file_Run36_3_new
+Timestamp: 2026-06-22 12:56:42.124759
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.5438130038558575
+==========
+file_test: corr_file_Run37_3_new
+Timestamp: 2026-06-22 12:56:47.232557
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.514875241672007
+==========
+file_test: corr_file_Run38_3_new
+Timestamp: 2026-06-22 12:56:52.434050
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.5213799838786215
+==========
+file_test: corr_file_Run39_3_new
+Timestamp: 2026-06-22 12:56:57.550476
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.5152811823043708
+==========
+file_test: corr_file_Run41_3_new
+Timestamp: 2026-06-22 12:57:02.797578
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.5168880311651436
+==========
+file_test: corr_file_Run42_3_new
+Timestamp: 2026-06-22 12:57:07.940438
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,0.5173080310764256
+==========
+file_test: corr_file_Run16_3_new
+Timestamp: 2026-06-22 12:57:12.669114
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-1.2270344289720507
+==========
+file_test: corr_file_Run19_3_new
+Timestamp: 2026-06-22 12:57:16.385875
+Number of layer: ,3
+file_model: partial_scaling_scaled_3_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,20
+Model Score: ,-103.45251332291933
+==========
+file_test: corr_file_Run20_3_new
+Timestamp: 2026-06-22 13:31:47.836060
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-150.8070478728577
+==========
+file_test: corr_file_Run23_3_new
+Timestamp: 2026-06-22 13:31:51.584544
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-921.0265735999432
+==========
+file_test: corr_file_Run18_3_new
+Timestamp: 2026-06-22 13:31:57.462399
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-2.126594206358672
+==========
+file_test: corr_file_Run21_3_new
+Timestamp: 2026-06-22 13:32:02.321185
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-148.7702948701768
+==========
+file_test: corr_file_Run24_3_new
+Timestamp: 2026-06-22 13:32:06.026921
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-1269.9604384003715
+==========
+file_test: corr_file_Run26_3_new
+Timestamp: 2026-06-22 13:32:08.217477
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-12525.086604491313
+==========
+file_test: corr_file_Run27_3_new
+Timestamp: 2026-06-22 13:32:10.217291
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-22641.190927868476
+==========
+file_test: corr_file_Run28_3_new
+Timestamp: 2026-06-22 13:32:15.507143
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-18.676906013862517
+==========
+file_test: corr_file_Run29_3_new
+Timestamp: 2026-06-22 13:32:21.207486
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-19.27716315728631
+==========
+file_test: corr_file_Run30_3_new
+Timestamp: 2026-06-22 13:32:26.887836
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-18.3713867845639
+==========
+file_test: corr_file_Run32_3_new
+Timestamp: 2026-06-22 13:32:33.344570
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.31979022621056497
+==========
+file_test: corr_file_Run33_3_new
+Timestamp: 2026-06-22 13:32:39.754941
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.30722410475554723
+==========
+file_test: corr_file_Run34_3_new
+Timestamp: 2026-06-22 13:32:46.393254
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5307546383604355
+==========
+file_test: corr_file_Run35_3_new
+Timestamp: 2026-06-22 13:32:52.929407
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5528422177629629
+==========
+file_test: corr_file_Run36_3_new
+Timestamp: 2026-06-22 13:32:59.501429
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5574791486171778
+==========
+file_test: corr_file_Run37_3_new
+Timestamp: 2026-06-22 13:33:06.110250
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5350094078084641
+==========
+file_test: corr_file_Run38_3_new
+Timestamp: 2026-06-22 13:33:12.702910
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5421786574313011
+==========
+file_test: corr_file_Run39_3_new
+Timestamp: 2026-06-22 13:33:19.237687
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5360874313193583
+==========
+file_test: corr_file_Run41_3_new
+Timestamp: 2026-06-22 13:33:25.839224
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5539345522203313
+==========
+file_test: corr_file_Run42_3_new
+Timestamp: 2026-06-22 13:33:32.748350
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,0.5531966619911786
+==========
+file_test: corr_file_Run16_3_new
+Timestamp: 2026-06-22 13:33:39.028404
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-2.5459248429227075
+==========
+file_test: corr_file_Run19_3_new
+Timestamp: 2026-06-22 13:33:43.876387
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_200_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,45
+Model Score: ,-170.2873137175636
+==========
+file_test: corr_file_Run20_3_new
+Timestamp: 2026-06-22 14:31:06.321040
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-117.34129131786581
+==========
+file_test: corr_file_Run23_3_new
+Timestamp: 2026-06-22 14:31:08.736803
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-748.5143390060601
+==========
+file_test: corr_file_Run18_3_new
+Timestamp: 2026-06-22 14:31:12.396610
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-1.1758495466132635
+==========
+file_test: corr_file_Run21_3_new
+Timestamp: 2026-06-22 14:31:15.564692
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-115.69568390943705
+==========
+file_test: corr_file_Run24_3_new
+Timestamp: 2026-06-22 14:31:18.006946
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-1032.6488513247602
+==========
+file_test: corr_file_Run26_3_new
+Timestamp: 2026-06-22 14:31:19.546496
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-10581.54028673982
+==========
+file_test: corr_file_Run27_3_new
+Timestamp: 2026-06-22 14:31:20.888897
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-19146.24694592684
+==========
+file_test: corr_file_Run28_3_new
+Timestamp: 2026-06-22 14:31:24.157258
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-13.096758554444234
+==========
+file_test: corr_file_Run29_3_new
+Timestamp: 2026-06-22 14:31:27.833539
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-13.529272034790297
+==========
+file_test: corr_file_Run30_3_new
+Timestamp: 2026-06-22 14:31:31.482662
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-12.860361718332811
+==========
+file_test: corr_file_Run32_3_new
+Timestamp: 2026-06-22 14:31:35.623759
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.29114924226456623
+==========
+file_test: corr_file_Run33_3_new
+Timestamp: 2026-06-22 14:31:39.703732
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.27304290943596726
+==========
+file_test: corr_file_Run34_3_new
+Timestamp: 2026-06-22 14:31:44.010012
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.3553605113103191
+==========
+file_test: corr_file_Run35_3_new
+Timestamp: 2026-06-22 14:31:48.253519
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.3864372488322246
+==========
+file_test: corr_file_Run36_3_new
+Timestamp: 2026-06-22 14:31:52.531736
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.392585440879239
+==========
+file_test: corr_file_Run37_3_new
+Timestamp: 2026-06-22 14:31:56.849168
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.3898113342061916
+==========
+file_test: corr_file_Run38_3_new
+Timestamp: 2026-06-22 14:32:01.193672
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.40032375555919214
+==========
+file_test: corr_file_Run39_3_new
+Timestamp: 2026-06-22 14:32:05.524243
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.392222455694869
+==========
+file_test: corr_file_Run41_3_new
+Timestamp: 2026-06-22 14:32:09.965173
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.4461331756452209
+==========
+file_test: corr_file_Run42_3_new
+Timestamp: 2026-06-22 14:32:14.345067
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,0.44507222881217007
+==========
+file_test: corr_file_Run16_3_new
+Timestamp: 2026-06-22 14:32:18.269683
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-1.468031236338273
+==========
+file_test: corr_file_Run19_3_new
+Timestamp: 2026-06-22 14:32:21.354534
+Number of layer: ,3
+file_model: partial_scaling_scaled_2_512_64_tanh_062226_alpha0pt1
+500
+500
+500
+Number of Iteration: ,122
+Model Score: ,-132.46882063601888
