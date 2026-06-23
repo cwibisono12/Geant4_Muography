@@ -2,7 +2,7 @@
 
 import joblib
 from sklearn.neural_network import MLPRegressor
-
+import numpy as np
 
 def get_parameters(X_train, y_train, layer, *, num_iter = 2000):
     '''
@@ -37,7 +37,7 @@ def initialize_model(X_train, y_train, layer, f_joblib):
     f_joblib: (obj) file pointer object to store the model
     '''
 
-    init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
+    init_model = MLPRegressor(solver = 'adam', alpha = 1e-1,
             hidden_layer_sizes = layer, activation='tanh', random_state = 12)
 
     init_model.partial_fit(X_train, y_train)
@@ -55,8 +55,8 @@ def model_initialize(layer, f_joblib):
     f_joblib: (obj) file pointer object to store the model
     '''
 
-    init_model = MLPRegressor(solver = 'adam', alpha = 1e-5,
-            hidden_layer_sizes = layer, activation='relu', random_state = 12)
+    init_model = MLPRegressor(solver = 'adam', alpha = 1e-1,
+            hidden_layer_sizes = layer, activation='tanh', random_state = 12)
 
     joblib.dump(init_model, f_joblib)
 
@@ -196,6 +196,41 @@ def store_score_result(fout, f_test, layer, num_epoch, score, f_model):
         f.write('Number of Iteration: '+','+str(num_epoch)+'\n')
         f.write('Model Score: '+','+str(score)+'\n')
         
+
+def scatt_angle_transformer(data, key):
+    '''
+    Extract Scattering angle from the spatial coordinates features from the correlated file
+    C. Wibisono
+    06/23 '26
+    Parameter(s):
+    data: (dict) dictionary containing spatial information of the hits in the correlated file.
+    key: event_ID
+    Return(s):
+    scatt_angle: (rad) scattering angle.
+    '''
+
+    p1 = np.array([data[key][0][0], data[key][0][1], data[key][0][2]])
+    p1_b = np.array([data[key][1][0], data[key][1][1], data[key][1][2]])
+    p2 = np.array([data[key][2][0], data[key][2][1], data[key][2][2]])
+    p2_b = np.array([data[key][3][0], data[key][3][1], data[key][3][2]])
+    
+    #Generate Direction vector:
+    #Incoming vector:
+    num_v1 = p1_b - p1
+    denum_v1 = np.linalg.norm(num_v1)
+    v1 = num_v1/denum_v1
+
+    #Outgoing vector:
+    num_v2 = p2_b - p2
+    denum_v2 = np.linalg.norm(num_v2)
+    v2 = num_v2/denum_v2
+
+    #Generate scattering angle:
+    theta_deg = np.rad2deg(np.arccos(np.dot(v1,v2)))
+
+    return theta_deg
+
+
 def get_features(file_in, *, arg_number = 3):
     '''
     Extract the features data to be used for the model
@@ -268,6 +303,7 @@ def get_features_append(file_in, *, arg_number = 2):
     file_in: fileinput pointer object 
     arg_number: (int) number of target variables (2:) for first and last hits , (3:) for the first, last and the other hits
     (4:), the first and last hits and the last hit for incoming muon and the first hit for outgoing muon.
+    (5:), the first and last hits and with addition of a new feature as interaction term.
     Return(s):
     X: [arr] array of independent features variables
     y: [arr] array of dependent variables
@@ -439,6 +475,25 @@ def get_features_append(file_in, *, arg_number = 2):
                                         data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
                                         ])
 
+
+                            if arg_number == 5:
+                                scatt_angle = scatt_angle_transformer(data, prev_id)
+                                
+                                X_arr.append([
+                                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                                    scatt_angle
+                                    ])
+
+                                y_arr.append([
+                                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                                    ])
+
                         del data
                         data = {}
                         data[row[0]] =[[],[],[],[],[],[]]
@@ -530,7 +585,26 @@ def get_features_append(file_in, *, arg_number = 2):
                         data[prev_id][5][first_out_index-2], data[prev_id][5][first_out_index-1], data[prev_id][5][first_out_index],
                         data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
                         ])
-            
+
+
+            if arg_number == 5:
+                scatt_angle = scatt_angle_transformer(data, prev_id)
+                                
+                X_arr.append([
+                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                    scatt_angle
+                    ])
+
+                y_arr.append([
+                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                    ])
+
             del data
         
     return X_arr, y_arr
