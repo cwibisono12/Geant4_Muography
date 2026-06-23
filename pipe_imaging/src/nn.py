@@ -393,7 +393,8 @@ def get_features_append(file_in, *, arg_number = 2):
                             data[row[0]][0].append(z1_scint)
 
                     else:
-                        print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3])
+                        scatt_angle = scatt_angle_transformer(data, prev_id)
+                        print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3], scatt_angle)
                         '''
                         Extract the features from the correlated file:
                         '''
@@ -477,7 +478,6 @@ def get_features_append(file_in, *, arg_number = 2):
 
 
                             if arg_number == 5:
-                                scatt_angle = scatt_angle_transformer(data, prev_id)
                                 
                                 X_arr.append([
                                     data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
@@ -513,7 +513,8 @@ def get_features_append(file_in, *, arg_number = 2):
         dim_scaling = len(data[prev_id][5])
         mid_dim_scaling = 3*int(((dim_scaling/3)//2))
 
-        print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3])
+        scatt_angle = scatt_angle_transformer(data, prev_id)
+        print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3], scatt_angle)
         
         if dim_pipe > 6 and dim_scaling > 6:
 
@@ -588,7 +589,6 @@ def get_features_append(file_in, *, arg_number = 2):
 
 
             if arg_number == 5:
-                scatt_angle = scatt_angle_transformer(data, prev_id)
                                 
                 X_arr.append([
                     data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
