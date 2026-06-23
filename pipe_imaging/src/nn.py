@@ -757,6 +757,39 @@ def inverse_transform(y_train_rescaled, f_transform):
 
     return y_train_inv
 
+def summary_statistics(X_train, f_train, f_out):
+    '''
+    Get the statistics summary for features.
+    C. Wibisono
+    06/23 '26
+    Parameter(s):
+    X_train: [arr] independent features.
+    f_train: location of training files.
+    f_out: file to store the summary statistics
+    '''
+    from datetime import datetime
+    
+    temp = f_train.split('/')
+    dim_temp = len(temp)
+    train_fname = ''
+
+    for i in range(dim_temp):
+        if '.csv' in temp[i]:
+            train_fname = train_fname + temp[i].split('.csv')[0]
+    
+
+    #Calculate statistics summary for each features in X_train:
+    dim_column = len(X_train[0])
+
+    X_train_np = np.array(X_train)
+
+    with open(f_out, mode='a') as f:
+        f.write('=========='+'\n')
+        f.write('file_training: '+str(train_fname)+'\n')
+        f.write('Timestamp: '+str(datetime.now())+'\n')
+        for j in range(dim_column):
+            f.write('mean of X_'+str(j)+' :'+','+str(np.mean(X_train_np[:,j]))+'\n')
+            f.write('SD of X_'+str(j)+' :'+','+str(np.var(X_train_np[:,j]))+'\n')
 
 
 def write_header(fin, run_mode):
