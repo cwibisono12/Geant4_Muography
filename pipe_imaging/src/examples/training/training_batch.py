@@ -70,6 +70,8 @@ if __name__ == "__main__":
 
         random.shuffle(epoch_files)
 
+        X_temp = []
+        y_temp = []
         for j in range(dim):
             X_train, y_train = nn.get_features_append(epoch_files[j], arg_number = option)
             X_train_new = nn.select_features(X_train)
@@ -77,7 +79,14 @@ if __name__ == "__main__":
                 X_train_new = nn.transform_feature_from_array(X_train_new)
             X_train_new_scaled = nn.rescale_features(X_train_new, transf_file_features)
             y_train_scaled = nn.rescale_features(y_train, transf_file_targets)
-            nn.retrain_model(X_train_new_scaled, y_train_scaled, file_model)
+            
+            X_temp.append(X_train_new_scaled)
+            y_temp.append(y_train_scaled)
+
+        X_temp = np.vstack(X_temp)
+        y_temp = np.vstack(y_temp)
+        #nn.retrain_model(X_train_new_scaled, y_train_scaled, file_model)
+        nn.retrain_model(X_temp, y_temp, file_model)
 
         
         #Assesing the current performance:
