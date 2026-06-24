@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
         X_temp = np.vstack(X_temp)
         y_temp = np.vstack(y_temp)
-        #nn.retrain_model(X_train_new_scaled, y_train_scaled, file_model)
+        
         nn.retrain_model(X_temp, y_temp, file_model)
 
         
