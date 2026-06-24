@@ -35,6 +35,10 @@ if __name__ == "__main__":
         #Dimensionality Reduction:
         X_test_new = nn.select_features(X_test)
 
+        #Transform the feature: (for mode = 5)
+        if option == 5:
+            X_test_new = nn.transform_feature_from_array(X_test_new)
+
         #Rescaling the features:
         X_test_new_scaled = nn.rescale_features(X_test_new, transf_file_features)
 

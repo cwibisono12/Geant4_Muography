@@ -791,6 +791,32 @@ def summary_statistics(X_train, f_train, f_out):
             f.write('mean of X_'+str(j)+' :'+','+str(np.mean(X_train_np[:,j]))+'\n')
             f.write('SD of X_'+str(j)+' :'+','+str(np.var(X_train_np[:,j]))+'\n')
 
+def transform_feature_from_array(X_train, *, arg_mode = 5):
+    '''
+    Transform a feature from a given array.
+    C. Wibisono
+    06/24 '26
+    Parameter(s):
+    X_train: [arr] independent features.
+    arg_mode: (int) number of target variables (see get_features_append function).
+    '''
+
+    dim_row = len(X_train)
+    dim_column = len(X_train[0])
+    
+    #Get the mean of the last feature if arg_mode = 5.
+    if arg_mode == 5:
+        X_train_np = np.array(X_train)
+        mean_last_Xcol = round(np.mean(X_train_np[:,dim_column - 1]),2)
+        
+        del X_train_np
+
+        #Overwrite the last column:
+        for i in range(dim_row):
+            X_train[i][dim_column -1] = mean_last_Xcol
+
+        
+    return X_train
 
 def write_header(fin, run_mode):
     '''
