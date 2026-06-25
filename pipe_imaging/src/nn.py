@@ -304,6 +304,7 @@ def get_features_append(file_in, *, arg_number = 2):
     arg_number: (int) number of target variables (2:) for first and last hits , (3:) for the first, last and the other hits
     (4:), the first and last hits and the last hit for incoming muon and the first hit for outgoing muon.
     (5:), the first and last hits and with addition of a new feature as interaction term.
+    (6:), the first, last and other hits with addition of a new feature as interaction term.
     Return(s):
     X: [arr] array of independent features variables
     y: [arr] array of dependent variables
@@ -478,7 +479,6 @@ def get_features_append(file_in, *, arg_number = 2):
 
 
                             if arg_number == 5:
-                                
                                 X_arr.append([
                                     data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
                                     data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
@@ -493,6 +493,25 @@ def get_features_append(file_in, *, arg_number = 2):
                                     data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
                                     data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
                                     ])
+
+
+                            if arg_number == 6:
+                                X_arr.append([
+                                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                                    scatt_angle
+                                    ])
+                                y_arr.append([
+                                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                                    data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
+                                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                                    ])
+
 
                         del data
                         data = {}
@@ -588,8 +607,7 @@ def get_features_append(file_in, *, arg_number = 2):
                         ])
 
 
-            if arg_number == 5:
-                                
+            if arg_number == 5:             
                 X_arr.append([
                     data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
                     data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
@@ -602,6 +620,23 @@ def get_features_append(file_in, *, arg_number = 2):
                     data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
                     data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
                     data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                    ])
+
+            if arg_number == 6:
+                X_arr.append([
+                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                    scatt_angle
+                    ])
+                y_arr.append([
+                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                    data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
                     data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
                     ])
 
@@ -805,7 +840,7 @@ def transform_feature_from_array(X_train, *, arg_mode = 5):
     dim_column = len(X_train[0])
     
     #Get the mean of the last feature if arg_mode = 5.
-    if arg_mode == 5:
+    if arg_mode == 5 or arg_mode == 6:
         X_train_np = np.array(X_train)
         mean_last_Xcol = round(np.mean(X_train_np[:,dim_column - 1]),2)
         
