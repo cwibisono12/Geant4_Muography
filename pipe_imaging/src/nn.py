@@ -206,7 +206,7 @@ def scatt_angle_transformer(data, key):
     data: (dict) dictionary containing spatial information of the hits in the correlated file.
     key: event_ID
     Return(s):
-    scatt_angle: (rad) scattering angle.
+    scatt_angle: (deg) scattering angle.
     '''
 
     p1 = np.array([data[key][0][0], data[key][0][1], data[key][0][2]])
@@ -496,21 +496,23 @@ def get_features_append(file_in, *, arg_number = 2):
 
 
                             if arg_number == 6:
-                                X_arr.append([
-                                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
-                                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
-                                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
-                                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
-                                    scatt_angle
-                                    ])
-                                y_arr.append([
-                                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
-                                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
-                                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
-                                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
-                                    data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
-                                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
-                                    ])
+                                #Require only event in which the scattering angle is greater than 0.5 deg
+                                if scatt_angle > 0.5:
+                                    X_arr.append([
+                                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                                        scatt_angle
+                                        ])
+                                    y_arr.append([
+                                        data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                        data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                                        data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                                        data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                                        data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
+                                        data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                                        ])
 
 
                         del data
@@ -624,21 +626,23 @@ def get_features_append(file_in, *, arg_number = 2):
                     ])
 
             if arg_number == 6:
-                X_arr.append([
-                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
-                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
-                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
-                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
-                    scatt_angle
-                    ])
-                y_arr.append([
-                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
-                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
-                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
-                    data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
-                    data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
-                    data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
-                    ])
+                #Require only event in which the scattering angle is greather than 0.5 deg
+                if scatt_angle > 0.5:
+                    X_arr.append([
+                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                        scatt_angle
+                        ])
+                    y_arr.append([
+                        data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                        data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                        data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1],
+                        data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
+                        data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
+                        data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                        ])
 
             del data
         
