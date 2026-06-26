@@ -294,7 +294,7 @@ def get_features(file_in, *, arg_number = 3):
         return X_arr, y_arr
 
 
-def get_features_append(file_in, *, arg_number = 2):
+def get_features_append(file_in, *, arg_number = 2, theta_scatt = 1.0):
     '''
     Extract the features data to be used for the model from all hits retrieved on the object
     C. Wibisono
@@ -305,6 +305,7 @@ def get_features_append(file_in, *, arg_number = 2):
     (4:), the first and last hits and the last hit for incoming muon and the first hit for outgoing muon.
     (5:), the first and last hits and with addition of a new feature as interaction term.
     (6:), the first, last and other hits with addition of a new feature as interaction term.
+    theta_scatt: (float) scattering angle between the incoming and outgoing muon from the scintillator hits for event selection.
     Return(s):
     X: [arr] array of independent features variables
     y: [arr] array of dependent variables
@@ -497,7 +498,7 @@ def get_features_append(file_in, *, arg_number = 2):
 
                             if arg_number == 6:
                                 #Require only event in which the scattering angle is greater than 0.5 deg
-                                if scatt_angle > 0.5:
+                                if scatt_angle >= theta_scatt:
                                     X_arr.append([
                                         data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
                                         data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
@@ -627,7 +628,7 @@ def get_features_append(file_in, *, arg_number = 2):
 
             if arg_number == 6:
                 #Require only event in which the scattering angle is greather than 0.5 deg
-                if scatt_angle > 0.5:
+                if scatt_angle > theta_scatt:
                     X_arr.append([
                         data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
                         data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
