@@ -35,8 +35,8 @@ if __name__ == "__main__":
         #Dimensionality Reduction:
         X_test_new = nn.select_features(X_test)
 
-        #Transform the feature: (for mode = 5)
-        if option == 5 or option == 6:
+        #Transform the feature: (for mode = 5, 6, 7)
+        if option == 5 or option == 6 or option == 7:
             X_test_new = nn.transform_feature_from_array(X_test_new)
 
         #Rescaling the features:
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         result_inv = nn.inverse_transform(result, transf_file_targets)
 
         #Store the prediction from the re-trained model:
-        nn.write_features(file_out_test, result_inv)
+        nn.write_features(file_out_test, result_inv, coord_transform = 2)
 
     
 

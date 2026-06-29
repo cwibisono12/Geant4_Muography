@@ -230,6 +230,44 @@ def scatt_angle_transformer(data, key):
 
     return theta_deg
 
+def cart_to_cylind(x, y, z):
+    '''
+    Transform the cartesian coordinates to cylindrical coordinates to better match target geometry.
+    C. Wibisono
+    06/29 '26
+    Parameter(s):
+    x: (float) x coordinate
+    y: (float) y coordinate
+    z: (float) z coordinate
+    Return(s):
+    r: (float) radius coordinate
+    theata: (float) angle coordinate
+    axial: (float) axial symmetry
+    '''
+
+    r = ((z**2.) + (x**2.))**0.5
+    theta = np.rad2deg(np.arctan(z/x))
+    y = y
+
+    return r, theta, y
+
+def cylind_to_card(r, theta, y):
+    '''
+    Transform the cylindrical coordinates to caretesian coordinates.
+    C. Wibisono
+    06/29 '26
+    Parameter(s):
+    r: (float) radius coordinate
+    theta:(deg) angle coordinate
+    y: (float) axial symmetry
+    '''
+
+    x = r*(np.cos(np.deg2rad(theta)))
+    y = y
+    z = r*(np.sin(np.deg2rad(theta)))
+    
+    return x, y, z
+
 
 def get_features(file_in, *, arg_number = 3):
     '''
@@ -305,6 +343,7 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 1.0):
     (4:), the first and last hits and the last hit for incoming muon and the first hit for outgoing muon.
     (5:), the first and last hits and with addition of a new feature as interaction term.
     (6:), the first, last and other hits with addition of a new feature as interaction term.
+    (7:), the first, last and other hits with addition of a new feature as intearaction term. (Target coordinates change to cylindrical).
     theta_scatt: (float) scattering angle between the incoming and outgoing muon from the scintillator hits for event selection.
     Return(s):
     X: [arr] array of independent features variables
@@ -515,6 +554,33 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 1.0):
                                         data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
                                         ])
 
+                            if arg_number == 7:
+                                #Require only event in which the scattering angle is greater than 0.5 deg
+                                if scatt_angle >= theta_scatt:
+                                    X_arr.append([
+                                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                                        scatt_angle
+                                        ])
+                                   
+                                    #Transform to cylindrical coordinates:
+                                    x0, y0, z0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
+                                    x1, y1, z1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
+                                    x2, y2, z2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
+                                    x3, y3, z3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
+                                    x4, y4, z4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
+                                    x5, y5, z5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
+                                    
+                                    y_arr.append([
+                                        x0, y0, z0,
+                                        x1, y1, z1,
+                                        x2, y2, z2,
+                                        x3, y3, z3,
+                                        x4, y4, z4,
+                                        x5, y5, z5
+                                        ])
 
                         del data
                         data = {}
@@ -643,6 +709,33 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 1.0):
                         data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2],
                         data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2],
                         data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1]
+                        ])
+
+            if arg_number == 7:
+                #Require only event in which the scattering angle is greather than 0.5 deg
+                if scatt_angle > theta_scatt:
+                    X_arr.append([
+                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                        scatt_angle
+                        ])
+                    
+                    x0, y0, z0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
+                    x1, y1, z1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
+                    x2, y2, z2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
+                    x3, y3, z3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
+                    x4, y4, z4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
+                    x5, y5, z5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
+                    
+                    y_arr.append([
+                        x0, y0, z0,
+                        x1, y1, z1,
+                        x2, y2, z2,
+                        x3, y3, z3,
+                        x4, y4, z4,
+                        x5, y5, z5
                         ])
 
             del data
@@ -872,7 +965,7 @@ def write_header(fin, run_mode):
         fin.write('#Pipe_Pos(x,y,z)'+','+'Scaling_Pos(x,y,z)'+'\n')
 
 
-def write_features(fout, y_test):
+def write_features(fout, y_test, *, coord_transform = 1):
     '''
     Export the result from the model prediction
     C. Wibisono
@@ -880,6 +973,7 @@ def write_features(fout, y_test):
     Parameter(s):
     fout: file output pointer object to store the result 
     y_test: [arr] the prediction variables array from the model
+    coord_transform: (int) coordinate transformation (default = 1 as is, 2= transform to cartesian)
     '''
     dim = len(y_test)
     dim_column = len(y_test[0]) #dimension of column 
@@ -892,21 +986,46 @@ def write_features(fout, y_test):
                 f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+'\n')
 
         if dim_column == 12:
-            for i in range(dim):
-                f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
-                        str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
-                        str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
-                        str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+'\n')
+            if coord_transform == 1:
+                for i in range(dim):
+                    f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
+                            str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
+                            str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
+                            str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+'\n')
+            if coord_transform == 2:
+                for i in range(dim):
+                    x0, y0, z0 = cylind_to_cart(y_test[i][0], y_test[i][1], y_test[i][2])
+                    x1, y1, z1 = cylind_to_cart(y_test[i][3], y_test[i][4], y_test[i][5])
+                    x2, y2, z2 = cylind_to_cart(y_test[i][6], y_test[i][7], y_test[i][8])
+                    x3, y3, z3 = cylind_to_cart(y_test[i][9], y_test[i][10], y_test[i][11])
+                    f.write(str(x0)+','+str(y0)+','+str(z0)+','+ \
+                            str(x1)+','+str(y1)+','+str(y1)+','+ \
+                            str(x2)+','+str(y2)+','+str(z2)+','+ \
+                            str(x3)+','+str(y3)+','+str(z3)+'\n')
 
         if dim_column == 18: 
-            for i in range(dim):
-                f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
-                        str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
-                        str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
-                        str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+','+\
-                        str(y_test[i][12])+','+str(y_test[i][13])+','+str(y_test[i][14])+','+\
-                        str(y_test[i][15])+','+str(y_test[i][16])+','+str(y_test[i][17])+'\n')
-                
+            if coord_transform == 1:
+                for i in range(dim):
+                    f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
+                            str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
+                            str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
+                            str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+','+\
+                            str(y_test[i][12])+','+str(y_test[i][13])+','+str(y_test[i][14])+','+\
+                            str(y_test[i][15])+','+str(y_test[i][16])+','+str(y_test[i][17])+'\n')
+            if coord_transform == 2:
+                for i in range(dim):
+                    x0, y0, z0 = cylind_to_cart(y_test[i][0], y_test[i][1], y_test[i][2])
+                    x1, y1, z1 = cylind_to_cart(y_test[i][3], y_test[i][4], y_test[i][5])
+                    x2, y2, z2 = cylind_to_cart(y_test[i][6], y_test[i][7], y_test[i][8])
+                    x3, y3, z3 = cylind_to_cart(y_test[i][9], y_test[i][10], y_test[i][11])
+                    x4, y4, z4 = cylind_to_cart(y_test[i][12], y_test[i][13], y_test[i][14])
+                    x5, y5, z5 = cylind_to_cart(y_test[i][15], y_test[i][16], y_test[i][17])
+                    f.write(str(x0)+','+str(y0)+','+str(z0)+','+ \
+                            str(x1)+','+str(y1)+','+str(z1)+','+ \
+                            str(x2)+','+str(y2)+','+str(z2)+','+ \
+                            str(x3)+','+str(y3)+','+str(z3)+','+\
+                            str(x4)+','+str(y4)+','+str(z4)+','+\
+                            str(x5)+','+str(y5)+','+str(z5)+'\n')
 
 def plot_results(coords):
     '''

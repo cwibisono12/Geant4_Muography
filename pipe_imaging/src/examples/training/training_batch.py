@@ -35,7 +35,7 @@ if __name__ == "__main__":
         X_train_new = nn.select_features(X_train)
         
         #Overwrite the last feature (for run_mode =5):
-        if option == 5 or option == 6:
+        if option == 5 or option == 6 or option == 7:
             X_train_new = nn.transform_feature_from_array(X_train_new)
 
         nn.scaler_update(X_train_new, transf_file_features)
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     #Extract the validation data:
     X_valid, y_valid = nn.get_features_append(validation_file, arg_number = option)
     X_valid_new = nn.select_features(X_valid)
-    if option == 5 or option == 6:
+    if option == 5 or option == 6 or option == 7:
         X_valid_new = nn.transform_feature_from_array(X_valid_new)
     X_valid_new_scaled = nn.rescale_features(X_valid_new, transf_file_features)
     y_valid_scaled = nn.rescale_features(y_valid, transf_file_targets)
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         for j in range(dim):
             X_train, y_train = nn.get_features_append(epoch_files[j], arg_number = option)
             X_train_new = nn.select_features(X_train)
-            if option == 5 or option == 6:
+            if option == 5 or option == 6 or option == 7:
                 X_train_new = nn.transform_feature_from_array(X_train_new)
             X_train_new_scaled = nn.rescale_features(X_train_new, transf_file_features)
             y_train_scaled = nn.rescale_features(y_train, transf_file_targets)

@@ -966,3 +966,113 @@ file_model: full_scaling_scaled_3_6_500_tanh_062626v2_alpha0pt1
 500
 Number of Iteration: ,11
 Model Score: ,0.8499827765106055
+==========
+file_test: corr_file_Run3_3_new
+Timestamp: 2026-06-29 11:08:37.015822
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7143441267819666
+==========
+file_test: corr_file_Run3_3_new
+Timestamp: 2026-06-29 11:09:47.017809
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7143441267819666
+==========
+file_test: corr_file_Run5_3_new
+Timestamp: 2026-06-29 11:09:54.019828
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7210284278906018
+==========
+file_test: corr_file_Run6_3_new
+Timestamp: 2026-06-29 11:10:01.002278
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7213391482569933
+==========
+file_test: corr_file_Run11_3_new
+Timestamp: 2026-06-29 11:10:07.242143
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.6679700669743217
+==========
+file_test: corr_file_Run12_3_new
+Timestamp: 2026-06-29 11:10:13.413134
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.6742680221175475
+==========
+file_test: corr_file_Run15_3_new
+Timestamp: 2026-06-29 11:10:18.566437
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.5199267245618375
+==========
+file_test: corr_file_Run7_3_new
+Timestamp: 2026-06-29 11:10:24.833755
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7051353701187936
+==========
+file_test: corr_file_Run8_3_new
+Timestamp: 2026-06-29 11:10:31.485416
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7049715191503564
+==========
+file_test: corr_file_Run9_3_new
+Timestamp: 2026-06-29 11:10:38.136565
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7053630303874731
+==========
+file_test: corr_file_Run2_3_new
+Timestamp: 2026-06-29 11:10:45.402861
+Number of layer: ,3
+file_model: full_scaling_scaled_3_7_500_tanh_062926_alpha0pt1
+500
+500
+500
+Number of Iteration: ,18
+Model Score: ,0.7142583850249115
