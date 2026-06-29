@@ -246,12 +246,12 @@ def cart_to_cylind(x, y, z):
     '''
 
     r = ((z**2.) + (x**2.))**0.5
-    theta = np.rad2deg(np.arctan(z/x))
+    theta = np.rad2deg(np.arctan2(z, x))
     y = y
 
     return r, theta, y
 
-def cylind_to_card(r, theta, y):
+def cylind_to_cart(r, theta, y):
     '''
     Transform the cylindrical coordinates to caretesian coordinates.
     C. Wibisono
