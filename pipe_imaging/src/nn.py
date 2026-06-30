@@ -241,30 +241,39 @@ def cart_to_cylind(x, y, z):
     z: (float) z coordinate
     Return(s):
     r: (float) radius coordinate
-    theata: (float) angle coordinate
-    axial: (float) axial symmetry
+    x_hat: (float) unit vector of angular coordinates projected onto the x-axis
+    z_hat: (float) unit vector of angular coordinates projected onto the z-axis
+    y: (float) axial symmetry
     '''
 
     r = ((z**2.) + (x**2.))**0.5
-    theta = np.rad2deg(np.arctan2(z, x))
-    y = y
+    theta = np.arctan2(z, x)
+    
+    #Transform theta into pairs of cos \theta and sin \theta
+    x_hat = np.cos(theta)
+    z_hat = np.sin(theta)
 
-    return r, theta, y
+    return r, x_hat, z_hat, y
 
-def cylind_to_cart(r, theta, y):
+def cylind_to_cart(r, x_hat, z_hat,  y):
     '''
     Transform the cylindrical coordinates to caretesian coordinates.
     C. Wibisono
     06/29 '26
     Parameter(s):
     r: (float) radius coordinate
-    theta:(deg) angle coordinate
+    x_hat:(float) unit vector of angular coordinates projected onto the x-axis
+    z_hat: (float) unit vector of angular coordinates projected onto the z-axis
     y: (float) axial symmetry
     '''
 
-    x = r*(np.cos(np.deg2rad(theta)))
+    #Infer the angular coordinate from the cartesian unit vector:
+    theta = np.arctan2(z_hat, x_hat)
+
+    #Transform the cylindrical to cartesian coordinate:
+    x = r*(np.cos(theta))
     y = y
-    z = r*(np.sin(np.deg2rad(theta)))
+    z = r*(np.sin(theta))
     
     return x, y, z
 
@@ -566,20 +575,20 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 1.0):
                                         ])
                                    
                                     #Transform to cylindrical coordinates:
-                                    x0, y0, z0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
-                                    x1, y1, z1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
-                                    x2, y2, z2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
-                                    x3, y3, z3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
-                                    x4, y4, z4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
-                                    x5, y5, z5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
+                                    r0, x0, z0, y0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
+                                    r1, x1, z1, y1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
+                                    r2, x2, z2, y2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
+                                    r3, x3, z3, y3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
+                                    r4, x4, z4, y4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
+                                    r5, x5, z5, y5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
                                     
                                     y_arr.append([
-                                        x0, y0, z0,
-                                        x1, y1, z1,
-                                        x2, y2, z2,
-                                        x3, y3, z3,
-                                        x4, y4, z4,
-                                        x5, y5, z5
+                                        r0, x0, z0, y0,
+                                        r1, x1, z1, y1,
+                                        r2, x2, z2, y2,
+                                        r3, x3, z3, y3,
+                                        r4, x4, z4, y4,
+                                        r5, x5, z5, y5
                                         ])
 
                         del data
@@ -722,20 +731,20 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 1.0):
                         scatt_angle
                         ])
                     
-                    x0, y0, z0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
-                    x1, y1, z1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
-                    x2, y2, z2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
-                    x3, y3, z3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
-                    x4, y4, z4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
-                    x5, y5, z5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
+                    r0, x0, z0, y0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
+                    r1, x1, z1, y1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
+                    r2, x2, z2, y2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
+                    r3, x3, z3, y3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
+                    r4, x4, z4, y4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
+                    r5, x5, z5, y5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
                     
                     y_arr.append([
-                        x0, y0, z0,
-                        x1, y1, z1,
-                        x2, y2, z2,
-                        x3, y3, z3,
-                        x4, y4, z4,
-                        x5, y5, z5
+                        r0, x0, z0, y0,
+                        r1, x1, z1, y1,
+                        r2, x2, z2, y2,
+                        r3, x3, z3, y3,
+                        r4, x4, z4, y4,
+                        r5, x5, z5, y5
                         ])
 
             del data
@@ -965,7 +974,7 @@ def write_header(fin, run_mode):
         fin.write('#Pipe_Pos(x,y,z)'+','+'Scaling_Pos(x,y,z)'+'\n')
 
 
-def write_features(fout, y_test, *, coord_transform = 1):
+def write_features(fout, y_test):
     '''
     Export the result from the model prediction
     C. Wibisono
@@ -973,7 +982,6 @@ def write_features(fout, y_test, *, coord_transform = 1):
     Parameter(s):
     fout: file output pointer object to store the result 
     y_test: [arr] the prediction variables array from the model
-    coord_transform: (int) coordinate transformation (default = 1 as is, 2= transform to cartesian)
     '''
     dim = len(y_test)
     dim_column = len(y_test[0]) #dimension of column 
@@ -1004,28 +1012,29 @@ def write_features(fout, y_test, *, coord_transform = 1):
                             str(x3)+','+str(y3)+','+str(z3)+'\n')
 
         if dim_column == 18: 
-            if coord_transform == 1:
-                for i in range(dim):
-                    f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
-                            str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
-                            str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
-                            str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+','+\
-                            str(y_test[i][12])+','+str(y_test[i][13])+','+str(y_test[i][14])+','+\
-                            str(y_test[i][15])+','+str(y_test[i][16])+','+str(y_test[i][17])+'\n')
-            if coord_transform == 2:
-                for i in range(dim):
-                    x0, y0, z0 = cylind_to_cart(y_test[i][0], y_test[i][1], y_test[i][2])
-                    x1, y1, z1 = cylind_to_cart(y_test[i][3], y_test[i][4], y_test[i][5])
-                    x2, y2, z2 = cylind_to_cart(y_test[i][6], y_test[i][7], y_test[i][8])
-                    x3, y3, z3 = cylind_to_cart(y_test[i][9], y_test[i][10], y_test[i][11])
-                    x4, y4, z4 = cylind_to_cart(y_test[i][12], y_test[i][13], y_test[i][14])
-                    x5, y5, z5 = cylind_to_cart(y_test[i][15], y_test[i][16], y_test[i][17])
-                    f.write(str(x0)+','+str(y0)+','+str(z0)+','+ \
-                            str(x1)+','+str(y1)+','+str(z1)+','+ \
-                            str(x2)+','+str(y2)+','+str(z2)+','+ \
-                            str(x3)+','+str(y3)+','+str(z3)+','+\
-                            str(x4)+','+str(y4)+','+str(z4)+','+\
-                            str(x5)+','+str(y5)+','+str(z5)+'\n')
+            for i in range(dim):
+                f.write(str(y_test[i][0])+','+str(y_test[i][1])+','+str(y_test[i][2])+','+ \
+                        str(y_test[i][3])+','+str(y_test[i][4])+','+str(y_test[i][5])+','+ \
+                        str(y_test[i][6])+','+str(y_test[i][7])+','+str(y_test[i][8])+','+ \
+                        str(y_test[i][9])+','+str(y_test[i][10])+','+str(y_test[i][11])+','+\
+                        str(y_test[i][12])+','+str(y_test[i][13])+','+str(y_test[i][14])+','+\
+                        str(y_test[i][15])+','+str(y_test[i][16])+','+str(y_test[i][17])+'\n')
+        
+        if dim_column == 24:
+            for i in range(dim):
+                x0, y0, z0 = cylind_to_cart(y_test[i][0], y_test[i][1], y_test[i][2], y_test[i][3])
+                x1, y1, z1 = cylind_to_cart(y_test[i][4], y_test[i][5], y_test[i][6], y_test[i][7])
+                x2, y2, z2 = cylind_to_cart(y_test[i][8], y_test[i][9], y_test[i][10], y_test[i][11])
+                x3, y3, z3 = cylind_to_cart(y_test[i][12], y_test[i][13], y_test[i][14], y_test[i][15])
+                x4, y4, z4 = cylind_to_cart(y_test[i][16], y_test[i][17], y_test[i][18], y_test[i][19])
+                x5, y5, z5 = cylind_to_cart(y_test[i][20], y_test[i][21], y_test[i][22], y_test[i][23])
+                f.write(str(x0)+','+str(y0)+','+str(z0)+','+ \
+                        str(x1)+','+str(y1)+','+str(z1)+','+ \
+                        str(x2)+','+str(y2)+','+str(z2)+','+ \
+                        str(x3)+','+str(y3)+','+str(z3)+','+\
+                        str(x4)+','+str(y4)+','+str(z4)+','+\
+                        str(x5)+','+str(y5)+','+str(z5)+'\n')
+
 
 def plot_results(coords):
     '''

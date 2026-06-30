@@ -63,7 +63,7 @@ if __name__ == "__main__":
         result_inv = nn.inverse_transform(result, transf_file_targets)
 
         #Store the prediction from the re-trained model:
-        nn.write_features(file_out_test, result_inv, coord_transform = 2)
+        nn.write_features(file_out_test, result_inv)
 
     
 
