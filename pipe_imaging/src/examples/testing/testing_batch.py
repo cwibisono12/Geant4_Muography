@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
         #Transform the feature: (for mode = 5, 6, 7)
         if option == 5 or option == 6 or option == 7:
-            X_test_new = nn.transform_feature_from_array(X_test_new)
+            X_test_new = nn.transform_feature_from_array(X_test_new, arg_mode = option)
 
         #Rescaling the features:
         X_test_new_scaled = nn.rescale_features(X_test_new, transf_file_features)
