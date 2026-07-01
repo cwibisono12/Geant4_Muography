@@ -45,7 +45,7 @@ def initialize_model(X_train, y_train, layer, f_joblib):
     joblib.dump(init_model, f_joblib)
 
 
-def model_initialize(layer, f_joblib):
+def model_initialize(layer, f_joblib, *, activation_function = 'tanh'):
     '''
     Initialize the model and store the model to joblib.
     C. Wibisono
@@ -53,10 +53,11 @@ def model_initialize(layer, f_joblib):
     Parameter(s):
     layer: (tuple) number of neurons for each ith layer
     f_joblib: (obj) file pointer object to store the model
+    activation_function: (str) activation function eg. relu for linear, tanh for non-linear (default = tanh).
     '''
 
     init_model = MLPRegressor(solver = 'adam', alpha = 1e-1,
-            hidden_layer_sizes = layer, activation='tanh', random_state = 12)
+            hidden_layer_sizes = layer, activation = activation_function, random_state = 12)
 
     joblib.dump(init_model, f_joblib)
 
@@ -196,6 +197,60 @@ def store_score_result(fout, f_test, layer, num_epoch, score, f_model):
         f.write('Number of Iteration: '+','+str(num_epoch)+'\n')
         f.write('Model Score: '+','+str(score)+'\n')
         
+def store_score_result_append(fout, f_test, layer, num_epoch, score_1, score_2, f_model_1, f_model_2):
+    '''
+    Store models score over the test data
+    C. Wibisono
+    06/02 '26
+    Parameter(s):
+    fout: file pointer object to store the model score result
+    f_test: (str) file name of the test data assesed for the model score
+    layer: (tuple) an array consisting the number of neurons for each layer
+    num_epoch: (int) number of iterations (epoch)
+    score: (float) R2 of X_test w.r.t y_test
+    f_model: (str) file name of the model used
+    '''
+    from datetime import datetime
+
+    dim = len(layer)
+    temp = f_test.split('/')
+    dim_temp = len(temp)
+    test_fname = ''
+    
+    temp_model_1 = f_model_1.split('/')
+    dim_model_1 = len(temp_model_1)
+    model_fname_1 = ''
+    
+    temp_model_2 = f_model_2.split('/')
+    dim_model_2 = len(temp_model_2)
+    model_fname_2 = ''
+    
+    for i in range(dim_temp):
+        if '.csv' in temp[i]:
+            test_fname = test_fname + temp[i].split('.csv')[0]
+
+    for j in range(dim_model_1):
+        if '.joblib' in temp_model_1[j]:
+            model_fname_1 = model_fname_1 + temp_model_1[j].split('.joblib')[0]
+
+    for k in range(dim_model_2):
+        if '.joblib' in temp_model_2[k]:
+            model_fname_2 = model_fname_2 + temp_model_2[k].split('.joblib')[0]
+    
+    with open(fout, mode='a') as f:
+        f.write('=========='+'\n')
+        f.write('file_test: '+str(test_fname)+'\n')
+        f.write('Timestamp: '+str(datetime.now())+'\n')
+        f.write('Number of layer: '+','+str(dim)+'\n')
+        f.write('file_model_1: '+str(model_fname_1)+'\n')
+        f.write('file_model_2: '+str(model_fname_2)+'\n')
+
+        for i in range(dim):
+            f.write(str(layer[i])+'\n')
+
+        f.write('Number of Iteration: '+','+str(num_epoch)+'\n')
+        f.write('Model Score 1: '+','+str(score_1)+'\n')
+        f.write('Model Score 2: '+','+str(score_2)+'\n')
 
 def scatt_angle_transformer(data, key):
     '''
@@ -947,7 +1002,7 @@ def transform_feature_from_array(X_train, *, arg_mode = 5):
     dim_column = len(X_train[0])
     
     #Get the mean of the last feature if arg_mode = 5.
-    if arg_mode == 5 or arg_mode == 6:
+    if arg_mode == 5 or arg_mode == 6 or arg_mode == 7:
         X_train_np = np.array(X_train)
         mean_last_Xcol = round(np.mean(X_train_np[:,dim_column - 1]),2)
         
@@ -959,6 +1014,74 @@ def transform_feature_from_array(X_train, *, arg_mode = 5):
 
         
     return X_train
+
+
+def split_target(y_train, *, arg_mode = 7):
+    '''
+    Split the target variables into two parts.
+    C. Wibisono
+    07/01 '26
+    Parameter(s):
+    y_train: [arr] target variables
+    arg_mode: (int) number of target variables (see get_features_append function).
+    Return(s):
+    y_train_1: [arr] splitted 1st targets
+    y_train_2: [arr] splitted 2nd targets
+    '''
+
+    dim_row = len(y_train)
+    
+    y_train_1 = []
+    y_train_2 = []
+    dim_row = len(y_train)
+    if arg_mode == 7:
+        for i in range(dim_row):
+            y_train_1.append([
+                y_train[i][0], y_train[i][3], y_train[i][4], y_train[i][7],
+                y_train[i][8], y_train[i][11], y_train[i][12], y_train[i][15],
+                y_train[i][16], y_train[i][19], y_train[i][20], y_train[i][23]
+                ])
+            y_train_2.append([
+                y_train[i][1], y_train[i][2], y_train[i][5], y_train[i][6],
+                y_train[i][9], y_train[i][10], y_train[i][13], y_train[i][14],
+                y_train[i][17], y_train[i][18], y_train[i][21], y_train[i][22]
+                ])
+
+    return y_train_1, y_train_2
+
+def combine_target(y_test_1, y_test_2, *, arg_mode = 7):
+    '''
+    Combine two target arrays into one.
+    C. Wibisono
+    07/01 '26
+    Parameter(s):
+    y_test_1: [arr] target variable 1 #linear
+    y_test_2: [arr] target variable 2 #non-linear
+    Return(s):
+    y_train: [arr] target variables
+    '''
+
+    y_test = [] #Combined array
+    dim1 = len(y_test_1)
+    dim2 = len(y_test_2)
+
+    if dim1 != dim2:
+        print("Length of arr 1 and 2 has to be equal\n")
+
+    if arg_mode == 7:
+        for i in range(dim1):
+            y_test.append([
+                y_test_1[i][0], y_test_2[i][0], y_test_2[i][1], y_test_1[i][1],
+                y_test_1[i][2], y_test_2[i][2], y_test_2[i][3], y_test_1[i][3],
+                y_test_1[i][4], y_test_2[i][4], y_test_2[i][5], y_test_1[i][5],
+                y_test_1[i][6], y_test_2[i][6], y_test_2[i][7], y_test_1[i][7],
+                y_test_1[i][8], y_test_2[i][8], y_test_2[i][9], y_test_1[i][9],
+                y_test_1[i][10], y_test_2[i][10], y_test_2[i][11], y_test_1[i][11]
+                ])
+
+    return y_test
+
+
 
 def write_header(fin, run_mode):
     '''
