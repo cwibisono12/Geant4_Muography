@@ -1032,9 +1032,9 @@ def merge_prediction_file(fin, fout, f_log):
                     temp = line.split(',')
                     dim = len(temp)
                     for i in range(dim):
-                        f1.write(temp[i]+',')
+                        f1.write(str(float(temp[i]))+',')
                         if i == dim -1:
-                            f1.write(temp[i])
+                            f1.write(str(float(temp[i]))+'\n')
 
     print(f"Finished copying: {fin} into {fout}")
     with open(f_log, mode='a') as f3:
