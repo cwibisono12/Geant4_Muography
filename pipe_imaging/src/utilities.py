@@ -990,4 +990,58 @@ def rearrange_corr_files(fin1, fin2, fin3, fin4, fout1, fout2):
             temp = len(comb_arr[i][1][1])
             for k in range(temp):
                 f2.write(comb_arr[i][0]+','+str(comb_arr[i][1][0][k])+','+str(comb_arr[i][1][1][k])+','+str(comb_arr[i][1][2][k])+','+str(comb_arr[i][1][3][k])+'\n')
+
+
+def merge_prediction_file(fin, fout, f_log):
+    '''
+    Merge file resulted from the model prediction.
+    C. Wibisono
+    07/02 '26
+    Parameter(s):
+    fin: file pointer of input file
+    fout: file pointer of output file
+    f_log: log file to keep the records 
+    '''
+    from datetime import datetime
+
+    temp_fin = fin.split('/')
+    dim_temp_fin = len(temp_fin)
+    fname_fin = ''
+
+    temp_fout = fout.split('/')
+    dim_temp_fout = len(temp_fout)
+    fname_fout = ''
+
+    for i in range(dim_temp_fin):
+        if '.csv' in temp_fin[i]:
+            fname_fin = fname_fin + temp_fin[i].split('.csv')[0]
     
+    for j in range(dim_temp_fout):
+        if '.csv' in temp_fout[j]:
+            fname_fout = fname_fout + temp_fout[j].split('.csv')[0]
+    
+    num = 0
+    with open(fout, mode='a') as f1:
+        with open(fin, mode='r')  as f2:
+            while(1):
+                line = f2.readline()
+                if line == '':
+                    break
+                else:
+                    num = num + 1
+                    temp = line.split(',')
+                    dim = len(temp)
+                    for i in range(dim):
+                        f1.write(temp[i]+',')
+                        if i == dim -1:
+                            f1.write(temp[i])
+
+    print(f"Finished copying: {fin} into {fout}")
+    with open(f_log, mode='a') as f3:
+        f3.write('=========='+'\n')
+        f3.write('Timestamp: '+str(datetime.now())+'\n')
+        f3.write('file_in: '+str(fname_fin)+'\n')
+        f3.write('file_out: '+str(fname_fout)+'\n')
+        f3.write('Num of records added: '+str(num)+'\n')
+
+    print(f"Finished creating log file {f_log}")
