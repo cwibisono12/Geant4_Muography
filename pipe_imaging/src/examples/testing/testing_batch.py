@@ -38,7 +38,7 @@ if __name__ == "__main__":
         X_test_new = nn.select_features(X_test)
 
         #Transform the feature: (for mode = 5, 6, 7)
-        if option == 5 or option == 6 or option == 7:
+        if option == 5 or option == 6 or option == 7 or option == 8:
             X_test_new = nn.transform_feature_from_array(X_test_new, arg_mode = option)
 
         #Rescaling the features:
@@ -47,11 +47,6 @@ if __name__ == "__main__":
         #Rescaling the targets:
         y_test_scaled = nn.rescale_features(y_test, transf_file_targets)
         
-        if option == 7:
-            #Split the scaled targets:
-            y_test_scaled_1, y_test_scaled_2 = nn.split_target(y_test_scaled, arg_mode = option)
-            del y_test_scaled
-
         if option >= 1 and option < 7:
             #Make prediction from the test file:
             result = nn.predict_outcome_from_file(X_test_new_scaled, file_model)
@@ -63,7 +58,11 @@ if __name__ == "__main__":
 
             nn.store_score_result(score_file, str(file_list[k]), layer, epoch, score, file_model)
         
-        if option == 7:
+        if option == 7 or option == 8:
+            #Split the scaled targets:
+            y_test_scaled_1, y_test_scaled_2 = nn.split_target(y_test_scaled, arg_mode = option)
+            del y_test_scaled
+            
             #Make prediction from the test_files:
             result_1 = nn.predict_outcome_from_file(X_test_new_scaled, file_model)
             result_2 = nn.predict_outcome_from_file(X_test_new_scaled, file_model_2)
@@ -87,8 +86,11 @@ if __name__ == "__main__":
         result_inv = nn.inverse_transform(result, transf_file_targets)
         
         #Store the prediction from the re-trained model:
-        nn.write_features(file_out_test, result_inv)
-
+        if option >= 1 or option <= 7:
+            nn.write_features(file_out_test, result_inv)
+        if option == 8:
+            nn.write_features(file_out_test, result_inv, coord_transform = 2)
+            
     
 
     

@@ -37,7 +37,7 @@ if __name__ == "__main__":
         X_train_new = nn.select_features(X_train)
         
         #Overwrite the last feature (for run_mode listed below):
-        if option == 5 or option == 6 or option == 7:
+        if option == 5 or option == 6 or option == 7 or option == 8:
             X_train_new = nn.transform_feature_from_array(X_train_new, arg_mode = option)
 
         nn.scaler_update(X_train_new, transf_file_features)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     layer = nn.get_layer_from_file(layer_file)
 
     #Initialize the model:
-    if option == 7:
+    if option == 7 or option == 8:
         nn.model_initialize(layer, file_model_1, activation_function = 'relu') #initialize 1st model
         nn.model_initialize(layer, file_model_2, activation_function = 'tanh') #initialize 2nd model
     if option >= 1 and option < 7:
@@ -56,17 +56,17 @@ if __name__ == "__main__":
     #Extract the validation data:
     X_valid, y_valid = nn.get_features_append(validation_file, arg_number = option)
     X_valid_new = nn.select_features(X_valid)
-    if option == 5 or option == 6 or option == 7:
+    if option == 5 or option == 6 or option == 7 or option == 8:
         X_valid_new = nn.transform_feature_from_array(X_valid_new, arg_mode = option)
     X_valid_new_scaled = nn.rescale_features(X_valid_new, transf_file_features)
     y_valid_scaled = nn.rescale_features(y_valid, transf_file_targets)
-    if option == 7:
+    if option == 7 or option == 8:
         y_valid_scaled_1, y_valid_scaled_2 = nn.split_target(y_valid_scaled, arg_mode = option)
 
     #Initialize convergence variables:
     best_val_loss = np.inf
     flag_counter = 0
-    if option == 7:
+    if option == 7 or option == 8:
         best_val_loss_1 = np.inf
         flag_counter_1 = 0
         best_val_loss_2 = np.inf
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         for j in range(dim):
             X_train, y_train = nn.get_features_append(epoch_files[j], arg_number = option)
             X_train_new = nn.select_features(X_train)
-            if option == 5 or option == 6 or option == 7:
+            if option == 5 or option == 6 or option == 7 or option == 8:
                 X_train_new = nn.transform_feature_from_array(X_train_new, arg_mode = option)
             X_train_new_scaled = nn.rescale_features(X_train_new, transf_file_features)
             y_train_scaled = nn.rescale_features(y_train, transf_file_targets)
@@ -103,7 +103,7 @@ if __name__ == "__main__":
         X_temp = np.vstack(X_temp)
         y_temp = np.vstack(y_temp)
        
-        if option == 7:
+        if option == 7 or option == 8:
             if converged_1 == 1 and converged_2 == 1:
                 print("Both models converged at iteration: ", i)
                 break
