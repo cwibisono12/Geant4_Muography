@@ -302,6 +302,7 @@ def cart_to_cylind(x, y, z):
     '''
 
     r = ((z**2.) + (x**2.))**0.5
+    
     theta = np.arctan2(z, x)
     
     #Transform theta into pairs of cos \theta and sin \theta
@@ -326,6 +327,7 @@ def cart_to_cylind_theta(x, y, z):
     '''
 
     r = ((z**2.) + (x**2.))**0.5
+    
     theta = np.arctan2(z, x)
     
     return r, theta, y
@@ -455,6 +457,7 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
     (7:), the first, last and other hits with addition of a new feature as intearaction term. (Target coordinates change to cylindrical).
     (8:), the first, last and other hits with addition of a new feature as intearaction term. (Target coordinates change to cylindrical with theta as polar angle).
     theta_scatt: (float) scattering angle between the incoming and outgoing muon from the scintillator hits for event selection.
+    (9:), the first, last and other hits with addition of a new feature as intearaction term. (Target coordinates change to cylindrical with rescaled r and polar coo    rdinates).
     Return(s):
     X: [arr] array of independent features variables
     y: [arr] array of dependent variables
@@ -720,6 +723,35 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
                                         r5, theta5, y5
                                         ])
 
+                            if arg_number == 9:
+                                #Require only event in which the scattering angle is greater than 0.5 deg
+                                if scatt_angle >= theta_scatt:
+                                    X_arr.append([
+                                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                                        scatt_angle
+                                        ])
+                                   
+                                    #Transform to cylindrical coordinates:
+                                    r0, x0, z0, y0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
+                                    r1, x1, z1, y1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
+                                    r2, x2, z2, y2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
+                                    r3, x3, z3, y3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
+                                    r4, x4, z4, y4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
+                                    r5, x5, z5, y5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
+                                    
+                                    #Rescale the r, cos \theta, and sin \theta coordinates by multiplying them with radius.
+                                    y_arr.append([
+                                        r0*r0, r0*x0, r0*z0, y0,
+                                        r1*r1, r1*x1, r1*z1, y1,
+                                        r2*r2, r2*x2, r2*z2, y2,
+                                        r3*r3, r3*x3, r3*z3, y3,
+                                        r4*r4, r4*x4, r4*z4, y4,
+                                        r5*r5, r5*x5, r5*z5, y5
+                                        ])
+
 
                         del data
                         data = {}
@@ -905,6 +937,32 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
                         r5, theta5, y5
                         ])
 
+            if arg_number == 9:
+                #Require only event in which the scattering angle is greather than 0.5 deg
+                if scatt_angle > theta_scatt:
+                    X_arr.append([
+                        data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                        data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                        data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                        data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                        scatt_angle
+                        ])
+                    
+                    r0, x0, z0, y0 = cart_to_cylind(data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2])
+                    r1, x1, z1, y1 = cart_to_cylind(data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2])
+                    r2, x2, z2, y2 = cart_to_cylind(data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1])
+                    r3, x3, z3, y3 = cart_to_cylind(data[prev_id][5][0], data[prev_id][5][1], data[prev_id][5][2])
+                    r4, x4, z4, y4 = cart_to_cylind(data[prev_id][5][mid_dim_scaling], data[prev_id][5][mid_dim_scaling+1], data[prev_id][5][mid_dim_scaling+2])
+                    r5, x5, z5, y5 = cart_to_cylind(data[prev_id][5][dim_scaling-3], data[prev_id][5][dim_scaling-2], data[prev_id][5][dim_scaling-1])
+                    
+                    y_arr.append([
+                        r0*r0, r0*x0, r0*z0, y0,
+                        r1*r1, r1*x1, r1*z1, y1,
+                        r2*r2, r2*x2, r2*z2, y2,
+                        r3*r3, r3*x3, r3*z3, y3,
+                        r4*r4, r4*x4, r4*z4, y4,
+                        r5*r5, r5*x5, r5*z5, y5
+                        ])
 
             del data
         
@@ -982,7 +1040,7 @@ def preprocess_selected_features_batch(transformer,X_arr):
 
     return X_arr_scaled
 
-def scaler_initialize(f_transform):
+def scaler_initialize(f_transform, *, with_mean_included = True):
     '''
     Initialize an empty scaler to be used to scale the data over the data batches 
     and memory keeping to retrieve the global mean and variances over all training data.
@@ -990,11 +1048,12 @@ def scaler_initialize(f_transform):
     06/15 '26
     Parameter(s):
     f_transform: (obj) file pointer object to store the transformer.
+    with_mean_included: (bool) center the data before scaling. (Default = True)
     '''
 
     from sklearn.preprocessing import StandardScaler
 
-    scaler_init = StandardScaler()
+    scaler_init = StandardScaler(with_mean = with_mean_included)
 
     joblib.dump(scaler_init, f_transform)
 
@@ -1106,7 +1165,7 @@ def transform_feature_from_array(X_train, *, arg_mode = 5):
     dim_column = len(X_train[0])
     
     #Get the mean of the last feature if arg_mode is listed below.
-    if arg_mode == 5 or arg_mode == 6 or arg_mode == 7 or arg_mode == 8:
+    if arg_mode == 5 or arg_mode == 6 or arg_mode == 7 or arg_mode == 8 or arg_mode == 9:
         X_train_np = np.array(X_train)
         mean_last_Xcol = round(np.mean(X_train_np[:,dim_column - 1]),2)
         
@@ -1127,7 +1186,7 @@ def split_target(y_train, *, arg_mode = 7):
     07/01 '26
     Parameter(s):
     y_train: [arr] target variables
-    arg_mode: (int) number of target variables (see get_features_append function).
+    arg_mode: (int) mode  of target variables (see get_features_append function).
     Return(s):
     y_train_1: [arr] splitted 1st targets
     y_train_2: [arr] splitted 2nd targets
@@ -1138,7 +1197,7 @@ def split_target(y_train, *, arg_mode = 7):
     y_train_1 = []
     y_train_2 = []
     dim_row = len(y_train)
-    if arg_mode == 7:
+    if arg_mode == 7 or arg_mode == 9:
         for i in range(dim_row):
             y_train_1.append([
                 y_train[i][0], y_train[i][3], y_train[i][4], y_train[i][7],
@@ -1174,6 +1233,7 @@ def combine_target(y_test_1, y_test_2, *, arg_mode = 7):
     Parameter(s):
     y_test_1: [arr] target variable 1 #linear
     y_test_2: [arr] target variable 2 #non-linear
+    arg_mode: (int) mode of target variable (see get_features_append function).
     Return(s):
     y_train: [arr] target variables
     '''
@@ -1185,7 +1245,7 @@ def combine_target(y_test_1, y_test_2, *, arg_mode = 7):
     if dim1 != dim2:
         print("Length of arr 1 and 2 has to be equal\n")
 
-    if arg_mode == 7:
+    if arg_mode == 7 or arg_mode == 9:
         for i in range(dim1):
             y_test.append([
                 y_test_1[i][0], y_test_2[i][0], y_test_2[i][1], y_test_1[i][1],
@@ -1209,7 +1269,56 @@ def combine_target(y_test_1, y_test_2, *, arg_mode = 7):
 
     return y_test
 
+def rescaled_target_transform(y_test,*,arg_mode = 9):
+    '''
+    Rescaled transformed target
+    C. Wibisono
+    06/06 '26
+    Parameter(s):
+    y_test: [arr] the prediction variables array from the model (After scaling the variable)
+    Return(s):
+    y_transf: [arr] rescaled target.
+    '''
 
+    dim_row = len(y_test)
+    dim_column = len(y_test[0])
+
+    y_transf = []
+    
+    if arg_mode == 9:
+        for i in range(dim_row):
+            for j in range(0, dim_column, 4):
+                #Enforce the negative number of radius to zero:
+                if y_test[i][j] < 0.:
+                    y_test[i][j] = 0.0
+                
+                #Convert back to radius:
+                y_test[i][j] = (y_test[i][j])**(0.5) 
+                #Safety check for preventing division with zero:
+                if y_test[i][j] < 0.00001:
+                    y_test[i][j] = 0.00001
+                    
+            for k in range(1, dim_column, 4):
+                #Revert scaled angular coordinates to original angular coordinates (cos\theta, sin\theta):
+                y_test[i][k] = y_test[i][k] / y_test[i][k-1]
+                y_test[i][k+1] = y_test[i][k+1] / y_test[i][k-1]
+
+                #Enforce the trigonometric identity: (sin \theta^2 + cos \theta^2 = 1)
+                norm = (((y_test[i][k])**2.)+((y_test[k+1][2])**2.))**0.5
+
+                y_test[i][k] = y_test[i][k]/norm
+                y_test[i][k+1] = y_test[i][k+1]/norm
+            
+            y_transf.append([
+                y_test[i][0], y_test[i][1], y_test[i][2], y_test[i][3],
+                y_test[i][4], y_test[i][5], y_test[i][6], y_test[i][7],
+                y_test[i][8], y_test[i][9], y_test[i][10], y_test[i][11],
+                y_test[i][12], y_test[i][13], y_test[i][14], y_test[i][15],
+                y_test[i][16], y_test[i][17], y_test[i][18], y_test[i][19],
+                y_test[i][20], y_test[i][21], y_test[i][22], y_test[i][23]
+                ])
+
+    return y_transf
 
 def write_header(fin, run_mode):
     '''

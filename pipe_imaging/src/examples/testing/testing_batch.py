@@ -38,7 +38,7 @@ if __name__ == "__main__":
         X_test_new = nn.select_features(X_test)
 
         #Transform the feature: (for mode = 5, 6, 7)
-        if option == 5 or option == 6 or option == 7 or option == 8:
+        if option == 5 or option == 6 or option == 7 or option == 8 or option == 9:
             X_test_new = nn.transform_feature_from_array(X_test_new, arg_mode = option)
 
         #Rescaling the features:
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
             nn.store_score_result(score_file, str(file_list[k]), layer, epoch, score, file_model)
         
-        if option == 7 or option == 8:
+        if option == 7 or option == 8 or option ==  9:
             #Split the scaled targets:
             y_test_scaled_1, y_test_scaled_2 = nn.split_target(y_test_scaled, arg_mode = option)
             del y_test_scaled
@@ -91,6 +91,9 @@ if __name__ == "__main__":
         if option == 8:
             nn.write_features(file_out_test, result_inv, coord_transform = 2)
             
-    
-
+        if option == 9:
+            #Revert the inversed scaled target back to original spatial positions:
+            result_inv_transf = nn.rescaled_target_transform(result_inv, arg_mode = option)
+            del result_inv
+            nn.write_features(file_out_test, result_inv_transf)
     
