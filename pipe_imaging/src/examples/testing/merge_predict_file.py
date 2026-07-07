@@ -20,7 +20,7 @@ if __name__ == "__main__":
     for name in file_list:
         temp = str(name)
         for k in range(initial, final+1, 1):
-            pattern = str(k)+'_'+str(option)+'_'+str(run_mode)+'_'+str(epoch)
+            pattern = 'Run'+str(k)+'_'+str(option)+'_'+str(run_mode)+'_'+str(epoch)
             
             #Merge file that meets condition above:
             if pattern in temp:

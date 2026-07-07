@@ -7,7 +7,7 @@ epoch=$4
 directory_out=$5 #directory output to store the merged files
 directory_log=$6 #directory to store the log file
 
-#./merge_predict_file.py $directory_in $option $run_mode 14 15 $epoch $directory_out/corr_file_conc_1_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
+./merge_predict_file.py $directory_in $option $run_mode 14 15 $epoch $directory_out/corr_file_conc_1_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
 ./merge_predict_file.py $directory_in $option $run_mode 43 45 $epoch $directory_out/corr_file_conc_2_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
 ./merge_predict_file.py $directory_in $option $run_mode 11 12 $epoch $directory_out/corr_file_conc_3_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
 ./merge_predict_file.py $directory_in $option $run_mode 46 48 $epoch $directory_out/corr_file_conc_4_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
