@@ -62,7 +62,7 @@ if __name__ == "__main__":
             model_2 = nn_torch.MLPRegressor(layer, ft_dim = len(X_train_new[0]), tg_dim = len(y_train_2[0]), activation_function = 'tanh')
             
             #Pytorch requires defining the loss function and optimizer explicitly:
-            loss_func_1 = torch_nn.L1Loss()
+            loss_func_1 = torch_nn.MSELoss()
             optim_1 = torch.optim.Adam(model_1.parameters(), lr = 0.001)
             loss_func_2 = torch.nn.MSELoss()
             optim_2 = torch.optim.Adam(model_2.parameters(), lr = 0.001)
