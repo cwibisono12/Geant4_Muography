@@ -183,6 +183,8 @@ def store_score_result(fout, f_test, layer, num_epoch, score, f_model):
     for j in range(dim_model):
         if '.joblib' in temp_model[j]:
             model_fname = model_fname + temp_model[j].split('.joblib')[0]
+        if '.pth' in temp_model[j]:
+            model_fname = model_fname + temp_model[j].split('.pth')[0]
 
     with open(fout, mode='a') as f:
         f.write('=========='+'\n')
@@ -232,10 +234,14 @@ def store_score_result_append(fout, f_test, layer, num_epoch, score_1, score_2, 
     for j in range(dim_model_1):
         if '.joblib' in temp_model_1[j]:
             model_fname_1 = model_fname_1 + temp_model_1[j].split('.joblib')[0]
+        if '.pth' in temp_model_1[j]:
+            model_fname_1 = model_fname_1 + temp_model_1[j].split('.pth')[0]
 
     for k in range(dim_model_2):
         if '.joblib' in temp_model_2[k]:
             model_fname_2 = model_fname_2 + temp_model_2[k].split('.joblib')[0]
+        if '.pth' in temp_model_2[k]:
+            model_fname_2 = model_fname_2 + temp_model_2[k].split('.pth')[0]
     
     with open(fout, mode='a') as f:
         f.write('=========='+'\n')

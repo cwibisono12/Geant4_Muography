@@ -6516,10 +6516,10 @@ Model Score 1: ,0.6839478340666711
 Model Score 2: ,-0.9018556760339492
 ==========
 file_test: corr_file_Run20_3_new
-Timestamp: 2026-07-09 12:11:20.097191
+Timestamp: 2026-07-09 12:29:22.106278
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6528,10 +6528,10 @@ Model Score 1: ,0.9517117142677307
 Model Score 2: ,0.858728289604187
 ==========
 file_test: corr_file_Run23_3_new
-Timestamp: 2026-07-09 12:11:25.527103
+Timestamp: 2026-07-09 12:29:27.368321
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6540,10 +6540,10 @@ Model Score 1: ,0.9547507166862488
 Model Score 2: ,0.8663060665130615
 ==========
 file_test: corr_file_Run18_3_new
-Timestamp: 2026-07-09 12:11:32.232622
+Timestamp: 2026-07-09 12:29:33.864769
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6552,10 +6552,10 @@ Model Score 1: ,0.9477613568305969
 Model Score 2: ,0.82927405834198
 ==========
 file_test: corr_file_Run21_3_new
-Timestamp: 2026-07-09 12:11:39.579932
+Timestamp: 2026-07-09 12:29:40.954740
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6564,10 +6564,10 @@ Model Score 1: ,0.9512181282043457
 Model Score 2: ,0.8602893948554993
 ==========
 file_test: corr_file_Run24_3_new
-Timestamp: 2026-07-09 12:11:44.939285
+Timestamp: 2026-07-09 12:29:46.263964
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6576,10 +6576,10 @@ Model Score 1: ,0.9546708464622498
 Model Score 2: ,0.8678584098815918
 ==========
 file_test: corr_file_Run26_3_new
-Timestamp: 2026-07-09 12:11:48.544623
+Timestamp: 2026-07-09 12:29:49.764348
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6588,10 +6588,10 @@ Model Score 1: ,0.9520115852355957
 Model Score 2: ,0.8922450542449951
 ==========
 file_test: corr_file_Run27_3_new
-Timestamp: 2026-07-09 12:11:51.037379
+Timestamp: 2026-07-09 12:29:52.167379
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6600,10 +6600,10 @@ Model Score 1: ,0.9527072310447693
 Model Score 2: ,0.8890638947486877
 ==========
 file_test: corr_file_Run28_3_new
-Timestamp: 2026-07-09 12:11:56.103336
+Timestamp: 2026-07-09 12:29:57.085618
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6612,10 +6612,10 @@ Model Score 1: ,0.9483233094215393
 Model Score 2: ,0.8424025177955627
 ==========
 file_test: corr_file_Run29_3_new
-Timestamp: 2026-07-09 12:12:03.772367
+Timestamp: 2026-07-09 12:30:04.511701
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6624,10 +6624,10 @@ Model Score 1: ,0.9482141137123108
 Model Score 2: ,0.8432784080505371
 ==========
 file_test: corr_file_Run30_3_new
-Timestamp: 2026-07-09 12:12:11.644169
+Timestamp: 2026-07-09 12:30:12.105730
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6636,10 +6636,10 @@ Model Score 1: ,0.9481012225151062
 Model Score 2: ,0.8439881801605225
 ==========
 file_test: corr_file_Run32_3_new
-Timestamp: 2026-07-09 12:12:19.988135
+Timestamp: 2026-07-09 12:30:20.224059
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6648,10 +6648,10 @@ Model Score 1: ,0.949860155582428
 Model Score 2: ,0.8131197690963745
 ==========
 file_test: corr_file_Run33_3_new
-Timestamp: 2026-07-09 12:12:28.851613
+Timestamp: 2026-07-09 12:30:28.836328
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6660,10 +6660,10 @@ Model Score 1: ,0.9497318863868713
 Model Score 2: ,0.8130255341529846
 ==========
 file_test: corr_file_Run34_3_new
-Timestamp: 2026-07-09 12:12:37.916956
+Timestamp: 2026-07-09 12:30:37.691728
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6672,10 +6672,10 @@ Model Score 1: ,0.9534282088279724
 Model Score 2: ,0.7990172505378723
 ==========
 file_test: corr_file_Run35_3_new
-Timestamp: 2026-07-09 12:12:47.052034
+Timestamp: 2026-07-09 12:30:46.520624
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6684,10 +6684,10 @@ Model Score 1: ,0.9533694982528687
 Model Score 2: ,0.8003517389297485
 ==========
 file_test: corr_file_Run36_3_new
-Timestamp: 2026-07-09 12:12:56.083391
+Timestamp: 2026-07-09 12:30:55.405000
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6696,10 +6696,10 @@ Model Score 1: ,0.9534163475036621
 Model Score 2: ,0.8006719350814819
 ==========
 file_test: corr_file_Run37_3_new
-Timestamp: 2026-07-09 12:13:05.238387
+Timestamp: 2026-07-09 12:31:04.303780
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6708,10 +6708,10 @@ Model Score 1: ,0.9585496187210083
 Model Score 2: ,0.7911953330039978
 ==========
 file_test: corr_file_Run38_3_new
-Timestamp: 2026-07-09 12:13:14.354914
+Timestamp: 2026-07-09 12:31:13.316059
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6720,10 +6720,10 @@ Model Score 1: ,0.9585695266723633
 Model Score 2: ,0.7899729609489441
 ==========
 file_test: corr_file_Run39_3_new
-Timestamp: 2026-07-09 12:13:23.453237
+Timestamp: 2026-07-09 12:31:22.186998
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6732,10 +6732,10 @@ Model Score 1: ,0.9586616158485413
 Model Score 2: ,0.7918775081634521
 ==========
 file_test: corr_file_Run41_3_new
-Timestamp: 2026-07-09 12:13:32.788173
+Timestamp: 2026-07-09 12:31:31.252212
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6744,10 +6744,10 @@ Model Score 1: ,0.9633165597915649
 Model Score 2: ,0.7788780927658081
 ==========
 file_test: corr_file_Run42_3_new
-Timestamp: 2026-07-09 12:13:42.046046
+Timestamp: 2026-07-09 12:31:40.146365
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6756,10 +6756,10 @@ Model Score 1: ,0.9632848501205444
 Model Score 2: ,0.7797998189926147
 ==========
 file_test: corr_file_Run16_3_new
-Timestamp: 2026-07-09 12:13:50.762232
+Timestamp: 2026-07-09 12:31:48.527777
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
@@ -6768,10 +6768,10 @@ Model Score 1: ,0.9478036761283875
 Model Score 2: ,0.8288098573684692
 ==========
 file_test: corr_file_Run19_3_new
-Timestamp: 2026-07-09 12:13:57.973056
+Timestamp: 2026-07-09 12:31:55.435078
 Number of layer: ,3
-file_model_1: 
-file_model_2: 
+file_model_1: partial_scaling_scaled_3_9_500_070926_relu_torch
+file_model_2: partial_scaling_scaled_3_9_500_070926_tanh_torch
 500
 500
 500
