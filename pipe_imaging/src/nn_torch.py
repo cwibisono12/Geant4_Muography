@@ -35,17 +35,21 @@ class MLPRegressor(nn.Module):
         #Initialize the container network of layers:
         network_list = []
         
-        #Set up the layer to be executed when the input data is passed through the object instantiated from this class.:
-        network_list.append(nn.Linear(self.ft_dim, self.layer[0]))
-        for i in range(0,dim_layer-1,1):
-            network_list.append(nn.Linear(self.layer[i], self.layer[i+1]))
-        
-        network_list.append(nn.Linear(self.layer[dim_layer-1], self.tg_dim))
-
+        #Setup the Activation Function:
         if activation_function == 'relu':
             self.act_func = nn.ReLU()
         if activation_function == 'tanh':
             self.act_func = nn.Tanh()
+        #Set up the layer to be executed when the input data is passed through the object instantiated from this class.:
+        network_list.append(nn.Linear(self.ft_dim, self.layer[0]))
+        network_list.append(self.act_func)
+        
+        for i in range(0,dim_layer-1,1):
+            network_list.append(nn.Linear(self.layer[i], self.layer[i+1]))
+            network_list.append(self.act_func)
+
+        network_list.append(nn.Linear(self.layer[dim_layer-1], self.tg_dim))
+
         
         self.network = nn.Sequential(*network_list)
 
@@ -57,10 +61,6 @@ class MLPRegressor(nn.Module):
         Parameter(s):
         X_train: [arr] independent input features (data format needs to be pytorch tensor array).
         '''
-        #dim = len(self.network)
-        #for i in range(dim):
-         #   X_train = self.network[i](X_train)
-          #  X_train = self.act_func(X_train)
 
         return self.network(X_train)
 
