@@ -1,9 +1,9 @@
 #!/bin/bash
 
 directory_in=$1 #directory input where the prediction files are
-option=$2
-run_mode=$3
-epoch=$4
+option=$2 #data retrieval mode when running simulation
+run_mode=$3 #data retrieval mode when training datasets
+epoch=$4 #iteration number
 directory_out=$5 #directory output to store the merged files
 directory_log=$6 #directory to store the log file
 

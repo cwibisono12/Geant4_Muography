@@ -9,7 +9,6 @@ class MLPRegressor(nn.Module):
     Build NN architecture inherited from the nn.Module.
     C. Wibisono
     07/08 '26
-    activation_function: (str) activation function to be used (eg. 'relu' or 'tanh' default = 'relu').
     '''
     
     def __init__(self, layer, ft_dim, tg_dim, *,  activation_function = 'relu'):
@@ -21,6 +20,7 @@ class MLPRegressor(nn.Module):
         layer: (tuple) number of neurons for each layer ith.
         ft_dim: (int) number of features.
         tg_dim: (int) number of targets.
+        activation_function: (str) activation function to be used (eg. 'relu' or 'tanh' default = 'relu').
         '''
         
         super().__init__()
