@@ -63,9 +63,9 @@ if __name__ == "__main__":
             
             #Pytorch requires defining the loss function and optimizer explicitly:
             loss_func_1 = torch_nn.MSELoss()
-            optim_1 = torch.optim.Adam(model_1.parameters(), lr = 0.001, weight_decay=1e-1)
+            optim_1 = torch.optim.AdamW(model_1.parameters(), lr = 0.001, weight_decay=1e-1)
             loss_func_2 = torch.nn.MSELoss()
-            optim_2 = torch.optim.Adam(model_2.parameters(), lr = 0.001, weight_decay=1e-1)
+            optim_2 = torch.optim.AdamW(model_2.parameters(), lr = 0.001, weight_decay=1e-1)
 
     if option >= 1 and option < 7:
         if training_mode == 1:
@@ -74,7 +74,7 @@ if __name__ == "__main__":
             model = nn_torch.MLPRegressor(layer = layer, ft_dim = len(X_train_new[0]), tg_dim = len(y_train), activation_function = 'tanh')
             #Pytorch requires defining the loss function and optimizer explicitly:
             loss_func = torch_nn.MSELoss()
-            optim = torch.optim.Adam(model.parameters(), lr = 0.001)
+            optim = torch.optim.AdamW(model.parameters(), lr = 0.001, weight_decay=1e-1)
 
 
     #Extract the validation data:
