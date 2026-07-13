@@ -457,6 +457,7 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
     Parameter(s):
     file_in: fileinput pointer object 
     arg_number: (int) number of target variables (2:) for first and last hits , (3:) for the first, last and the other hits
+    theta_scatt: (deg) allowed scattering angle for event selection.
     (4:), the first and last hits and the last hit for incoming muon and the first hit for outgoing muon.
     (5:), the first and last hits and with addition of a new feature as interaction term.
     (6:), the first, last and other hits with addition of a new feature as interaction term.
@@ -1310,7 +1311,7 @@ def rescaled_target_transform(y_test,*,arg_mode = 9):
                 y_test[i][k+1] = y_test[i][k+1] / y_test[i][k-1]
 
                 #Enforce the trigonometric identity: (sin \theta^2 + cos \theta^2 = 1)
-                norm = (((y_test[i][k])**2.)+((y_test[k+1][2])**2.))**0.5
+                norm = (((y_test[i][k])**2.)+((y_test[i][k+1])**2.))**0.5
 
                 y_test[i][k] = y_test[i][k]/norm
                 y_test[i][k+1] = y_test[i][k+1]/norm
