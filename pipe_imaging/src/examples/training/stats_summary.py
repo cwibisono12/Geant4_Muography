@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     #Iterate over the trainig data to obtain summary statistics for each file:
     for i in range(dim):
-        X_train, y_train = nn.get_features_append(file_list[i], arg_number = option)
+        X_train, y_train = nn.get_features_append(file_list[i], arg_number = option, theta_scatt = 1e-15)
         X_train_new = nn.select_features(X_train)
         
         #Store summary statistics to file_stats:

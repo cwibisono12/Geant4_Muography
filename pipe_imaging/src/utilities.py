@@ -1045,3 +1045,53 @@ def merge_prediction_file(fin, fout, f_log):
         f3.write('Num of records added: '+str(num)+'\n')
 
     print(f"Finished creating log file {f_log}")
+
+def get_mean_scatt_angle(begin, stop, f_stats):
+    '''
+    Get the average of scattering angle from the summary stats file.
+    (See nn.stats_summary function)
+    C. Wibisono
+    07/14 '26
+    Parameter(s):
+    begin: (int) initial run number to retrieve the scattering angle mean.
+    stop: (int) final run number to retrieve the scattering angle mean (inclusive).
+    f_stats: file pointer object of stats_summary file.
+    Return(s):
+    scatt_ave: (float) scattering angle average (degree).
+    '''
+
+    with open(f_stats, mode = 'r') as f:
+        scatt_ave = 0
+        count_scatt = 0
+        arr = []
+        for i in range(begin, stop+1, 1):
+            arr.append(i)
+
+        while(1):
+            f.readline()
+            temp = f.readline()
+            f_name = temp.split()[1]
+            run_num = int(f_name.split('_')[2].split('Run')[1])
+            flag_temp = 0
+            if run_num in arr:
+                #Get the scattering angle mean corresponding to the found run number:
+                for i in range(17):
+                    f.readline()
+                scatt_angle = float(f.readline().split(',')[1])
+                print(f'found run_num: {run_num} in {f_stats} with scatt_angle: {scatt_angle}')
+                count_scatt = count_scatt + 1
+                scatt_ave = scatt_ave + scatt_angle
+                f.readline()
+                arr.remove(run_num)
+                flag_temp = 1
+            if flag_temp == 0:
+                for i in range(19):
+                    f.readline()
+            
+            if len(arr) == 0:
+                break
+        #Get the scattering angle average over the matches run number:
+        scatt_ave = scatt_ave/count_scatt
+        print('scatt angle average: ', scatt_ave)
+        return scatt_ave
+
