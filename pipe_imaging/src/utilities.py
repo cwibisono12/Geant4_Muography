@@ -1068,7 +1068,9 @@ def get_mean_scatt_angle(begin, stop, f_stats):
             arr.append(i)
 
         while(1):
-            f.readline()
+            line = f.readline()
+            if line == '':
+                break
             temp = f.readline()
             f_name = temp.split()[1]
             run_num = int(f_name.split('_')[2].split('Run')[1])
@@ -1090,8 +1092,12 @@ def get_mean_scatt_angle(begin, stop, f_stats):
             
             if len(arr) == 0:
                 break
-        #Get the scattering angle average over the matches run number:
-        scatt_ave = scatt_ave/count_scatt
-        print('scatt angle average: ', scatt_ave)
-        return scatt_ave
+        #Get the scattering angle average over the provided run number:
+        if count_scatt > 0:
+            scatt_ave = scatt_ave/count_scatt
+            print('scatt angle average: ', scatt_ave)
+            return scatt_ave
+        else:
+            print(f'None of provided run numbers found in {f_stats} file.')
+            return None
 
