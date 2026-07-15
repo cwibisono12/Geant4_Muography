@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from utilities import is_valid_event
 from utilities import generate_input_scint, write_header
 from utilities import obj_dict, obj_dict_append
-from utilities import corr_file, corr_file_append
+from utilities import corr_file, corr_file_append, corr_file_append_woscaling
 from utilities import get_radius
 
 def transform_input(file_in, f_pipe, f_scaling, file_out):
@@ -203,7 +203,7 @@ def transform_input_woscaling(file_in, f_pipe, file_out):
                             count = count + 1
                             scint0, scint1, scint2, scint3 = generate_input_scint(data)
                             print(scint_key,scint0[0],scint0[1],scint0[2],pipe[scint_key][2],pipe[scint_key][3],pipe[scint_key][4])
-                            corr_file_append(file_out, scint0, scint1, scint2, scint3, pipe, scaling, scint_key)
+                            corr_file_append_woscaling(file_out, scint0, scint1, scint2, scint3, pipe, scint_key)
 
                     #Store event data into a dictionary:
                     del data
@@ -220,32 +220,52 @@ def transform_input_woscaling(file_in, f_pipe, file_out):
         if scint_key in pipe.keys():
             count = count + 1
             scint0, scint1, scint2, scint3 = generate_input_scint(data)
-            print(row[0],scint0[0],scint0[1],scint0[2],scint0[3],pipe[scint_key][2],pipe[scint_key][3],pipe[scint_key][4])
-            corr_file_append(file_out, scint0, scint1, scint2, scint3, pipe, scaling, scint_key)
+            print(row[0],scint0[0],scint0[1],scint0[2],pipe[scint_key][2],pipe[scint_key][3],pipe[scint_key][4])
+            corr_file_append_woscaling(file_out, scint0, scint1, scint2, scint3, pipe, scint_key)
 
     print(count)
   
 if __name__ == "__main__":
     import sys
-    filein = sys.argv[1] #scintillator file
-    filein2 = sys.argv[2] #pipe file
-    filein3 = sys.argv[3] #scaling file
-    fileout = sys.argv[4] #output file
-    run_mode = int(sys.argv[5]) #running_mode (1, 2, 4:(first, last, average), 3: all scattering points of objects)
-    with open(fileout, mode = 'w') as fout:
-        if (run_mode == 1 or run_mode == 2 or run_mode == 4):
-            write_header(fout, 1)
-        else:
-            write_header(fout, 2)
 
-        with open(filein, mode='r') as fin1:
+    dim = len(sys.argv)
+
+    if dim == 6:
+        filein = sys.argv[1] #scintillator file
+        filein2 = sys.argv[2] #pipe file
+        filein3 = sys.argv[3] #scaling file
+        fileout = sys.argv[4] #output file
+        run_mode = int(sys.argv[5]) #running_mode (1, 2, 4:(first, last, average), 3: all scattering points of objects)
+    
+
+        with open(fileout, mode = 'w') as fout:
             if (run_mode == 1 or run_mode == 2 or run_mode == 4):
-                transform_input(fin1, filein2, filein3, fout)
+                write_header(fout, 1)
             else:
-                transform_input_append(fin1, filein2, filein3, fout)
+                write_header(fout, 2)
 
+            with open(filein, mode='r') as fin1:
+                if (run_mode == 1 or run_mode == 2 or run_mode == 4):
+                    transform_input(fin1, filein2, filein3, fout)
+                else:
+                    transform_input_append(fin1, filein2, filein3, fout)
+    
+        obj_rad = get_radius(fileout, run_mode)
+        print("Radius of correlated objects\n")
+        print("Pipe:","r_min: (cm)",obj_rad['pipe'][0],"r_max: (cm)",obj_rad['pipe'][1])
+        print("Scaling:","r_min: (cm)",obj_rad['scaling'][0],"r_max: (cm)",obj_rad['scaling'][1])
 
-    obj_rad = get_radius(fileout, run_mode)
-    print("Radius of correlated objects\n")
-    print("Pipe:","r_min: (cm)",obj_rad['pipe'][0],"r_max: (cm)",obj_rad['pipe'][1])
-    print("Scaling:","r_min: (cm)",obj_rad['scaling'][0],"r_max: (cm)",obj_rad['scaling'][1])
+    if dim == 5:
+        filein = sys.argv[1] #scintillator file
+        filein2 = sys.argv[2] #pipe file
+        fileout = sys.argv[3] #output file
+        run_mode = int(sys.argv[4]) #running_mode (1, 2, 4:(first, last, average), 3: all scattering points of objects)
+        
+        with open(fileout, mode ='w') as fout:
+            write_header(fout, 2)
+            with open(filein, mode='r') as fin1:
+                transform_input_woscaling(fin1, filein2, fout)
+
+        obj_rad = get_radius(fileout, run_mode)
+        print("Radius of correlated objects\n")
+        print("Pipe:","r_min: (cm)",obj_rad['pipe'][0],"r_max: (cm)",obj_rad['pipe'][1])

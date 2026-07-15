@@ -456,7 +456,7 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
     05/25 '26
     Parameter(s):
     file_in: fileinput pointer object 
-    arg_number: (int) number of target variables (2:) for first and last hits , (3:) for the first, last and the other hits
+    arg_number: (int) number of target variables (0: only one object retrieved in addition to scints, (2:) for first and last hits , (3:) for the first, last and the other hits
     theta_scatt: (deg) allowed scattering angle for event selection.
     (4:), the first and last hits and the last hit for incoming muon and the first hit for outgoing muon.
     (5:), the first and last hits and with addition of a new feature as interaction term.
@@ -542,7 +542,11 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
                 else:
                     if not data:
                         prev_id = row[0]
-                        data[row[0]] =[[],[],[],[],[],[]]
+                        if arg_number > 0:
+                            data[row[0]] =[[],[],[],[],[],[]]
+
+                        if arg_number == 0:
+                            data[row[0]] = [[],[],[],[],[]]
 
                         if obj_type == 0:
                             x1_scint = float(row[1])
@@ -561,10 +565,27 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
                         '''
                         dim_pipe = len(data[prev_id][4])
                         mid_dim_pipe = 3*int(((dim_pipe/3)//2))
-                        dim_scaling = len(data[prev_id][5])
-                        mid_dim_scaling = 3*int(((dim_scaling/3)//2))
-                        
-                        if dim_pipe > 6 and dim_scaling > 6:
+
+                        if arg_number > 0:
+                            dim_scaling = len(data[prev_id][5])
+                            mid_dim_scaling = 3*int(((dim_scaling/3)//2))
+
+                        if dim_pipe > 6 and arg_number == 0:
+                            if scatt_angle >= theta_scatt:
+                                X_arr.append([
+                                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                                    scatt_angle
+                                    ])
+                                y_arr.append([
+                                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1]
+                                    ])
+
+                        if arg_number > 0 and dim_pipe > 6 and dim_scaling > 6:
 
                             if arg_number == 2:
                                 X_arr.append([
@@ -762,7 +783,11 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
 
                         del data
                         data = {}
-                        data[row[0]] =[[],[],[],[],[],[]]
+                        if arg_number > 0:
+                            data[row[0]] =[[],[],[],[],[],[]]
+                        if arg_number == 0:
+                            data[row[0]] = [[],[],[],[],[]]
+
                         prev_id = row[0]
                         if obj_type == 0:
                             x1_scint = float(row[1])
@@ -776,13 +801,31 @@ def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
 
         dim_pipe = len(data[prev_id][4])
         mid_dim_pipe = 3*int(((dim_pipe/3)//2))
-        dim_scaling = len(data[prev_id][5])
-        mid_dim_scaling = 3*int(((dim_scaling/3)//2))
+        
+        if arg_number > 0:
+            dim_scaling = len(data[prev_id][5])
+            mid_dim_scaling = 3*int(((dim_scaling/3)//2))
 
         scatt_angle = scatt_angle_transformer(data, prev_id)
         print(data[prev_id][0],data[prev_id][1],data[prev_id][2],data[prev_id][3], scatt_angle)
         
-        if dim_pipe > 6 and dim_scaling > 6:
+        if dim_pipe > 6 and arg_number == 0:
+            if scatt_angle >= theta_scatt:
+                X_arr.append([
+                    data[prev_id][0][0], data[prev_id][0][1], data[prev_id][0][2],
+                    data[prev_id][1][0], data[prev_id][1][1], data[prev_id][1][2],
+                    data[prev_id][2][0], data[prev_id][2][1], data[prev_id][2][2],
+                    data[prev_id][3][0], data[prev_id][3][1], data[prev_id][3][2],
+                    scatt_angle
+                    ])
+                y_arr.append([
+                    data[prev_id][4][0], data[prev_id][4][1], data[prev_id][4][2],
+                    data[prev_id][4][mid_dim_pipe], data[prev_id][4][mid_dim_pipe+1], data[prev_id][4][mid_dim_pipe+2],
+                    data[prev_id][4][dim_pipe-3], data[prev_id][4][dim_pipe-2], data[prev_id][4][dim_pipe-1]
+                    ])
+            
+
+        if arg_number > 0 and dim_pipe > 6 and dim_scaling > 6:
 
             if arg_number == 2:
                 X_arr.append([
