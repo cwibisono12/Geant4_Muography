@@ -473,6 +473,31 @@ def corr_file_append(fout, scint_0, scint_1, scint_2, scint_3, pipe_data, scalin
     for j in range(scaling_dim):
         fout.write(key+','+str(scaling_data[key][2][j])+','+str(scaling_data[key][3][j])+','+str(scaling_data[key][4][j])+','+'5'+'\n')
 
+def corr_file_append_woscaling(fout, scint_0, scint_1, scint_2, scint_3, pipe_data, key):
+    '''
+    Generate correlation file output consists of
+    spatial positions in scintillators, and pipe without scaling.
+    The file can allow multiple scattering points for the pipe.
+    C. Wibisono
+    07/14 '26
+    Parameter(s):
+    fout: correlation file output pointer object
+    scint_0: (dict) scintillators data 1st layer
+    scint_1: (dict) scintillators data 2nd layer
+    scint_2: (dict) scintillators data 3rd layer
+    scint_3: (dict) scintillators data 4th layer
+    pipe_data: (dict) pipe data
+    key: str primary key (event ID)
+    '''
+
+    pipe_dim = len(pipe_data[key][0])
+
+    fout.write(key+','+str(scint_0[0])+','+str(scint_0[1])+','+str(scint_0[2])+','+'0'+'\n')
+    fout.write(key+','+str(scint_1[0])+','+str(scint_1[1])+','+str(scint_1[2])+','+'1'+'\n')
+    fout.write(key+','+str(scint_2[0])+','+str(scint_2[1])+','+str(scint_2[2])+','+'2'+'\n')
+    fout.write(key+','+str(scint_3[0])+','+str(scint_3[1])+','+str(scint_3[2])+','+'3'+'\n')
+    for i in range(pipe_dim):
+        fout.write(key+','+str(pipe_data[key][2][i])+','+str(pipe_data[key][3][i])+','+str(pipe_data[key][4][i])+','+'4'+'\n')
 
 def get_radius(fin, mode):
     '''
@@ -1100,4 +1125,54 @@ def get_mean_scatt_angle(begin, stop, f_stats):
         else:
             print(f'None of provided run numbers found in {f_stats} file.')
             return None
+
+
+def get_radius_from_predict_file(f_predict, *, arg_number = 9):
+    '''
+    Get the minimum and maximum radius from the prediction file.
+    C. Wibisono
+    07/16 '26:
+    Parameter(s):
+    f_predict: (obj) file pointer object from prediction file.
+    arg_number: (int) argument number when training the data (default = 9).
+    Return(s):
+    obj: [dict] minimum and maximum radius of each object (in cm).
+    ''' 
+
+    obj = {}
+
+    with open(f_predict, mode='r') as f:
+        
+        r_pipe_min = 10000
+        r_pipe_max = 0
+        r_scaling_min = 10000
+        r_scaling_max = 0
+
+        while(1):
+            
+            line = f.readline()
+            if line == '':
+                break
+            temp = line.split(',')
+            
+            if arg_number >= 6:
+                temp_pipe_max = math.sqrt((float(temp[0])**2.)+(float(temp[2])**2.))
+                temp_pipe_min = math.sqrt((float(temp[6])**2.)+(float(temp[8])**2.))
+             
+                if temp_pipe_min < r_pipe_min:
+                    r_pipe_min = temp_pipe_min
+                if temp_pipe_max > r_pipe_max:
+                    r_pipe_max = temp_pipe_max
+
+                temp_scaling_max = math.sqrt((float(temp[9])**2.)+(float(temp[11])**2.))
+                temp_scaling_min = math.sqrt((float(temp[15])**2.)+(float(temp[17])**2.))
+                if temp_scaling_min < r_scaling_min:
+                    r_scaling_min = temp_scaling_min
+                if temp_scaling_max > r_scaling_max:
+                    r_scaling_max = temp_scaling_max
+
+        obj['pipe'] = [r_pipe_min/10., r_pipe_max/10.]
+        obj['scaling'] = [r_scaling_min/10., r_scaling_max/10.]
+
+    return obj
 
