@@ -1176,3 +1176,82 @@ def get_radius_from_predict_file(f_predict, *, arg_number = 9):
 
     return obj
 
+def get_volume_fraction_from_predict_file(f_predict, *, arg_number = 9):
+    '''
+    Get fraction of the volume of the second object relative to the first object 
+    from the prediction file.
+    C. Wibisono
+    07/16 '26
+    Parameter(s):
+    f_predict: (obj) file pointer object from prediction file.
+    arg_number: (int) argument number when training the data (default = 9).
+    Return(s):
+    fraction: (float) fraction number.
+    '''
+
+    fraction = 0
+    with open(f_predict, mode = 'r') as f:
+        
+        r_pipe_min = 10000
+        r_pipe_max = 0
+        L_pipe_min = 100000
+        L_pipe_max = -100000
+        h_scaling = 0
+        L_scaling_min = 100000
+        L_scaling_max = -100000
+        count = 0
+        while(1):
+            line = f.readline()
+        
+            if line == '':
+                break
+        
+            temp = line.split(',')
+            
+            if arg_number >= 6:
+                temp_radius_max = math.sqrt((float(temp[0])**2.)+(float(temp[2])**2.))
+                temp_radius_min = math.sqrt((float(temp[6])**2.)+(float(temp[8])**2.))
+                L_pipe = float(temp[1])
+
+                if temp_radius_min < r_pipe_min:
+                    r_pipe_min = temp_radius_min
+                if temp_radius_max > r_pipe_max:
+                    r_pipe_max = temp_radius_max
+                if L_pipe < L_pipe_min:
+                    L_pipe_min = L_pipe
+
+                if L_pipe > L_pipe_max:
+                    L_pipe_max = L_pipe
+
+                h_scaling_temp = float(temp[11])
+                h_scaling = h_scaling + h_scaling_temp
+                count = count + 1
+
+                L_scaling = float(temp[10])
+                if L_scaling < L_scaling_min:
+                    L_scaling_min = L_scaling
+                if L_scaling > L_scaling_max:
+                    L_scaling_max = L_scaling
+
+
+        L_pipe = L_pipe_max - L_pipe_min
+        L_scaling = L_scaling_max - L_scaling_min
+        h_scaling = h_scaling / count
+        V_pipe = (math.pi)*(r_pipe_min**2.)*L_pipe
+        
+        
+        if h_scaling < 0: 
+            h_scaled = r_pipe_min-abs(h_scaling)
+            temp_1 = L_scaling*((r_pipe_min**2.)*np.arccos((r_pipe_min-h_scaled)/r_pipe_min)) 
+            temp_2 =  L_scaling*(r_pipe_min-h_scaled)*(math.sqrt(2*r_pipe_min*h_scaled-(h_scaled**2.)))
+            V_scaling = temp_1 - temp_2
+            fraction = V_scaling/V_pipe
+
+        
+        if h_scaling >=0:
+            h_empty = r_pipe_min-h_scaling
+            V_empty = L_scaling*((r_pipe_min**2.)*np.arccos((r_pipe_min-h_empty)/r_pipe_min)  - (r_pipe_min-h_empty)*math.sqrt(2*r_pipe_min*h_empty-(h_empty**2.)))
+            V_scaling = V_pipe - V_empty
+            fraction = V_scaling/V_pipe
+    
+    return fraction
