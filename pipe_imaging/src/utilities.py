@@ -1157,7 +1157,7 @@ def get_radius_from_predict_file(f_predict, *, arg_number = 9):
             
             if arg_number >= 6:
                 temp_pipe_max = math.sqrt((float(temp[0])**2.)+(float(temp[2])**2.))
-                temp_pipe_min = math.sqrt((float(temp[6])**2.)+(float(temp[8])**2.))
+                temp_pipe_min = math.sqrt((float(temp[3])**2.)+(float(temp[5])**2.))
              
                 if temp_pipe_min < r_pipe_min:
                     r_pipe_min = temp_pipe_min
@@ -1165,7 +1165,7 @@ def get_radius_from_predict_file(f_predict, *, arg_number = 9):
                     r_pipe_max = temp_pipe_max
 
                 temp_scaling_max = math.sqrt((float(temp[9])**2.)+(float(temp[11])**2.))
-                temp_scaling_min = math.sqrt((float(temp[15])**2.)+(float(temp[17])**2.))
+                temp_scaling_min = math.sqrt((float(temp[12])**2.)+(float(temp[14])**2.))
                 if temp_scaling_min < r_scaling_min:
                     r_scaling_min = temp_scaling_min
                 if temp_scaling_max > r_scaling_max:
@@ -1242,6 +1242,7 @@ def get_volume_fraction_from_predict_file(f_predict, *, arg_number = 9):
         
         if h_scaling < 0: 
             h_scaled = r_pipe_min-abs(h_scaling)
+            print("h_scaling: ", h_scaled/10.)
             temp_1 = L_scaling*((r_pipe_min**2.)*np.arccos((r_pipe_min-h_scaled)/r_pipe_min)) 
             temp_2 =  L_scaling*(r_pipe_min-h_scaled)*(math.sqrt(2*r_pipe_min*h_scaled-(h_scaled**2.)))
             V_scaling = temp_1 - temp_2
