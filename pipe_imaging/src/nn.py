@@ -449,7 +449,7 @@ def get_features(file_in, *, arg_number = 3):
         return X_arr, y_arr
 
 
-def get_features_append(file_in, *, arg_number = 2, theta_scatt = 0.5):
+def get_features_append(file_in, *, arg_number = 2, theta_scatt = 1e-15):
     '''
     Extract the features data to be used for the model from all hits retrieved on the object
     C. Wibisono
