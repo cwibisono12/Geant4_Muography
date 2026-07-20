@@ -25,3 +25,9 @@ directory_log=$6 #directory to store the log file
 ./merge_predict_file.py $directory_in $option $run_mode 73 75 $epoch $directory_out/corr_file_conc_16_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
 ./merge_predict_file.py $directory_in $option $run_mode 76 78 $epoch $directory_out/corr_file_conc_17_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
 ./merge_predict_file.py $directory_in $option $run_mode 80 81 $epoch $directory_out/corr_file_conc_18_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
+./merge_predict_file.py $directory_in $option $run_mode 101 102 $epoch $directory_out/corr_file_conc_0pt5_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
+./merge_predict_file.py $directory_in $option $run_mode 103 105 $epoch $directory_out/corr_file_conc_0pt4_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
+./merge_predict_file.py $directory_in $option $run_mode 107 108 $epoch $directory_out/corr_file_conc_0pt3_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
+./merge_predict_file.py $directory_in $option $run_mode 109 111 $epoch $directory_out/corr_file_conc_0pt2_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
+./merge_predict_file.py $directory_in $option $run_mode 113 114 $epoch $directory_out/corr_file_conc_0pt1_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
+./merge_predict_file.py $directory_in $option $run_mode 116 117 $epoch $directory_out/corr_file_conc_0pt01_${option}_${run_mode}_${epoch}_predict.csv $directory_log/merge_predict_concentric_log.txt
