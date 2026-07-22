@@ -1057,7 +1057,8 @@ def merge_prediction_file(fin, fout, f_log):
                     temp = line.split(',')
                     dim = len(temp)
                     for i in range(dim):
-                        f1.write(str(float(temp[i]))+',')
+                        if i < dim - 1:
+                            f1.write(str(float(temp[i]))+',')
                         if i == dim -1:
                             f1.write(str(float(temp[i]))+'\n')
 
@@ -1251,8 +1252,81 @@ def get_volume_fraction_from_predict_file(f_predict, *, arg_number = 9):
         
         if h_scaling >=0:
             h_empty = r_pipe_min-h_scaling
+            print("h_empty: ",h_empty/10.,"h_scaling: ",(r_pipe_min-h_empty)/10.)
             V_empty = L_scaling*((r_pipe_min**2.)*np.arccos((r_pipe_min-h_empty)/r_pipe_min)  - (r_pipe_min-h_empty)*math.sqrt(2*r_pipe_min*h_empty-(h_empty**2.)))
             V_scaling = V_pipe - V_empty
             fraction = V_scaling/V_pipe
     
     return fraction
+
+def detect_edge(f_predict):
+    '''
+    Detect the edge from the prediction file based on the gradient with respect to radial direction.
+    C. Wibisono
+    07/22 '26
+    Parameter(s):
+    f_predict: (obj) prediction file pointer object.
+    '''
+    from nn import cart_to_cylind_theta 
+    import matplotlib.pyplot as plt
+
+    #Initialize the matrix:
+    mat_2D = []
+    mat_2D_dfr = []
+    for i in range(2000): #theta
+        mat_2D.append([])
+        mat_2D_dfr.append([])
+        for j in range(2000): #r
+            mat_2D[i].append(0)
+            mat_2D_dfr[i].append(0)
+
+    
+    with open(f_predict, mode='r') as f:
+        prev = f.tell()
+        line_0 = f.readline()
+        row_0 = line_0.split(',')
+        
+        #Get the number of columns:
+        col_dim = len(row_0)
+        f.seek(prev)
+
+        if col_dim == 18:
+            while(1):
+                line = f.readline()
+                if line == '':
+                    break
+                temp = line.split(',')
+                for i in range(9,col_dim,3):
+                    x, y, z = float(temp[i]), float(temp[i+1]), float(temp[i+2])
+                    r, theta, y = cart_to_cylind_theta(x, y, z)
+                    r_transf = round(r*10.)
+                    theta_transf = round(theta*100.)
+                    if theta_transf < 0:
+                        theta_transf = 1000 + abs(theta_transf)
+                    if (r_transf >= 0 and r_transf < 2000) and (theta_transf >= 0 and theta_transf < 2000):
+                        mat_2D[theta_transf][r_transf] = mat_2D[theta_transf][r_transf] + 1
+                    
+                    
+        #Edge Detection:
+        arr = []
+        for i in range(2000):
+            temp_max = -1
+            for j in range(1, 1999, 1):
+                mat_2D_dfr[i][j] = mat_2D[i][j+1] - mat_2D[i][j] 
+                if mat_2D_dfr[i][j] > temp_max:
+                    temp_max = mat_2D_dfr[i][j]
+                    rad_max = j
+            mat_2D_dfr[i][0] = mat_2D_dfr[i][1]
+            mat_2D_dfr[i][1999] = mat_2D_dfr[i][1998]
+            arr.append(rad_max/100.)
+
+
+        #fig, ax = plt.subplots(1,2)
+        #ax[0].imshow(mat_2D)
+        del mat_2D
+        del mat_2D_dfr
+        fig, ax = plt.subplots()
+
+        ax.hist(arr, bins = 150)
+        plt.show()
+
