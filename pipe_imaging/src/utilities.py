@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
 import math
-
+from struct import *
 
 def is_valid_event(data):
     '''
@@ -882,6 +882,27 @@ def retrieve_file_name(file_loc, mode, option, num_epoch):
     if mode == 2:
         return test_fname+str(option)+'_train.csv'
 
+def retrieve_merged_file_name(file_loc):
+    '''
+    Retrieve merged file name from list of file:
+    C. Wibisono
+    07/23 '26
+    Parameter(s):
+    file_loc: file address
+    '''
+
+    temp = file_loc.split('/')
+    dim = len(temp)
+    temp_fname = ''
+
+    for i in range(dim):
+        if '.csv' in temp[i]:
+            sub_temp =  temp[i].split('_')
+            temp_fname = temp_fname + sub_temp[2] +'_'+ sub_temp[3] +'_'+ sub_temp[4]+'_'+sub_temp[5]+'_'+sub_temp[6]
+
+    return temp_fname
+
+
 
 def obj_dict_corr(fin):
     '''
@@ -1259,24 +1280,31 @@ def get_volume_fraction_from_predict_file(f_predict, *, arg_number = 9):
     
     return fraction
 
-def detect_edge(f_predict):
+def detect_edge(f_predict, *, dimy = 100, dimx = 250):
     '''
     Detect the edge from the prediction file based on the gradient with respect to radial direction.
     C. Wibisono
     07/22 '26
     Parameter(s):
     f_predict: (obj) prediction file pointer object.
+    dimy: (int) y dimension for intensity and the gradient of intensity arrays creation. (default = 100)
+    dimx: (int) x dimension for intensity and the gradient of intensity arrays creation. (default = 250)
+    Return(s):
+    mat_2D: (int) 2D array of intensity.
+    mat_2D_dfr: (int) 2D array of the gradient w.r.t x direction.
     '''
+
     from nn import cart_to_cylind_theta 
     import matplotlib.pyplot as plt
-
+    from matplotlib.colors import LogNorm
+    
     #Initialize the matrix:
     mat_2D = []
     mat_2D_dfr = []
-    for i in range(2000): #theta
+    for i in range(100): #theta
         mat_2D.append([])
         mat_2D_dfr.append([])
-        for j in range(2000): #r
+        for j in range(250): #r
             mat_2D[i].append(0)
             mat_2D_dfr[i].append(0)
 
@@ -1299,34 +1327,96 @@ def detect_edge(f_predict):
                 for i in range(9,col_dim,3):
                     x, y, z = float(temp[i]), float(temp[i+1]), float(temp[i+2])
                     r, theta, y = cart_to_cylind_theta(x, y, z)
-                    r_transf = round(r*10.)
-                    theta_transf = round(theta*100.)
+                    r_transf = round(r)
+                    theta_transf = round(theta*10.)
                     if theta_transf < 0:
-                        theta_transf = 1000 + abs(theta_transf)
-                    if (r_transf >= 0 and r_transf < 2000) and (theta_transf >= 0 and theta_transf < 2000):
+                        theta_transf = round((np.pi)*10.) + abs(theta_transf)
+                    if (r_transf >= 0 and r_transf < 200) and (theta_transf >= 0 and theta_transf < 100):
                         mat_2D[theta_transf][r_transf] = mat_2D[theta_transf][r_transf] + 1
                     
                     
         #Edge Detection:
         arr = []
-        for i in range(2000):
+        for i in range(100):
             temp_max = -1
-            for j in range(1, 1999, 1):
+            for j in range(1, 199, 1):
                 mat_2D_dfr[i][j] = mat_2D[i][j+1] - mat_2D[i][j] 
                 if mat_2D_dfr[i][j] > temp_max:
                     temp_max = mat_2D_dfr[i][j]
                     rad_max = j
             mat_2D_dfr[i][0] = mat_2D_dfr[i][1]
-            mat_2D_dfr[i][1999] = mat_2D_dfr[i][1998]
-            arr.append(rad_max/100.)
+            mat_2D_dfr[i][199] = mat_2D_dfr[i][198]
+            arr.append(rad_max/10.)
 
 
-        #fig, ax = plt.subplots(1,2)
-        #ax[0].imshow(mat_2D)
-        del mat_2D
-        del mat_2D_dfr
-        fig, ax = plt.subplots()
 
-        ax.hist(arr, bins = 150)
-        plt.show()
+    return mat_2D, mat_2D_dfr
 
+
+def matwrite(filename, *, dimy, dimx, arr, overwrite):
+    '''
+    Matrix writer
+    C. Wibisono
+    02/18 '24
+    Usage:
+    To write and or update a matrix into a file.
+    Function Arguments
+    Filename : file to write/update
+    dimy: int, y dimension
+    dimx: int, x dimension
+    arr: int[dimy][dimx], two dimensional array
+    overwrite: int : 1 (to overwrite) or 0 (to append)
+    '''
+
+    p=Struct("@i")
+    if overwrite == 1:
+        with open(filename,mode='wb') as f:
+            for i in range(0,dimy,1):
+                for j in range(0,dimx,1):
+                    temp=arr[i][j]
+                    f.write(p.pack(temp))
+                    
+            print("Completed\n")
+        
+    else:
+        with open(filename,mode='rb') as f:
+            for i in range(0,dimy,1):
+                for j in range(0,dimx,1):
+                    buff=f.read(4)
+                    temp,=p.unpack(buff)
+                    arr[i][j]=arr[i][j]+temp
+            print("Complete updating the matrix")
+            print("Writing updated matrix")
+        
+        with open(filename,mode='wb') as f:
+            for i in range(0,dimy,1):
+                for j in range(0,dimx,1):
+                    temp=arr[i][j]
+                    f.write(p.pack(temp))
+
+            print("Completed\n")
+
+
+def store_log_2D_mat_edge(f_log, file_in, fmat1, fmat2):
+    '''
+    Keep the record in generating 2D edge detection matrices
+    C. Wibisono
+    07/23 '26
+    Parameter(s):
+    f_log: (obj) log file pointer object.
+    file_in: (str) merged file prediction name..
+    fmat1: (str) file name from mat1.
+    fmat2: (str) file name from mat2.
+    '''
+
+    from datetime import datetime
+
+    
+    with open(f_log, mode='a') as f:
+        f.write('=========='+'\n')
+        f.write('Timestamp: '+str(datetime.now())+'\n')
+        f.write('file_in: '+file_in+'\n')
+        f.write('file_out1: '+fmat1+'\n')
+        f.write('file_out2: '+fmat2+'\n')
+
+    print(f"Finished creating log file {f_log}")
