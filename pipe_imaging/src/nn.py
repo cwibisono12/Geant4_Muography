@@ -1190,6 +1190,7 @@ def summary_statistics(X_train, f_train, f_out):
 
     #Calculate statistics summary for each features in X_train:
     dim_column = len(X_train[0])
+    dim_row = len(X_train)
 
     X_train_np = np.array(X_train)
 
@@ -1197,6 +1198,7 @@ def summary_statistics(X_train, f_train, f_out):
         f.write('=========='+'\n')
         f.write('file_training: '+str(train_fname)+'\n')
         f.write('Timestamp: '+str(datetime.now())+'\n')
+        f.write('Num of records: '+str(dim_row)+'\n')
         for j in range(dim_column):
             f.write('mean of X_'+str(j)+' :'+','+str(np.mean(X_train_np[:,j]))+'\n')
             f.write('SD of X_'+str(j)+' :'+','+str(np.var(X_train_np[:,j]))+'\n')

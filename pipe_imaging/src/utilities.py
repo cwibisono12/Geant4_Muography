@@ -1105,11 +1105,13 @@ def get_mean_scatt_angle(begin, stop, f_stats):
     f_stats: file pointer object of stats_summary file.
     Return(s):
     scatt_ave: (float) scattering angle average (degree).
+    total_row: (int) total number of records.
     '''
 
     with open(f_stats, mode = 'r') as f:
         scatt_ave = 0
         count_scatt = 0
+        count_row = 0
         arr = []
         for i in range(begin, stop+1, 1):
             arr.append(i)
@@ -1123,8 +1125,12 @@ def get_mean_scatt_angle(begin, stop, f_stats):
             run_num = int(f_name.split('_')[2].split('Run')[1])
             flag_temp = 0
             if run_num in arr:
+                #Get the number of rows:
+                f.readline()
+                dim_row = int(f.readline().split()[3])
+                count_row = count_row + dim_row
                 #Get the scattering angle mean corresponding to the found run number:
-                for i in range(17):
+                for i in range(16):
                     f.readline()
                 scatt_angle = float(f.readline().split(',')[1])
                 print(f'found run_num: {run_num} in {f_stats} with scatt_angle: {scatt_angle}')
@@ -1134,7 +1140,7 @@ def get_mean_scatt_angle(begin, stop, f_stats):
                 arr.remove(run_num)
                 flag_temp = 1
             if flag_temp == 0:
-                for i in range(19):
+                for i in range(20):
                     f.readline()
             
             if len(arr) == 0:
@@ -1142,8 +1148,8 @@ def get_mean_scatt_angle(begin, stop, f_stats):
         #Get the scattering angle average over the provided run number:
         if count_scatt > 0:
             scatt_ave = scatt_ave/count_scatt
-            print('scatt angle average: ', scatt_ave)
-            return scatt_ave
+            print('scatt angle average: ', scatt_ave, 'number of rows: ', count_row)
+            return scatt_ave, count_row
         else:
             print(f'None of provided run numbers found in {f_stats} file.')
             return None
