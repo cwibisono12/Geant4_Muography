@@ -1330,14 +1330,14 @@ def detect_edge(f_predict, *, dimy = 100, dimx = 250):
                 if line == '':
                     break
                 temp = line.split(',')
-                for i in range(9,col_dim,3):
+                for i in range(0,col_dim,3):
                     x, y, z = float(temp[i]), float(temp[i+1]), float(temp[i+2])
                     r, theta, y = cart_to_cylind_theta(x, y, z)
                     r_transf = round(r)
                     theta_transf = round(theta*10.)
                     if theta_transf < 0:
                         theta_transf = round((np.pi)*10.) + abs(theta_transf)
-                    if (r_transf >= 0 and r_transf < 200) and (theta_transf >= 0 and theta_transf < 100):
+                    if (r_transf >= 0 and r_transf < 250) and (theta_transf >= 0 and theta_transf < 100):
                         mat_2D[theta_transf][r_transf] = mat_2D[theta_transf][r_transf] + 1
                     
                     
@@ -1345,13 +1345,13 @@ def detect_edge(f_predict, *, dimy = 100, dimx = 250):
         arr = []
         for i in range(100):
             temp_max = -1
-            for j in range(1, 199, 1):
+            for j in range(1, 249, 1):
                 mat_2D_dfr[i][j] = mat_2D[i][j+1] - mat_2D[i][j] 
                 if mat_2D_dfr[i][j] > temp_max:
                     temp_max = mat_2D_dfr[i][j]
                     rad_max = j
             mat_2D_dfr[i][0] = mat_2D_dfr[i][1]
-            mat_2D_dfr[i][199] = mat_2D_dfr[i][198]
+            mat_2D_dfr[i][249] = mat_2D_dfr[i][248]
             arr.append(rad_max/10.)
 
 

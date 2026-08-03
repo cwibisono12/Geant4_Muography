@@ -68,3 +68,73 @@ Timestamp: 2026-07-24 14:34:52.733950
 file_in: partial_0pt01_3_9_26
 file_out1: partial_0pt01_3_9_26_2D_int
 file_out2: partial_0pt01_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:46.704284
+file_in: partial_0pt1_3_9_26
+file_out1: partial_0pt1_3_9_26_2D_int
+file_out2: partial_0pt1_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:47.940325
+file_in: partial_0pt25_3_9_26
+file_out1: partial_0pt25_3_9_26_2D_int
+file_out2: partial_0pt25_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:49.607234
+file_in: partial_0pt3_3_9_26
+file_out1: partial_0pt3_3_9_26_2D_int
+file_out2: partial_0pt3_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:51.642342
+file_in: partial_0pt4_3_9_26
+file_out1: partial_0pt4_3_9_26_2D_int
+file_out2: partial_0pt4_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:52.733208
+file_in: partial_0pt5_3_9_26
+file_out1: partial_0pt5_3_9_26_2D_int
+file_out2: partial_0pt5_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:54.984096
+file_in: partial_0pt6_3_9_26
+file_out1: partial_0pt6_3_9_26_2D_int
+file_out2: partial_0pt6_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:57.249184
+file_in: partial_0pt7_3_9_26
+file_out1: partial_0pt7_3_9_26_2D_int
+file_out2: partial_0pt7_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:08:59.516471
+file_in: partial_0pt8_3_9_26
+file_out1: partial_0pt8_3_9_26_2D_int
+file_out2: partial_0pt8_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:09:01.785845
+file_in: partial_0pt9_3_9_26
+file_out1: partial_0pt9_3_9_26_2D_int
+file_out2: partial_0pt9_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:09:01.952411
+file_in: partial_0pt05_3_9_26
+file_out1: partial_0pt05_3_9_26_2D_int
+file_out2: partial_0pt05_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:09:02.110718
+file_in: partial_0pt04_3_9_26
+file_out1: partial_0pt04_3_9_26_2D_int
+file_out2: partial_0pt04_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:09:02.174672
+file_in: partial_0pt03_3_9_26
+file_out1: partial_0pt03_3_9_26_2D_int
+file_out2: partial_0pt03_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:09:02.218722
+file_in: partial_0pt02_3_9_26
+file_out1: partial_0pt02_3_9_26_2D_int
+file_out2: partial_0pt02_3_9_26_2D_fdr
+==========
+Timestamp: 2026-08-03 11:09:02.234452
+file_in: partial_0pt01_3_9_26
+file_out1: partial_0pt01_3_9_26_2D_int
+file_out2: partial_0pt01_3_9_26_2D_fdr
