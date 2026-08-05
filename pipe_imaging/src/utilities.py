@@ -1426,3 +1426,104 @@ def store_log_2D_mat_edge(f_log, file_in, fmat1, fmat2):
         f.write('file_out2: '+fmat2+'\n')
 
     print(f"Finished creating log file {f_log}")
+
+def calculate_model_rms(f_thickness):
+    '''
+    Calculate the rms from model prediction w.r.t actual value
+    C. Wibisono
+    08/05 '26
+    Parameter(s):
+    f_thickness: (obj) file pointer object consisting of  thickness value from the model.
+    Return(s):
+    rms: (float) root mean square.
+    '''
+
+    rms_sum = 0
+    count = 0
+    
+    with open(f_thickness, mode='r') as f:
+        
+        #Read the header:
+        f.readline()
+        
+        while(1):
+            line = f.readline()
+            if line == '':
+                break
+            temp = line.split(',')
+            model, truth = float(temp[1]), float(temp[0])
+            rms_val = (model- truth)**2.
+            rms_sum = rms_sum + rms_val
+            count = count + 1
+            print("thickness: ",truth,"prediction: ",model,"sq diff: ",rms_val)
+
+
+    rms = (rms_sum/count)**0.5
+    print("RMS: ",rms)
+
+    return rms
+
+def plot_2D_edge_density_mat(f_intmat, f_gdmat):
+    '''
+    2D roster plot for intensity and gradient density matrices.
+    C. Wibisono
+    08/05 '26
+    Parameter(s):
+    f_intmat: (obj) file pointer for intensity matrix.
+    f_gdmat: (obj) file pointer for gradient density matrix.
+    '''
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import matplotlib.ticker as tck
+    from matplotlib.colors import LogNorm
+
+    plt.rcParams['figure.facecolor'] = 'none'
+    plt.rcParams['axes.facecolor'] = 'none'
+    plt.rcParams['savefig.transparent'] = True
+    plt.rcParams['font.family'] = 'serif'
+    plt.rcParams['font.serif'] = ['Times New Roman']+plt.rcParams['font.serif']
+    plt.rcParams['figure.dpi'] = 200
+
+    #Extract file name:
+    temp_file = f_intmat.split('/')
+    dim = len(temp_file)
+
+    fig_temp = ''
+    for i in range(dim):
+        if '.mat' in temp_file[i]:
+            temp_name = temp_file[i].split('_')
+            fig_temp = fig_temp + temp_name[0]+'_'+temp_name[1]
+    
+    #Parse the file: 
+    arr_int = np.reshape(np.fromfile(f_intmat, dtype = np.int32, sep ="", count=-1),(100,250))
+    arr_gd = np.reshape(np.fromfile(f_gdmat, dtype = np.int32, sep ="", count=-1),(100,250))
+    
+    fig1, ax1 = plt.subplots()
+    ax1.tick_params(direction='in', axis='both',which='major', bottom=True, left=True, top=True, right=True, length = 9, width = 0.75)
+    ax1.tick_params(direction='in', axis='both',which='minor', bottom=True, left=True, top=True, right=True, length = 6, width = 0.75)
+    ax1.xaxis.set_minor_locator(tck.AutoMinorLocator())
+    ax1.yaxis.set_minor_locator(tck.AutoMinorLocator())
+    ax1.set_xlabel('radius (cm)')
+    ax1.set_ylabel(r'$\theta$ (rad)')
+
+    im1 = ax1.imshow(arr_int, cmap = 'Blues', origin='lower', extent=[0, 25, 0, 10], aspect='auto', norm=LogNorm())
+    ax1.set_xlim(0,21)
+    ax1.set_ylim(0,6.29)
+    fig1.colorbar(im1, ax = ax1)
+    fig1.savefig(fig_temp+'_int.png')
+    plt.close(fig1)
+
+    fig2, ax2 = plt.subplots()
+    ax2.tick_params(direction='in', axis='both',which='major', bottom=True, left=True, top=True, right=True, length = 9, width = 0.75)
+    ax2.tick_params(direction='in', axis='both',which='minor', bottom=True, left=True, top=True, right=True, length = 6, width = 0.75)
+    ax2.xaxis.set_minor_locator(tck.AutoMinorLocator())
+    ax2.yaxis.set_minor_locator(tck.AutoMinorLocator())
+    ax2.set_xlabel('radius (cm)')
+    ax2.set_ylabel(r'$\theta$ (rad)')
+    im2 = ax2.imshow(arr_gd, cmap = 'Blues', origin='lower', extent = [0, 25, 0, 10], aspect='auto', norm=LogNorm())
+    ax2.set_xlim(0,21)
+    ax2.set_ylim(0,6.29)
+    fig2.colorbar(im2, ax = ax2)
+    fig2.savefig(fig_temp+'_gd.png')
+    plt.close(fig2)
+     
