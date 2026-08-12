@@ -1482,6 +1482,7 @@ def plot_2D_edge_density_mat(f_intmat, f_gdmat):
     plt.rcParams['savefig.transparent'] = True
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman']+plt.rcParams['font.serif']
+    plt.rcParams['axes.labelsize'] = 14
     plt.rcParams['figure.dpi'] = 200
 
     #Extract file name:
@@ -1526,4 +1527,63 @@ def plot_2D_edge_density_mat(f_intmat, f_gdmat):
     fig2.colorbar(im2, ax = ax2)
     fig2.savefig(fig_temp+'_gd.png')
     plt.close(fig2)
-     
+
+
+def retrieve_mat_files_in_directory(dir_in, run_mode, training_mode, epoch):
+    '''
+    Retrieve matrix files in dir_in and create 2D roster plot for intensity ang gradient
+    density matrix.
+    C. Wibisono
+    08/12 '26
+    Parameter(s):
+    dir_in: (str) directory input path where the matrix files are stored
+    run_mode: (int) mode when running simulation
+    training_mode: (int) mode when training the model
+    epoch: (int) iteration number when the model converges over validation dataset.
+    Return(s):
+    file_arr: (dict) dictionary consisting of key and pair of intensity and gradient density matrix files.
+    '''
+
+    file_list = retrieve_files_in_directory(dir_in)
+
+    #Only process files with the following pattern:
+    pattern = str(run_mode)+'_'+str(training_mode)+'_'+str(epoch)
+    
+    #Create dictionary of file list that meets the pattern above:
+    file_arr = {}
+
+    for name in file_list:
+        temp = str(name)
+        temp_split = str(name).split('/')
+        
+        #Extract file_name:
+        dim = len(temp_split)
+        f_name = ''
+        for i in range(dim):
+            if '.mat' in temp_split[i]:
+                temp_str = temp_split[i].split('_')
+                f_name = f_name + temp_str[1]
+                type_name = temp_str[6].split('.mat')[0]
+
+        if f_name in file_arr.keys():
+            if pattern in temp:
+                file_arr[f_name].append(temp) 
+        else:
+            if pattern in temp:
+                file_arr[f_name] = [temp]
+    
+    del file_list
+    
+    #Create 2D roster of the matrix files:
+    for key, items in file_arr.items():
+        if 'int' in file_arr[key][0].split('.mat')[0]:
+            print(f'Processing {file_arr[key][0]} and {file_arr[key][1]}')
+            #plot_2D_edge_density_mat(file_arr[key][0], file_arr[key][1])
+        if 'int' in file_arr[key][1].split('.mat')[0]:
+            print(f'Processing {file_arr[key][0]} and {file_arr[key][1]}')
+            #plot_2D_edge_density_mat(file_arr[key][1], file_arr[key][0])
+    
+    
+    
+    return file_arr
+
