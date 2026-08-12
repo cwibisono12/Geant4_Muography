@@ -1578,10 +1578,10 @@ def retrieve_mat_files_in_directory(dir_in, run_mode, training_mode, epoch):
     for key, items in file_arr.items():
         if 'int' in file_arr[key][0].split('.mat')[0]:
             print(f'Processing {file_arr[key][0]} and {file_arr[key][1]}')
-            #plot_2D_edge_density_mat(file_arr[key][0], file_arr[key][1])
+            plot_2D_edge_density_mat(file_arr[key][0], file_arr[key][1])
         if 'int' in file_arr[key][1].split('.mat')[0]:
             print(f'Processing {file_arr[key][0]} and {file_arr[key][1]}')
-            #plot_2D_edge_density_mat(file_arr[key][1], file_arr[key][0])
+            plot_2D_edge_density_mat(file_arr[key][1], file_arr[key][0])
     
     
     
